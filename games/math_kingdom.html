@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>수학 왕국 — 정수 · 유리수 | 영통수학여행학원</title>
+<!-- PWA -->
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#7c3aed">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="수학왕국">
+<link rel="apple-touch-icon" href="./icon.svg">
+<!-- SEO -->
+<meta name="description" content="영통수학여행학원의 재미있는 수학 학습 게임! 정수, 소수, 분수를 게임으로 마스터하세요.">
+<meta name="keywords" content="수학게임, 영통수학학원, 수학여행학원, 정수, 유리수, 수학학습">
+<meta property="og:title" content="수학 왕국 | 영통수학여행학원">
+<meta property="og:description" content="재미있는 수학 학습 게임으로 실력을 키워보세요!">
+<meta property="og:type" content="website">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI","Noto Sans KR",sans-serif;
+  background:linear-gradient(135deg,#0f0c29 0%,#302b63 60%,#24243e 100%);
+  min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:12px}
+.wrap{width:100%;max-width:540px;margin:0 auto}
+
+/* ── 화면 전환 ── */
+.screen{display:none;animation:fadeIn .25s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ── 카드 ── */
+.card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;padding:1.5rem;margin-bottom:.85rem;backdrop-filter:blur(10px)}
+
+/* ── 타이틀 ── */
+.title{text-align:center;padding:1.5rem 0 1rem}
+.title h1{font-size:2.2rem;font-weight:900;
+  background:linear-gradient(135deg,#a78bfa,#f472b6,#fb923c);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:-.02em}
+.title p{color:#94a3b8;font-size:.95rem;margin-top:.4rem}
+
+/* ── 섹션 레이블 ── */
+.sec-label{font-size:.72rem;font-weight:700;color:#7c8db0;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:.5rem}
+
+/* ── 모드/난이도 버튼 ── */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem}
+.sel-btn{border:2px solid rgba(255,255,255,.15);border-radius:13px;
+  background:rgba(255,255,255,.05);color:#ccc;padding:.75rem .5rem;
+  font-family:inherit;font-size:.88rem;font-weight:600;cursor:pointer;
+  text-align:center;transition:all .18s;line-height:1.5}
+.sel-btn:hover{border-color:#a78bfa;background:rgba(167,139,250,.15);color:#fff}
+.sel-btn.active{border-color:#a78bfa;background:rgba(167,139,250,.25);color:#fff;
+  box-shadow:0 0 16px rgba(167,139,250,.3)}
+.sel-btn .icon{font-size:1.6rem;display:block;margin-bottom:.25rem}
+.sel-btn .sub{font-size:.72rem;color:#94a3b8;margin-top:.15rem}
+
+/* ── 개념 미리보기 ── */
+.concept-preview{display:none;margin-top:.75rem}
+.concept-preview.show{display:block;animation:fadeIn .2s ease}
+.concept-box{
+  background:rgba(251,146,60,.08);border:2px solid rgba(251,146,60,.3);
+  border-radius:16px;padding:1.25rem 1.3rem;
+  animation:borderGlow 2.5s ease-in-out infinite}
+@keyframes borderGlow{
+  0%,100%{border-color:rgba(251,146,60,.3);box-shadow:none}
+  50%{border-color:rgba(251,146,60,.85);box-shadow:0 0 28px rgba(251,146,60,.35)}}
+.concept-box h4{color:#fb923c;font-size:.95rem;font-weight:800;margin-bottom:.65rem}
+.concept-box .rule{font-size:.84rem;color:#cbd5e1;line-height:2;margin-bottom:.65rem}
+.concept-box .example{
+  background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.3);
+  border-radius:10px;padding:.75rem .9rem;
+  font-size:.85rem;color:#c4b5fd;font-family:monospace;line-height:1.9;
+  animation:exampleFloat 3s ease-in-out infinite}
+@keyframes exampleFloat{
+  0%,100%{transform:translateY(0);box-shadow:none}
+  50%{transform:translateY(-4px);box-shadow:0 10px 24px rgba(167,139,250,.25)}}
+
+/* ── 시작 버튼 ── */
+.start-btn{width:100%;padding:1rem;border:none;border-radius:14px;
+  background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff;
+  font-size:1.1rem;font-weight:700;cursor:pointer;font-family:inherit;
+  box-shadow:0 4px 24px rgba(124,58,237,.4);transition:all .2s;margin-top:.5rem}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(124,58,237,.55)}
+.start-btn:disabled{background:#444;box-shadow:none;cursor:not-allowed;transform:none}
+
+/* ── 게임 헤더 ── */
+.game-header{display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem}
+.prog-wrap{flex:1}
+.prog-bar{height:8px;background:rgba(255,255,255,.1);border-radius:999px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#a78bfa);
+  border-radius:999px;transition:width .4s ease}
+.prog-label{font-size:.75rem;color:#94a3b8;margin-bottom:.3rem}
+.score-badge{background:linear-gradient(135deg,#f59e0b,#fcd34d);
+  color:#78350f;padding:.3rem .8rem;border-radius:20px;font-weight:800;
+  font-size:.9rem;white-space:nowrap;min-width:80px;text-align:center}
+.streak-badge{background:rgba(251,146,60,.2);border:1px solid rgba(251,146,60,.4);
+  color:#fb923c;padding:.3rem .65rem;border-radius:20px;font-weight:700;
+  font-size:.85rem;white-space:nowrap;display:none}
+.streak-badge.show{display:block}
+
+/* ── 팁 카드 ── */
+.tip-card{background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);
+  border-radius:14px;padding:.75rem 1rem;margin-bottom:.75rem;
+  font-size:.82rem;color:#93c5fd;line-height:1.7;
+  animation:tipFloat 3s ease-in-out infinite}
+.tip-card strong{color:#60a5fa}
+@keyframes tipFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-4px);box-shadow:0 8px 20px rgba(59,130,246,.2)}}
+
+/* ── 타이머 ── */
+.timer-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.85rem}
+.timer-bar{flex:1;height:10px;background:rgba(255,255,255,.1);border-radius:999px;overflow:hidden}
+.timer-fill{height:100%;border-radius:999px;transition:width 1s linear,background .4s;
+  background:linear-gradient(90deg,#22c55e,#86efac)}
+.timer-fill.warn{background:linear-gradient(90deg,#f59e0b,#fcd34d)}
+.timer-fill.danger{background:linear-gradient(90deg,#ef4444,#fca5a5)}
+.timer-num{font-size:.85rem;font-weight:700;color:#94a3b8;min-width:2em;text-align:right}
+
+/* ── 문제 박스 (대형, 극적) ── */
+.prob-card{
+  background:linear-gradient(160deg,#0a0025 0%,#160045 55%,#060015 100%);
+  border:2.5px solid rgba(167,139,250,.45);
+  border-radius:26px;padding:2.4rem 1.5rem 1.6rem;text-align:center;
+  margin-bottom:.85rem;min-height:180px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.9rem;
+  box-shadow:0 0 50px rgba(124,58,237,.35),0 0 100px rgba(124,58,237,.15),
+             inset 0 0 40px rgba(124,58,237,.05);
+  animation:probGlow 2.8s ease-in-out infinite;position:relative}
+@keyframes probGlow{
+  0%,100%{border-color:rgba(167,139,250,.45);box-shadow:0 0 50px rgba(124,58,237,.35),0 0 100px rgba(124,58,237,.15)}
+  50%{border-color:rgba(167,139,250,.9);box-shadow:0 0 80px rgba(124,58,237,.6),0 0 160px rgba(124,58,237,.3)}}
+.prob-label{font-size:.78rem;font-weight:800;color:#a78bfa;
+  letter-spacing:.14em;text-transform:uppercase;
+  text-shadow:0 0 10px rgba(167,139,250,.5)}
+.prob-expr{font-size:3rem;font-weight:900;color:#fff;
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
+  gap:.3rem;line-height:2.2;
+  text-shadow:0 0 24px rgba(167,139,250,.55)}
+
+/* ── 힌트 버튼 ── */
+.hint-btn{
+  border:2px solid rgba(251,191,36,.55);border-radius:24px;
+  background:rgba(251,191,36,.1);color:#fbbf24;
+  padding:.45rem 1.1rem;font-family:inherit;font-size:.9rem;font-weight:800;
+  cursor:pointer;transition:all .2s;letter-spacing:.03em;
+  animation:hintGlow 2s ease-in-out infinite}
+.hint-btn:hover{background:rgba(251,191,36,.22);transform:scale(1.06);
+  box-shadow:0 0 20px rgba(251,191,36,.5)}
+@keyframes hintGlow{
+  0%,100%{box-shadow:0 0 0 rgba(251,191,36,0)}
+  50%{box-shadow:0 0 18px rgba(251,191,36,.5)}}
+
+/* ══ 힌트 모달 ══ */
+.hint-overlay{
+  display:none;position:fixed;inset:0;z-index:350;
+  background:rgba(0,0,0,.78);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;padding:1rem}
+.hint-overlay.show{display:flex;animation:overlayIn .2s ease}
+.hint-modal{
+  width:100%;max-width:480px;
+  background:linear-gradient(155deg,#1a1500 0%,#2a2000 55%,#120e00 100%);
+  border:2.5px solid #f59e0b;border-radius:26px;padding:2rem 1.7rem 1.7rem;
+  box-shadow:0 0 55px rgba(245,158,11,.5),0 0 110px rgba(245,158,11,.2);
+  animation:modalPop .4s cubic-bezier(.34,1.56,.64,1)}
+.hint-title{text-align:center;font-size:2rem;font-weight:900;color:#fbbf24;
+  margin-bottom:1.2rem;letter-spacing:.04em;
+  text-shadow:0 0 24px rgba(251,191,36,.9);
+  animation:wrongPulse 1.4s ease-in-out infinite}
+.hint-tip{
+  background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);
+  border-radius:14px;padding:.85rem 1rem;
+  font-size:.9rem;color:#fde68a;line-height:1.8;
+  margin-bottom:1rem;text-align:center}
+.hint-rules{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.3rem}
+.hint-rules li{
+  font-size:.95rem;color:#fef3c7;line-height:1.75;
+  padding:.75rem 1rem;background:rgba(245,158,11,.08);
+  border-radius:13px;border-left:4px solid #f59e0b;
+  opacity:0;transform:translateX(-24px);animation:stepIn .4s ease forwards}
+.hint-close{
+  width:100%;padding:1rem;border:none;border-radius:15px;
+  background:linear-gradient(135deg,#d97706,#f59e0b);
+  color:#1a0a00;font-size:1.05rem;font-weight:900;
+  cursor:pointer;font-family:inherit;
+  box-shadow:0 4px 20px rgba(217,119,6,.4);
+  animation:nextPulse 1.8s ease-in-out infinite}
+.hint-close:hover{animation:none;transform:scale(1.05)}
+
+/* ── 분수 표시 ── */
+.frac{display:inline-flex;flex-direction:column;align-items:center;
+  vertical-align:middle;margin:0 3px;font-size:.88em;line-height:1.2}
+.ft{border-bottom:2.5px solid currentColor;padding:0 5px 2px;min-width:1.4em;text-align:center}
+.fb{padding:2px 5px 0;min-width:1.4em;text-align:center}
+
+/* ── 선택지 버튼 ── */
+.ans-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.7rem}
+.ans-btn{border:2.5px solid rgba(255,255,255,.15);border-radius:14px;
+  background:rgba(255,255,255,.07);color:#fff;padding:1rem .5rem;
+  font-family:inherit;font-size:1.3rem;font-weight:700;cursor:pointer;
+  transition:all .15s;min-height:70px;display:flex;align-items:center;justify-content:center}
+.ans-btn:hover:not(:disabled){border-color:#a78bfa;background:rgba(167,139,250,.2);
+  transform:translateY(-2px);box-shadow:0 4px 16px rgba(167,139,250,.25)}
+.ans-btn.correct{border-color:#22c55e !important;background:rgba(34,197,94,.2) !important;
+  color:#bbf7d0 !important;animation:pulse-green .3s ease}
+.ans-btn.wrong{border-color:#ef4444 !important;background:rgba(239,68,68,.2) !important;
+  color:#fecaca !important;animation:shake .35s ease}
+.ans-btn:disabled{cursor:default}
+@keyframes pulse-green{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
+/* ── 피드백 ── */
+.feedback{text-align:center;font-size:.95rem;font-weight:700;min-height:1.5rem;margin-bottom:.4rem}
+.feedback.ok{color:#34d399}.feedback.ng{color:#f87171}
+
+/* ── 파티클 ── */
+.particle{position:fixed;pointer-events:none;font-size:1.5rem;
+  animation:floatUp .8s ease forwards;z-index:999}
+@keyframes floatUp{0%{transform:translateY(0) scale(1);opacity:1}
+  100%{transform:translateY(-120px) scale(0);opacity:0}}
+
+/* ══════════════════════════════════════════════════════
+   ★  FLASH OVERLAY  ★
+══════════════════════════════════════════════════════ */
+.flash-overlay{position:fixed;inset:0;pointer-events:none;z-index:500;opacity:0}
+.flash-overlay.red{animation:flashRed .6s ease forwards}
+.flash-overlay.orange{animation:flashOrange .6s ease forwards}
+@keyframes flashRed{
+  0%{background:rgba(239,68,68,0);opacity:1}
+  18%{background:rgba(239,68,68,.55)}
+  100%{background:rgba(239,68,68,0);opacity:0}}
+@keyframes flashOrange{
+  0%{background:rgba(251,146,60,0);opacity:1}
+  18%{background:rgba(251,146,60,.45)}
+  100%{background:rgba(251,146,60,0);opacity:0}}
+
+/* ══════════════════════════════════════════════════════
+   ★  풀이 FULL-SCREEN OVERLAY MODAL  ★
+══════════════════════════════════════════════════════ */
+.explain-overlay{
+  display:none;position:fixed;inset:0;z-index:400;
+  background:rgba(0,0,0,.85);backdrop-filter:blur(10px);
+  align-items:center;justify-content:center;padding:1rem;
+  overflow-y:auto}
+.explain-overlay.show{display:flex;animation:overlayIn .2s ease}
+@keyframes overlayIn{from{opacity:0}to{opacity:1}}
+
+.explain-modal{
+  width:100%;max-width:520px;
+  background:linear-gradient(160deg,#0d0022 0%,#1a004a 55%,#08001a 100%);
+  border:3px solid #ef4444;border-radius:28px;
+  padding:2.25rem 1.8rem 2rem;
+  box-shadow:
+    0 0 60px rgba(239,68,68,.6),
+    0 0 130px rgba(239,68,68,.25),
+    inset 0 0 60px rgba(239,68,68,.06);
+  animation:modalPop .45s cubic-bezier(.34,1.56,.64,1);
+  margin:auto}
+@keyframes modalPop{
+  from{transform:scale(0.1) rotate(-12deg);opacity:0}
+  to{transform:scale(1) rotate(0deg);opacity:1}}
+
+/* ── 틀렸어요 배너 ── */
+.wrong-banner{text-align:center;margin-bottom:1.6rem}
+.wrong-x{
+  display:block;font-size:5.5rem;line-height:1.1;
+  filter:drop-shadow(0 0 24px rgba(239,68,68,1));
+  animation:wrongBounceIn .55s cubic-bezier(.34,1.56,.64,1) both,
+             wrongWobble 2.2s ease-in-out .6s infinite}
+@keyframes wrongBounceIn{
+  0%{transform:scale(0) rotate(-25deg);opacity:0}
+  65%{transform:scale(1.25) rotate(6deg)}
+  100%{transform:scale(1) rotate(0deg);opacity:1}}
+@keyframes wrongWobble{
+  0%,100%{transform:rotate(0deg) scale(1)}
+  25%{transform:rotate(-10deg) scale(1.08)}
+  75%{transform:rotate(10deg) scale(1.08)}}
+.wrong-title{
+  display:block;font-size:2.8rem;font-weight:900;letter-spacing:-.03em;
+  color:#ef4444;
+  text-shadow:0 0 30px rgba(239,68,68,1),0 0 80px rgba(239,68,68,.5);
+  animation:wrongSlideIn .4s ease .25s both,
+             wrongPulse 1.3s ease-in-out .8s infinite}
+@keyframes wrongSlideIn{
+  from{transform:translateX(-40px);opacity:0}
+  to{transform:translateX(0);opacity:1}}
+@keyframes wrongPulse{
+  0%,100%{transform:scale(1);text-shadow:0 0 30px rgba(239,68,68,1),0 0 80px rgba(239,68,68,.5)}
+  50%{transform:scale(1.07);text-shadow:0 0 50px rgba(239,68,68,1),0 0 140px rgba(239,68,68,.7)}}
+
+/* ── 풀이 부제목 ── */
+.explain-subtitle{
+  text-align:center;font-size:1.15rem;font-weight:800;
+  color:#a78bfa;margin-bottom:1.3rem;letter-spacing:.06em;
+  text-shadow:0 0 16px rgba(167,139,250,.5);
+  animation:subtitleGlow 2s ease-in-out infinite}
+@keyframes subtitleGlow{
+  0%,100%{text-shadow:0 0 16px rgba(167,139,250,.5)}
+  50%{text-shadow:0 0 32px rgba(167,139,250,1)}}
+
+/* ── 풀이 단계 ── */
+.explain-steps{list-style:none;display:flex;flex-direction:column;gap:.8rem;margin-bottom:1.6rem}
+.explain-steps li{
+  font-size:1.05rem;color:#e2e8f0;line-height:1.8;
+  padding:.9rem 1.15rem;
+  background:rgba(255,255,255,.07);border-radius:16px;
+  border-left:5px solid #7c3aed;
+  opacity:0;transform:translateX(-40px);
+  animation:stepIn .45s ease forwards}
+@keyframes stepIn{to{opacity:1;transform:translateX(0)}}
+.explain-steps .step-num{font-weight:700;color:#a78bfa;margin-right:.35rem}
+
+/* ── 마지막 정답 단계 (highlight) ── */
+.explain-steps li.highlight{
+  background:linear-gradient(135deg,rgba(245,158,11,.2),rgba(239,68,68,.12));
+  border-left-color:#f59e0b;border-left-width:7px;
+  font-size:1.25rem;font-weight:800;color:#fff;padding:1.1rem 1.15rem;
+  animation:stepIn .45s ease forwards,
+             finalPulse 1.1s ease-in-out infinite}
+@keyframes finalPulse{
+  0%,100%{box-shadow:0 0 0 rgba(245,158,11,0);transform:scale(1)}
+  50%{box-shadow:0 0 36px rgba(245,158,11,.55);transform:scale(1.03)}}
+.explain-steps .step-num.final{color:#f59e0b;font-size:1.3em}
+
+/* ★★★ 강조 텍스트(strong) — 끊임없이 확대/축소 ★★★ */
+.explain-steps strong{
+  display:inline-block;
+  color:#fbbf24;font-size:1.15em;
+  text-shadow:0 0 14px rgba(251,191,36,.8);
+  animation:pulseKey .85s ease-in-out infinite}
+@keyframes pulseKey{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.35);text-shadow:0 0 28px rgba(251,191,36,1)}}
+
+/* ── 다음 문제 버튼 ── */
+.next-btn{
+  width:100%;padding:1.2rem;border:none;border-radius:18px;
+  background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff;
+  font-size:1.2rem;font-weight:900;cursor:pointer;font-family:inherit;
+  letter-spacing:.04em;
+  box-shadow:0 4px 28px rgba(124,58,237,.55);
+  animation:nextPulse 1.7s ease-in-out infinite}
+@keyframes nextPulse{
+  0%,100%{transform:scale(1);box-shadow:0 4px 28px rgba(124,58,237,.55)}
+  50%{transform:scale(1.05);box-shadow:0 10px 50px rgba(219,39,119,.8)}}
+.next-btn:hover{animation:none;transform:scale(1.08) !important;
+  box-shadow:0 12px 56px rgba(219,39,119,.9) !important}
+
+/* ── 결과 ── */
+.result-score{text-align:center;padding:1.5rem;background:linear-gradient(135deg,#7c3aed,#db2777);
+  border-radius:20px;margin-bottom:1rem}
+.result-score .num{font-size:4rem;font-weight:900;color:#fff;line-height:1}
+.result-score .lbl{font-size:.9rem;color:rgba(255,255,255,.75);margin-top:.3rem}
+.result-stats{display:flex;gap:.6rem;margin-bottom:1rem}
+.result-stats .stat{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;padding:.9rem;text-align:center}
+.result-stats .stat .v{font-size:1.6rem;font-weight:800;color:#a78bfa}
+.result-stats .stat .k{font-size:.75rem;color:#64748b;margin-top:.2rem}
+.result-msg{text-align:center;font-size:1.05rem;font-weight:600;color:#e2e8f0;margin-bottom:1rem}
+.result-btns{display:flex;gap:.6rem}
+.result-btns button{flex:1;padding:.9rem;border-radius:13px;border:2px solid;
+  font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s}
+.result-btns .btn-main{background:transparent;color:#a78bfa;border-color:#a78bfa}
+.result-btns .btn-retry{background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff;border-color:transparent}
+.result-btns button:hover{transform:translateY(-2px)}
+
+/* ── 오답 노트 ── */
+.mistake-list{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem;max-height:250px;overflow-y:auto}
+.mistake-item{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);
+  border-radius:12px;padding:.75rem 1rem;font-size:.83rem;color:#cbd5e1}
+.mistake-item .mq{font-weight:700;color:#fca5a5;margin-bottom:.2rem}
+.mistake-item .ma{color:#94a3b8}
+</style>
+</head>
+<body>
+
+<!-- ══ 화면 플래시 ══ -->
+<div id="flash-overlay" class="flash-overlay"></div>
+
+<!-- ══ 힌트 모달 ══ -->
+<div id="hint-overlay" class="hint-overlay">
+  <div class="hint-modal">
+    <div class="hint-title">💡 힌트</div>
+    <div class="hint-tip" id="hint-tip"></div>
+    <ul class="hint-rules" id="hint-rules"></ul>
+    <button class="hint-close" onclick="closeHint()">✅ 알겠어요! 닫기</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     ★  풀이 전체화면 모달  ★
+══════════════════════════════════════════════════════ -->
+<div id="explain-overlay" class="explain-overlay">
+  <div class="explain-modal">
+    <div class="wrong-banner">
+      <span class="wrong-x" id="wrong-x">❌</span>
+      <span class="wrong-title" id="wrong-title-text">틀렸어요!</span>
+    </div>
+    <div class="explain-subtitle">📚 이렇게 풀어요!</div>
+    <ol class="explain-steps" id="explain-steps"></ol>
+    <button class="next-btn" onclick="nextQ()">다음 문제 →</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ══ 메뉴 ══ -->
+<div id="scr-menu" class="screen active">
+  <div class="title">
+    <h1>수학 왕국 🎮</h1>
+    <p>정수와 유리수 — 개념 학습 + 게임</p>
+  </div>
+
+  <div class="card">
+    <div class="sec-label">📚 학습 유형</div>
+    <div class="grid2" style="margin-bottom:.85rem">
+      <button class="sel-btn" id="btn-int" onclick="pickMode('int')">
+        <span class="icon">🔢</span>정수 연산<div class="sub">+  −  ×  ÷  음수 포함</div>
+      </button>
+      <button class="sel-btn" id="btn-rat" onclick="pickMode('rat')">
+        <span class="icon">🔣</span>유리수 연산<div class="sub">분수 +  −  ×  ÷</div>
+      </button>
+    </div>
+
+    <div class="sec-label">⚡ 난이도</div>
+    <div class="grid3" style="margin-bottom:.85rem">
+      <button class="sel-btn" id="btn-easy"   onclick="pickDiff('easy')"><span class="icon">😊</span>쉬움</button>
+      <button class="sel-btn" id="btn-medium" onclick="pickDiff('medium')"><span class="icon">🤔</span>보통</button>
+      <button class="sel-btn" id="btn-hard"   onclick="pickDiff('hard')"><span class="icon">🔥</span>어려움</button>
+    </div>
+
+    <div class="concept-preview" id="concept-preview">
+      <div class="concept-box" id="concept-box"></div>
+    </div>
+
+    <button class="start-btn" id="start-btn" onclick="startGame()" disabled>🚀 게임 시작!</button>
+  </div>
+
+  <!-- 다른 게임 -->
+  <div class="card" style="margin-top:.75rem;padding:1rem 1.2rem">
+    <div class="sec-label" style="margin-bottom:.6rem">🎓 영통수학여행학원 — 다른 게임</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
+      <a href="algebra.html" target="_blank"
+        style="display:block;background:linear-gradient(135deg,#1e1050,#2a1a6e);
+        border:1.5px solid rgba(167,139,250,.35);border-radius:14px;padding:.85rem .7rem;
+        text-decoration:none;text-align:center;transition:.2s;"
+        onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:1.5rem;margin-bottom:.25rem">🔮</div>
+        <div style="font-size:.8rem;font-weight:700;color:#a78bfa">문자와 식<br>마법학교</div>
+        <div style="font-size:.65rem;color:#64748b;margin-top:.2rem">중1 문자와 식</div>
+      </a>
+      <a href="detective.html" target="_blank"
+        style="display:block;background:linear-gradient(135deg,#1a1000,#2a1800);
+        border:1.5px solid rgba(212,160,23,.35);border-radius:14px;padding:.85rem .7rem;
+        text-decoration:none;text-align:center;transition:.2s;"
+        onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:1.5rem;margin-bottom:.25rem">🔍</div>
+        <div style="font-size:.8rem;font-weight:700;color:#d4a017">수학 탐정<br>수사국</div>
+        <div style="font-size:.65rem;color:#64748b;margin-top:.2rem">방정식 활용</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 게임 ══ -->
+<div id="scr-game" class="screen">
+  <div class="game-header">
+    <div class="prog-wrap">
+      <div class="prog-label" id="prog-label">1 / 10</div>
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+    <div class="score-badge" id="score-badge">⭐ 0</div>
+    <div class="streak-badge" id="streak-badge">🔥 0</div>
+  </div>
+
+  <div class="tip-card" id="tip-card"></div>
+
+  <div class="timer-row">
+    <div class="timer-bar"><div class="timer-fill" id="timer-fill" style="width:100%"></div></div>
+    <div class="timer-num" id="timer-num">30</div>
+  </div>
+
+  <div class="prob-card">
+    <div class="prob-label">문제</div>
+    <div class="prob-expr" id="prob-expr"></div>
+    <button class="hint-btn" id="hint-btn" onclick="showHint()">💡 힌트 보기</button>
+  </div>
+
+  <div class="ans-grid" id="ans-grid"></div>
+  <div class="feedback" id="feedback"></div>
+</div>
+
+<!-- ══ 결과 ══ -->
+<div id="scr-result" class="screen">
+  <div class="title" style="padding-top:.5rem">
+    <h1 id="res-emoji" style="font-size:3rem"></h1>
+  </div>
+  <div class="result-score">
+    <div class="num" id="res-score">0</div>
+    <div class="lbl">점 / 100점</div>
+  </div>
+  <div class="result-msg" id="res-msg"></div>
+  <div class="result-stats">
+    <div class="stat"><div class="v" id="res-correct">0</div><div class="k">정답 ✅</div></div>
+    <div class="stat"><div class="v" id="res-wrong">0</div><div class="k">오답 ❌</div></div>
+    <div class="stat"><div class="v" id="res-acc">0%</div><div class="k">정확도</div></div>
+  </div>
+
+  <div id="mistake-section" style="display:none">
+    <div class="card" style="padding:1rem">
+      <div class="sec-label" style="color:#f87171;margin-bottom:.6rem">❌ 오답 노트</div>
+      <div class="mistake-list" id="mistake-list"></div>
+    </div>
+  </div>
+
+  <div class="result-btns">
+    <button class="btn-main" onclick="goMenu()">🏠 메인</button>
+    <button class="btn-retry" onclick="retryGame()">🔄 다시 하기</button>
+  </div>
+</div>
+
+</div><!-- /.wrap -->
+
+<script>
+// ── 상태 ────────────────────────────────────────────────
+const S = { mode:null, diff:null, qs:[], cur:0, score:0,
+            correct:0, wrong:0, streak:0, tLeft:30,
+            timerID:null, answered:false, mistakes:[] };
+
+// ── 유틸 ────────────────────────────────────────────────
+const ri  = (lo,hi) => Math.floor(Math.random()*(hi-lo+1))+lo;
+const rnz = (lo,hi) => { let v; do{v=ri(lo,hi);}while(v===0); return v; };
+const gcd = (a,b)   => { a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b];}return a||1; };
+const simp= (n,d)   => { if(d<0){n=-n;d=-d;}const g=gcd(Math.abs(n),d);return{n:n/g,d:d/g}; };
+const fs  = f       => f.d===1?String(f.n):`${f.n}/${f.d}`;
+const wrap= v       => v<0?`(${v})`:String(v);
+
+function fh(n,d){
+  if(d===1) return `<strong>${n}</strong>`;
+  return `<span class="frac"><span class="ft">${n}</span><span class="fb">${d}</span></span>`;
+}
+function lcm(a,b){ return a*b/gcd(a,b); }
+
+// ── 개념 정보 ───────────────────────────────────────────
+const CONCEPTS = {
+  int_easy:{
+    title:'정수의 덧셈 · 뺄셈',
+    rules:[
+      '(+) + (+) → 절댓값의 합, 양수(+)',
+      '(−) + (−) → 절댓값의 합, 음수(−)',
+      '부호가 다를 때 → 절댓값의 차, 큰 쪽 부호',
+      '뺄셈: a − b = a + (−b) 로 변환'
+    ],
+    ex:'(-3) + 8 = ?  →  |8|−|3| = 5,  큰 쪽(8)이 양수 → 답: 5'
+  },
+  int_medium:{
+    title:'정수의 곱셈 · 나눗셈 · 연산 순서',
+    rules:[
+      '(+)×(+)=(+),  (−)×(−)=(+)',
+      '(+)×(−)=(−),  (−)×(+)=(−)',
+      '나눗셈 부호 규칙도 동일',
+      '연산 순서: ×, ÷ 먼저 → 그 다음 +, −'
+    ],
+    ex:'2 + (-3) × 4 = ?  →  (-3)×4=-12 먼저,  2+(-12)=-10'
+  },
+  int_hard:{
+    title:'복합 연산 (괄호 · 연산 순서)',
+    rules:[
+      '① 괄호 안 먼저',
+      '② 그 다음 × ÷',
+      '③ 마지막 + −',
+      '음수 부호 규칙 주의'
+    ],
+    ex:'(-2+5) × 3 = ?  →  괄호: 3,  3×3 = 9'
+  },
+  rat_easy:{
+    title:'유리수의 덧셈 · 뺄셈 (같은 분모)',
+    rules:[
+      '분모가 같으면 → 분자만 계산, 분모 그대로',
+      '결과는 항상 약분(기약분수)으로',
+      '음수 분자 가능 → 부호 주의'
+    ],
+    ex:'2/5 + 1/5 = 3/5  /  3/4 − 1/4 = 2/4 = 1/2'
+  },
+  rat_medium:{
+    title:'유리수의 연산 (다른 분모 · 곱셈)',
+    rules:[
+      '다른 분모 덧셈: 최소공배수(LCM)로 통분 후 계산',
+      '곱셈: 분자×분자, 분모×분모',
+      '결과는 항상 약분'
+    ],
+    ex:'1/3 + 1/4: LCM=12 → 4/12+3/12=7/12'
+  },
+  rat_hard:{
+    title:'유리수의 나눗셈',
+    rules:[
+      'a/b ÷ c/d = a/b × d/c  (역수를 곱함)',
+      '나누는 분수를 뒤집어서 곱하기',
+      '결과는 항상 약분'
+    ],
+    ex:'2/3 ÷ 4/5 = 2/3 × 5/4 = 10/12 = 5/6'
+  }
+};
+
+const TIPS = {
+  int_easy:'💡 부호가 같으면 절댓값 합, 다르면 절댓값 차  /  뺄셈은 더하기로 변환',
+  int_medium:'💡 곱셈·나눗셈: 같은 부호=양수, 다른 부호=음수  /  × ÷ 먼저 계산',
+  int_hard:'💡 순서: ① 괄호 ② × ÷ ③ + −',
+  rat_easy:'💡 분모가 같으면 분자끼리만 계산 → 약분 확인',
+  rat_medium:'💡 다른 분모: LCM으로 통분  /  곱셈: 분자×분자, 분모×분모',
+  rat_hard:'💡 나눗셈: 뒤 분수를 뒤집어서 곱하기 (역수×)'
+};
+
+// ── 정수 문제 생성 ──────────────────────────────────────
+function genInt(diff){
+  let question, answer, steps=[];
+
+  if(diff==='easy'){
+    const a=ri(-20,20), b=ri(-20,20), op=Math.random()<.5?'+':'-';
+    answer = op==='+'?a+b:a-b;
+    question = `${wrap(a)} ${op} ${wrap(b)} = ?`;
+    if(op==='+'){
+      if(a>=0&&b>=0){
+        steps=['두 양수(+)의 합',`${a} + ${b} = <strong>${answer}</strong>`];
+      }else if(a<0&&b<0){
+        steps=[
+          '두 음수(−)의 합: 절댓값을 더하고 음수(-) 부호',
+          `|${a}| + |${b}| = ${Math.abs(a)} + ${Math.abs(b)} = ${Math.abs(a)+Math.abs(b)}`,
+          `두 음수이므로 → <strong>${answer}</strong>`
+        ];
+      }else{
+        const big=Math.abs(a)>=Math.abs(b)?a:b;
+        const small=Math.abs(a)<Math.abs(b)?a:b;
+        steps=[
+          '부호가 다른 두 수의 합 → 절댓값의 차, 큰 쪽 부호',
+          `절댓값의 차: ${Math.abs(big)} − ${Math.abs(small)} = ${Math.abs(big)-Math.abs(small)}`,
+          `절댓값이 큰 수(${Math.abs(big)})는 ${big>0?'양수(+)':'음수(−)'}`,
+          `정답: <strong>${answer}</strong>`
+        ];
+      }
+    }else{
+      const b2=-b;
+      steps=['뺄셈 → 덧셈으로 변환: a − b = a + (−b)',
+             `${wrap(a)} − ${wrap(b)} = ${wrap(a)} + (${b2})`];
+      if(a>=0&&b2>=0) steps.push(`두 양수의 합: ${a} + ${b2} = <strong>${answer}</strong>`);
+      else if(a<0&&b2<0) steps.push(`두 음수의 합: −(${Math.abs(a)}+${Math.abs(b2)}) = <strong>${answer}</strong>`);
+      else{
+        const big=Math.abs(a)>=Math.abs(b2)?a:b2;
+        const small=Math.abs(a)<Math.abs(b2)?a:b2;
+        steps.push(`절댓값의 차: ${Math.abs(big)} − ${Math.abs(small)} = ${Math.abs(big)-Math.abs(small)}`);
+        steps.push(`큰 쪽(${big>0?'양수':'음수'}) 부호 → <strong>${answer}</strong>`);
+      }
+    }
+
+  }else if(diff==='medium'){
+    const t=ri(0,2);
+    if(t===0){
+      const a=rnz(-12,12),b=rnz(-12,12);
+      answer=a*b; question=`${wrap(a)} × ${wrap(b)} = ?`;
+      const same=(a>0&&b>0)||(a<0&&b<0);
+      steps=[
+        '곱셈 부호 규칙: 같은 부호 → (+), 다른 부호 → (−)',
+        `${a<0?'(−)':'(+)'} × ${b<0?'(−)':'(+)'} = ${same?'<strong>(+)</strong>':'<strong>(−)</strong>'}`,
+        `절댓값 곱: ${Math.abs(a)} × ${Math.abs(b)} = ${Math.abs(a*b)}`,
+        `정답: <strong>${answer}</strong>`
+      ];
+    }else if(t===1){
+      const b=rnz(-10,10),r=rnz(-10,10); const a=b*r;
+      answer=r; question=`${wrap(a)} ÷ ${wrap(b)} = ?`;
+      const same=(a>0&&b>0)||(a<0&&b<0);
+      steps=[
+        '나눗셈 부호 규칙: 곱셈과 동일 (같은 부호→양수, 다른 부호→음수)',
+        `${a<0?'(−)':'(+)'} ÷ ${b<0?'(−)':'(+)'} = ${same?'<strong>(+)</strong>':'<strong>(−)</strong>'}`,
+        `절댓값 나눗셈: ${Math.abs(a)} ÷ ${Math.abs(b)} = ${Math.abs(r)}`,
+        `정답: <strong>${answer}</strong>`
+      ];
+    }else{
+      const a=ri(-10,10),b=rnz(-6,6),c=rnz(-6,6);
+      answer=a+b*c; question=`${wrap(a)} + ${wrap(b)} × ${wrap(c)} = ?`;
+      steps=[
+        '연산 순서: 곱셈(×)을 덧셈(+)보다 먼저!',
+        `① 곱셈 먼저: ${wrap(b)} × ${wrap(c)} = <strong>${b*c}</strong>`,
+        `② 덧셈: ${wrap(a)} + ${wrap(b*c)} = <strong>${answer}</strong>`
+      ];
+    }
+
+  }else{
+    if(Math.random()<.5){
+      const a=ri(-10,10),b=ri(-10,10),c=rnz(-6,6);
+      answer=(a+b)*c; question=`(${a} + ${wrap(b)}) × ${wrap(c)} = ?`;
+      steps=[
+        '괄호 안을 먼저 계산!',
+        `① 괄호: ${a} + ${wrap(b)} = <strong>${a+b}</strong>`,
+        `② 곱셈: ${wrap(a+b)} × ${wrap(c)} = <strong>${answer}</strong>`
+      ];
+    }else{
+      const a=rnz(-8,8),b=rnz(-8,8),c=ri(-10,10);
+      answer=a*b-c; question=`${wrap(a)} × ${wrap(b)} − ${wrap(c)} = ?`;
+      steps=[
+        '연산 순서: 곱셈(×) 먼저, 그 다음 뺄셈',
+        `① 곱셈: ${wrap(a)} × ${wrap(b)} = <strong>${a*b}</strong>`,
+        `② 뺄셈: ${wrap(a*b)} − ${wrap(c)} = <strong>${answer}</strong>`
+      ];
+    }
+  }
+
+  steps.push(`✅ 정답: <strong>${answer}</strong>`);
+  const ws=new Set();
+  while(ws.size<3){const d=rnz(-Math.max(8,Math.abs(answer||8)),Math.max(8,Math.abs(answer||8)));if(answer+d!==answer)ws.add(answer+d);}
+  return{type:'int',question,answer:String(answer),choices:[String(answer),...[...ws].map(String)].sort(()=>Math.random()-.5),steps};
+}
+
+// ── 유리수 문제 생성 ───────────────────────────────────
+const DENS=[2,3,4,5,6,8];
+function genRat(diff){
+  let question,ansF,steps=[];
+
+  if(diff==='easy'){
+    const d=DENS[ri(0,3)],n1=ri(1,d),n2=ri(1,d),op=Math.random()<.5?'+':'-';
+    const rn=op==='+'?n1+n2:n1-n2;
+    ansF=simp(rn,d);
+    question=`${fh(n1,d)} ${op} ${fh(n2,d)} = ?`;
+    steps=[
+      `분모가 같아요(${d}) → 분자끼리만 계산, 분모는 그대로!`,
+      `분자 계산: ${n1} ${op} ${n2} = <strong>${rn}</strong>`,
+      `결과: ${fh(rn,d)}`
+    ];
+    if(ansF.d!==d) steps.push(`약분 (÷${gcd(Math.abs(rn),d)}): ${fh(rn,d)} = <strong>${fh(ansF.n,ansF.d)}</strong>`);
+    else steps.push(`이미 기약분수: <strong>${fh(ansF.n,ansF.d)}</strong>`);
+
+  }else if(diff==='medium'){
+    if(Math.random()<.5){
+      let d1=DENS[ri(0,4)],d2=DENS[ri(0,4)]; while(d2===d1)d2=DENS[ri(0,4)];
+      const n1=ri(1,d1),n2=ri(1,d2),op=Math.random()<.5?'+':'-';
+      const L=lcm(d1,d2),m1=L/d1,m2=L/d2;
+      const rn=op==='+'?n1*m1+n2*m2:n1*m1-n2*m2;
+      ansF=simp(rn,L);
+      question=`${fh(n1,d1)} ${op} ${fh(n2,d2)} = ?`;
+      steps=[
+        `분모가 달라요(${d1}과 ${d2}) → 통분 필요!`,
+        `최소공배수(LCM) = <strong>${L}</strong>`,
+        `${fh(n1,d1)} = ${fh(n1*m1,L)} (분자·분모에 ${m1} 곱함)`,
+        `${fh(n2,d2)} = ${fh(n2*m2,L)} (분자·분모에 ${m2} 곱함)`,
+        `${fh(n1*m1,L)} ${op} ${fh(n2*m2,L)} = ${fh(rn,L)}`
+      ];
+      if(ansF.d!==L) steps.push(`약분 (÷${gcd(Math.abs(rn),L)}): <strong>${fh(ansF.n,ansF.d)}</strong>`);
+      else steps.push(`기약분수: <strong>${fh(ansF.n,ansF.d)}</strong>`);
+    }else{
+      const d1=DENS[ri(0,4)],d2=DENS[ri(0,4)],n1=ri(1,d1),n2=ri(1,d2);
+      ansF=simp(n1*n2,d1*d2);
+      question=`${fh(n1,d1)} × ${fh(n2,d2)} = ?`;
+      steps=[
+        '분수 곱셈: 분자×분자, 분모×분모',
+        `분자: ${n1} × ${n2} = <strong>${n1*n2}</strong>`,
+        `분모: ${d1} × ${d2} = <strong>${d1*d2}</strong>`,
+        `결과: ${fh(n1*n2,d1*d2)}`
+      ];
+      if(ansF.d!==d1*d2) steps.push(`약분 (÷${gcd(n1*n2,d1*d2)}): <strong>${fh(ansF.n,ansF.d)}</strong>`);
+      else steps.push(`기약분수: <strong>${fh(ansF.n,ansF.d)}</strong>`);
+    }
+  }else{
+    const d1=DENS[ri(0,5)],d2=DENS[ri(0,5)],n1=ri(1,d1),n2=ri(1,d2);
+    ansF=simp(n1*d2,d1*n2);
+    question=`${fh(n1,d1)} ÷ ${fh(n2,d2)} = ?`;
+    steps=[
+      '분수 나눗셈: 뒤 분수를 뒤집어서 곱하기!',
+      `${fh(n1,d1)} ÷ ${fh(n2,d2)} = ${fh(n1,d1)} × ${fh(d2,n2)}`,
+      `분자: ${n1} × ${d2} = <strong>${n1*d2}</strong>`,
+      `분모: ${d1} × ${n2} = <strong>${d1*n2}</strong>`,
+      `결과: ${fh(n1*d2,d1*n2)}`
+    ];
+    if(ansF.d!==d1*n2||ansF.n!==n1*d2) steps.push(`약분 (÷${gcd(n1*d2,d1*n2)}): <strong>${fh(ansF.n,ansF.d)}</strong>`);
+    else steps.push(`기약분수: <strong>${fh(ansF.n,ansF.d)}</strong>`);
+  }
+
+  steps.push(`✅ 정답: <strong>${fh(ansF.n,ansF.d)}</strong>`);
+  const ca=fs(ansF),used=new Set([ca]),wrongs=[];
+  const cands=[simp(ansF.n+1,ansF.d),simp(ansF.n-1,ansF.d),simp(ansF.n,ansF.d+1),simp(ansF.d,ansF.n||1),simp(ansF.n+2,ansF.d)];
+  for(const w of cands){const s=fs(w);if(w.d>0&&!used.has(s)&&wrongs.length<3){used.add(s);wrongs.push(w);}}
+  while(wrongs.length<3){const w=simp(ansF.n+rnz(-3,3),ansF.d+ri(0,2));const s=fs(w);if(w.d>0&&!used.has(s)){used.add(s);wrongs.push(w);}}
+  return{type:'rat',question,answer:ca,choices:[ca,...wrongs.map(fs)].sort(()=>Math.random()-.5),steps};
+}
+
+// ── 메뉴 ──────────────────────────────────────────────
+function pickMode(m){
+  S.mode=m;
+  ['int','rat'].forEach(k=>document.getElementById('btn-'+k).classList.toggle('active',k===m));
+  updateConceptPreview(); updateStartBtn();
+}
+function pickDiff(d){
+  S.diff=d;
+  ['easy','medium','hard'].forEach(k=>document.getElementById('btn-'+k).classList.toggle('active',k===d));
+  updateConceptPreview(); updateStartBtn();
+}
+function updateStartBtn(){
+  document.getElementById('start-btn').disabled=!(S.mode&&S.diff);
+}
+function updateConceptPreview(){
+  const cp=document.getElementById('concept-preview');
+  const cb=document.getElementById('concept-box');
+  if(!S.mode||!S.diff){cp.classList.remove('show');return;}
+  const key=S.mode+'_'+S.diff;
+  const c=CONCEPTS[key];
+  if(!c){cp.classList.remove('show');return;}
+  cb.innerHTML=`<h4>📐 ${c.title}</h4><div class="rule">${c.rules.map(r=>`• ${r}`).join('<br>')}</div><div class="example">💡 예시: ${c.ex}</div>`;
+  cp.classList.add('show');
+}
+
+// ── 게임 시작 ──────────────────────────────────────────
+function startGame(){
+  S.qs=Array.from({length:10},()=>S.mode==='int'?genInt(S.diff):genRat(S.diff));
+  S.cur=0;S.score=0;S.correct=0;S.wrong=0;S.streak=0;S.mistakes=[];
+  showScreen('scr-game');
+  document.getElementById('tip-card').innerHTML=TIPS[S.mode+'_'+S.diff]||'';
+  loadQ();
+}
+function retryGame(){ startGame(); }
+
+// ── 문제 로드 ──────────────────────────────────────────
+function loadQ(){
+  const q=S.qs[S.cur];
+  S.answered=false;
+  document.getElementById('prog-label').textContent=`${S.cur+1} / 10`;
+  document.getElementById('prog-fill').style.width=`${S.cur/10*100}%`;
+  document.getElementById('score-badge').textContent=`⭐ ${S.score}`;
+  document.getElementById('prob-expr').innerHTML=q.question;
+  document.getElementById('feedback').textContent='';
+  document.getElementById('feedback').className='feedback';
+  document.getElementById('hint-overlay').classList.remove('show');
+
+  const sb=document.getElementById('streak-badge');
+  if(S.streak>=2){sb.textContent=`🔥 ${S.streak}연속`;sb.classList.add('show');}
+  else sb.classList.remove('show');
+
+  const grid=document.getElementById('ans-grid');
+  grid.innerHTML=q.choices.map((c,i)=>`
+    <button class="ans-btn" id="ab${i}" onclick="checkAns(${i})">
+      ${S.mode==='rat'?fhFromStr(c):c}
+    </button>`).join('');
+
+  clearInterval(S.timerID);
+  S.tLeft=30; updTimer();
+  S.timerID=setInterval(()=>{
+    S.tLeft--; updTimer();
+    if(S.tLeft<=0){clearInterval(S.timerID);timeUp();}
+  },1000);
+}
+
+function fhFromStr(s){
+  if(!s.includes('/')) return `<strong>${s}</strong>`;
+  const [n,d]=s.split('/');
+  return `<span class="frac"><span class="ft">${n}</span><span class="fb">${d}</span></span>`;
+}
+
+function updTimer(){
+  const pct=S.tLeft/30*100;
+  const f=document.getElementById('timer-fill');
+  f.style.width=pct+'%';
+  f.className='timer-fill'+(S.tLeft<=5?' danger':S.tLeft<=10?' warn':'');
+  document.getElementById('timer-num').textContent=S.tLeft;
+}
+
+// ── 정답 확인 ──────────────────────────────────────────
+function checkAns(idx){
+  if(S.answered)return;
+  S.answered=true;
+  clearInterval(S.timerID);
+  const q=S.qs[S.cur];
+  const ok=q.choices[idx]===q.answer;
+
+  disableAnswers();
+  if(ok){
+    document.getElementById('ab'+idx).classList.add('correct');
+    const bonus=Math.floor(S.tLeft/30*10);
+    S.score+=10+bonus; S.correct++; S.streak++;
+    const fb=document.getElementById('feedback');
+    fb.className='feedback ok';
+    fb.textContent=`✅ 정답! +${10+bonus}점${bonus>0?' (시간 보너스 +'+bonus+')':''}`;
+    spawnParticles();
+    setTimeout(()=>nextQ(),1400);
+  }else{
+    document.getElementById('ab'+idx).classList.add('wrong');
+    S.wrong++; S.streak=0;
+    S.mistakes.push({q:q.question.replace(/<[^>]+>/g,''),a:q.answer});
+    const cbtn=q.choices.findIndex(c=>c===q.answer);
+    if(cbtn>=0) document.getElementById('ab'+cbtn).classList.add('correct');
+    const fb=document.getElementById('feedback');
+    fb.className='feedback ng'; fb.textContent='❌ 틀렸어요. 풀이를 확인해봐요!';
+    showExplanation(q, false);
+  }
+}
+
+function timeUp(){
+  if(S.answered)return;
+  S.answered=true;
+  S.wrong++; S.streak=0;
+  const q=S.qs[S.cur];
+  S.mistakes.push({q:q.question.replace(/<[^>]+>/g,''),a:q.answer});
+  disableAnswers();
+  const cbtn=q.choices.findIndex(c=>c===q.answer);
+  if(cbtn>=0) document.getElementById('ab'+cbtn).classList.add('correct');
+  const fb=document.getElementById('feedback');
+  fb.className='feedback ng'; fb.textContent='⏰ 시간 초과!';
+  showExplanation(q, true);
+}
+
+function disableAnswers(){
+  for(let i=0;i<4;i++){const b=document.getElementById('ab'+i);if(b)b.disabled=true;}
+}
+
+// ── 풀이 모달 표시 ────────────────────────────────────
+function showExplanation(q, isTimeUp){
+  // 화면 플래시
+  const flash=document.getElementById('flash-overlay');
+  flash.className='flash-overlay';
+  void flash.offsetWidth;
+  flash.className='flash-overlay '+(isTimeUp?'orange':'red');
+
+  // 배너 텍스트 & 아이콘
+  const titleEl=document.getElementById('wrong-title-text');
+  const xEl=document.getElementById('wrong-x');
+  titleEl.textContent=isTimeUp?'시간 초과!':'틀렸어요!';
+  xEl.textContent=isTimeUp?'⏰':'❌';
+
+  // 애니메이션 재시작 (display:none→flex 전환으로 자동 재시작되지만 명시적으로 초기화)
+  [xEl, titleEl].forEach(el=>{
+    el.style.animation='none';
+    void el.offsetWidth;
+    el.style.animation='';
+  });
+
+  // 단계별 풀이 (stagger delay)
+  const list=document.getElementById('explain-steps');
+  list.innerHTML=q.steps.map((s,i)=>{
+    const isLast=i===q.steps.length-1;
+    const delay=`${i*140+100}ms`;
+    return `<li class="${isLast?'highlight':''}" style="animation-delay:${delay}">
+      <span class="step-num ${isLast?'final':''}">${isLast?'✅':`${i+1}.`}</span> ${s}
+    </li>`;
+  }).join('');
+
+  document.getElementById('explain-overlay').classList.add('show');
+  window.scrollTo(0,0);
+}
+
+function nextQ(){
+  document.getElementById('explain-overlay').classList.remove('show');
+  S.cur++;
+  if(S.cur>=10) showResult();
+  else loadQ();
+}
+
+// ── 파티클 ──────────────────────────────────────────
+function spawnParticles(){
+  const emojis=['⭐','✨','💫','🎉','🌟','💥'];
+  for(let i=0;i<10;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.textContent=emojis[ri(0,5)];
+    p.style.left=ri(5,95)+'%';
+    p.style.top=ri(15,75)+'%';
+    p.style.animationDelay=(i*55)+'ms';
+    p.style.fontSize=ri(14,28)+'px';
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),950);
+  }
+}
+
+// ── 결과 ──────────────────────────────────────────────
+function showResult(){
+  clearInterval(S.timerID);
+  showScreen('scr-result');
+  const acc=Math.round(S.correct/10*100);
+  let emoji,msg;
+  if(acc>=90){emoji='🏆';msg='완벽해! 수학 천재 인정!';}
+  else if(acc>=70){emoji='⭐';msg='훌륭해! 조금만 더 연습하면 완벽!';}
+  else if(acc>=50){emoji='👍';msg='잘했어! 오답 노트로 부족한 부분 복습해봐!';}
+  else{emoji='💪';msg='괜찮아! 개념을 다시 읽고 도전해봐!';}
+  document.getElementById('res-emoji').textContent=emoji;
+  document.getElementById('res-score').textContent=S.score;
+  document.getElementById('res-msg').textContent=msg;
+  document.getElementById('res-correct').textContent=S.correct;
+  document.getElementById('res-wrong').textContent=S.wrong;
+  document.getElementById('res-acc').textContent=acc+'%';
+
+  const ms=document.getElementById('mistake-section');
+  const ml=document.getElementById('mistake-list');
+  if(S.mistakes.length>0){
+    ms.style.display='block';
+    ml.innerHTML=S.mistakes.map(m=>`
+      <div class="mistake-item">
+        <div class="mq">문제: ${m.q}</div>
+        <div class="ma">정답: <strong>${m.a}</strong></div>
+      </div>`).join('');
+  }else{
+    ms.style.display='none';
+  }
+}
+
+// ── 힌트 ──────────────────────────────────────────────
+function showHint(){
+  const key=S.mode+'_'+S.diff;
+  const concept=CONCEPTS[key];
+  const tip=TIPS[key]||'';
+
+  // 팁 텍스트 (💡 이모지 제거하고 표시)
+  document.getElementById('hint-tip').textContent=tip.replace(/^💡\s*/,'');
+
+  // 개념 규칙 목록 (stagger 딜레이)
+  const ul=document.getElementById('hint-rules');
+  ul.innerHTML=(concept?concept.rules:[]).map((r,i)=>
+    `<li style="animation-delay:${i*110+80}ms">• ${r}</li>`
+  ).join('');
+
+  document.getElementById('hint-overlay').classList.add('show');
+  window.scrollTo(0,0);
+}
+function closeHint(){
+  document.getElementById('hint-overlay').classList.remove('show');
+}
+
+function goMenu(){ showScreen('scr-menu'); }
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+<!-- PWA Service Worker 등록 -->
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(()=> console.log('SW 등록 완료'))
+      .catch(e => console.log('SW 등록 실패:', e));
+  });
+}
+</script>
+</body>
+</html>

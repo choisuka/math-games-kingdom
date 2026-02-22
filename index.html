@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f172a">
+<meta name="description" content="수학 게임 모음 - 중학교 수학을 게임으로 재미있게 배워요!">
+<title>수학 게임 왕국</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f172a;
+    --bg2: #1e293b;
+    --bg3: #334155;
+    --accent: #38bdf8;
+    --green: #34d399;
+    --amber: #f59e0b;
+    --purple: #a78bfa;
+    --pink: #f472b6;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --radius: 16px;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── Header ── */
+  header {
+    text-align: center;
+    padding: 3rem 1rem 2rem;
+    position: relative;
+  }
+  .header-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(56,189,248,.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .crown { font-size: 3.5rem; display: block; margin-bottom: .5rem; animation: float 3s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--accent), var(--green), var(--amber));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -.02em;
+  }
+  .subtitle {
+    margin-top: .75rem;
+    color: var(--text2);
+    font-size: 1.05rem;
+  }
+
+  /* ── Game Grid ── */
+  .games {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+  }
+
+  .card {
+    background: var(--bg2);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: var(--radius);
+    padding: 2rem 1.75rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--card-glow);
+    opacity: 0;
+    transition: opacity .3s;
+    pointer-events: none;
+  }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  .card:hover::before { opacity: 1; }
+  .card:hover { border-color: var(--card-border); }
+
+  .card-1 { --card-glow: radial-gradient(ellipse at 0% 0%, rgba(56,189,248,.12), transparent 60%); --card-border: rgba(56,189,248,.5); }
+  .card-2 { --card-glow: radial-gradient(ellipse at 0% 0%, rgba(52,211,153,.12), transparent 60%); --card-border: rgba(52,211,153,.5); }
+  .card-3 { --card-glow: radial-gradient(ellipse at 0% 0%, rgba(167,139,250,.12), transparent 60%); --card-border: rgba(167,139,250,.5); }
+  .card-4 { --card-glow: radial-gradient(ellipse at 0% 0%, rgba(245,158,11,.12), transparent 60%); --card-border: rgba(245,158,11,.5); }
+
+  .card-icon { font-size: 3rem; line-height: 1; }
+  .card-tag {
+    display: inline-block;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: .2rem .6rem;
+    border-radius: 100px;
+    margin-bottom: -.2rem;
+  }
+  .tag-1 { background: rgba(56,189,248,.15); color: #38bdf8; }
+  .tag-2 { background: rgba(52,211,153,.15); color: #34d399; }
+  .tag-3 { background: rgba(167,139,250,.15); color: #a78bfa; }
+  .tag-4 { background: rgba(245,158,11,.15); color: #f59e0b; }
+
+  .card h2 { font-size: 1.4rem; font-weight: 800; line-height: 1.3; }
+  .card p { color: var(--text2); font-size: .9rem; line-height: 1.6; flex: 1; }
+
+  .card-meta {
+    display: flex;
+    gap: .75rem;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-size: .75rem;
+    padding: .2rem .65rem;
+    border-radius: 100px;
+    background: var(--bg3);
+    color: var(--text2);
+    white-space: nowrap;
+  }
+
+  .card-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: .25rem;
+  }
+  .play-btn {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .85rem;
+    font-weight: 700;
+    color: var(--card-accent, var(--accent));
+    transition: gap .2s;
+  }
+  .card:hover .play-btn { gap: .7rem; }
+  .card-1 .play-btn { color: #38bdf8; }
+  .card-2 .play-btn { color: #34d399; }
+  .card-3 .play-btn { color: #a78bfa; }
+  .card-4 .play-btn { color: #f59e0b; }
+
+  /* ── Install Banner ── */
+  #install-banner {
+    display: none;
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg2);
+    border: 1px solid rgba(56,189,248,.3);
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 12px 40px rgba(0,0,0,.6);
+    z-index: 100;
+    max-width: 420px;
+    width: calc(100% - 2rem);
+    animation: slideUp .4s ease;
+  }
+  @keyframes slideUp { from{transform:translateX(-50%) translateY(20px);opacity:0} to{transform:translateX(-50%) translateY(0);opacity:1} }
+  #install-banner.hidden { display: none !important; }
+  .install-icon { font-size: 2rem; flex-shrink: 0; }
+  .install-text { flex: 1; }
+  .install-text strong { display: block; font-size: .95rem; margin-bottom: .2rem; }
+  .install-text span { font-size: .8rem; color: var(--text2); }
+  .install-btn {
+    background: var(--accent);
+    color: #0f172a;
+    border: none;
+    border-radius: 8px;
+    padding: .5rem 1rem;
+    font-size: .85rem;
+    font-weight: 700;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: opacity .2s;
+  }
+  .install-btn:hover { opacity: .85; }
+  .install-close {
+    background: none;
+    border: none;
+    color: var(--text2);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: .2rem;
+    flex-shrink: 0;
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 1.5rem 1rem 3rem;
+    color: var(--text2);
+    font-size: .8rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* ── PWA installed indicator ── */
+  .pwa-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .75rem;
+    color: var(--green);
+    margin-top: .5rem;
+    opacity: 0;
+    transition: opacity .5s;
+  }
+  .pwa-badge.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-glow"></div>
+  <span class="crown">👑</span>
+  <h1>수학 게임 왕국</h1>
+  <p class="subtitle">중학교 수학을 게임으로 재미있게 배워요!</p>
+  <div class="pwa-badge" id="pwa-badge">✓ 앱으로 설치됨</div>
+</header>
+
+<main class="games">
+
+  <a class="card card-1" href="games/math_kingdom.html">
+    <span class="card-tag tag-1">어드벤처</span>
+    <div class="card-icon">🏰</div>
+    <h2>수학 왕국</h2>
+    <p>마법사와 함께 수학 몬스터를 물리쳐라! RPG 스타일 사칙연산 배틀 게임.</p>
+    <div class="card-meta">
+      <span class="badge">🎮 Phaser 엔진</span>
+      <span class="badge">🔢 연산 · 수식</span>
+      <span class="badge">⭐ 초급~중급</span>
+    </div>
+    <div class="card-arrow">
+      <span class="play-btn">게임 시작 →</span>
+    </div>
+  </a>
+
+  <a class="card card-2" href="games/algebra.html">
+    <span class="card-tag tag-2">퀴즈</span>
+    <div class="card-icon">📐</div>
+    <h2>대수 탐험대</h2>
+    <p>문자와 식, 방정식, 부등식까지! 5챕터 × 10문제로 대수의 모든 것을 마스터.</p>
+    <div class="card-meta">
+      <span class="badge">📚 5챕터</span>
+      <span class="badge">❓ 50+ 문제</span>
+      <span class="badge">✏️ 주관식 포함</span>
+    </div>
+    <div class="card-arrow">
+      <span class="play-btn">게임 시작 →</span>
+    </div>
+  </a>
+
+  <a class="card card-3" href="games/detective.html">
+    <span class="card-tag tag-3">추리</span>
+    <div class="card-icon">🔍</div>
+    <h2>수학 탐정</h2>
+    <p>속력·비율·확률 사건을 해결하라! 개념 패널과 함께 수학 원리를 이해하며 풀어가는 추리 게임.</p>
+    <div class="card-meta">
+      <span class="badge">🕵️ 5케이스</span>
+      <span class="badge">💡 개념 설명</span>
+      <span class="badge">🔎 힌트 시스템</span>
+    </div>
+    <div class="card-arrow">
+      <span class="play-btn">게임 시작 →</span>
+    </div>
+  </a>
+
+  <a class="card card-4" href="games/graph.html">
+    <span class="card-tag tag-4">그래프</span>
+    <div class="card-icon">📈</div>
+    <h2>그래프 탐험대</h2>
+    <p>좌표평면부터 일차함수까지! 캔버스로 직접 그리며 배우는 그래프 시각화 게임.</p>
+    <div class="card-meta">
+      <span class="badge">📍 좌표평면</span>
+      <span class="badge">📏 일차함수</span>
+      <span class="badge">🌀 반비례</span>
+    </div>
+    <div class="card-arrow">
+      <span class="play-btn">게임 시작 →</span>
+    </div>
+  </a>
+
+</main>
+
+<footer>
+  <p>수학 게임 왕국 · 중학교 수학 학습 플랫폼</p>
+  <p style="margin-top:.4rem"><a href="https://play.google.com/store" style="display:none" id="play-link">Google Play에서 설치</a></p>
+</footer>
+
+<!-- Install Banner -->
+<div id="install-banner" class="hidden">
+  <span class="install-icon">📱</span>
+  <div class="install-text">
+    <strong>앱으로 설치하기</strong>
+    <span>홈 화면에 추가하면 오프라인에서도 게임할 수 있어요!</span>
+  </div>
+  <button class="install-btn" id="install-btn">설치</button>
+  <button class="install-close" id="install-close" aria-label="닫기">✕</button>
+</div>
+
+<script>
+// ── Service Worker Registration ──
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.log('SW registration failed:', err));
+  });
+}
+
+// ── PWA Install Prompt ──
+let deferredPrompt = null;
+const banner = document.getElementById('install-banner');
+const installBtn = document.getElementById('install-btn');
+const closeBtn = document.getElementById('install-close');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  banner.classList.remove('hidden');
+  banner.style.display = 'flex';
+});
+
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === 'accepted') {
+    banner.classList.add('hidden');
+    document.getElementById('pwa-badge').classList.add('show');
+  }
+  deferredPrompt = null;
+});
+
+closeBtn.addEventListener('click', () => {
+  banner.classList.add('hidden');
+  banner.style.display = 'none';
+});
+
+// ── Detect if already installed as PWA ──
+if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+  document.getElementById('pwa-badge').classList.add('show');
+}
+
+window.addEventListener('appinstalled', () => {
+  banner.classList.add('hidden');
+  document.getElementById('pwa-badge').classList.add('show');
+});
+</script>
+
+</body>
+</html>
