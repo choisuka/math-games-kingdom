@@ -569,14 +569,15 @@ const CONCEPTS = {
     ex:'2 + (-3) × 4 = ?  →  (-3)×4=-12 먼저,  2+(-12)=-10'
   },
   int_hard:{
-    title:'복합 연산 (괄호 · 연산 순서)',
+    title:'복합 연산 (사칙연산 · 괄호)',
     rules:[
-      '① 괄호 안 먼저',
-      '② 그 다음 × ÷',
-      '③ 마지막 + −',
-      '음수 부호 규칙 주의'
+      '① 소괄호() → 중괄호{} → 대괄호[] 순서',
+      '② 괄호 없으면: × ÷ 먼저',
+      '③ 같은 우선순위: 왼쪽부터',
+      '④ 마지막 + −',
+      '가감승제 2~4개 혼합 문제 포함!'
     ],
-    ex:'(-2+5) × 3 = ?  →  괄호: 3,  3×3 = 9'
+    ex:'3 + 2×(−4) − 6÷(−2) = 3 + (−8) − (−3) = −2'
   },
   rat_easy:{
     title:'유리수의 덧셈 · 뺄셈 (같은 분모)',
@@ -597,23 +598,24 @@ const CONCEPTS = {
     ex:'1/3 + 1/4: LCM=12 → 4/12+3/12=7/12'
   },
   rat_hard:{
-    title:'유리수의 나눗셈',
+    title:'유리수 복합 연산 (나눗셈 · 혼합)',
     rules:[
       'a/b ÷ c/d = a/b × d/c  (역수를 곱함)',
-      '나누는 분수를 뒤집어서 곱하기',
-      '결과는 항상 약분'
+      '분수도 연산 순서 동일: × ÷ 먼저!',
+      '혼합: × 계산 후 통분하여 + − 계산',
+      '최종 결과 반드시 약분!'
     ],
-    ex:'2/3 ÷ 4/5 = 2/3 × 5/4 = 10/12 = 5/6'
+    ex:'1/2 + 1/3 × 3/4 = 1/2 + 1/4 = 3/4'
   }
 };
 
 const TIPS = {
   int_easy:'💡 부호가 같으면 절댓값 합, 다르면 절댓값 차  /  뺄셈은 더하기로 변환',
   int_medium:'💡 곱셈·나눗셈: 같은 부호=양수, 다른 부호=음수  /  × ÷ 먼저 계산',
-  int_hard:'💡 순서: ① 괄호 ② × ÷ ③ + −',
+  int_hard:'💡 순서: ① 괄호(){}[] ② × ÷ ③ + −  /  가감승제 혼합: × ÷ 모두 계산 후 + −',
   rat_easy:'💡 분모가 같으면 분자끼리만 계산 → 약분 확인',
   rat_medium:'💡 다른 분모: LCM으로 통분  /  곱셈: 분자×분자, 분모×분모',
-  rat_hard:'💡 나눗셈: 뒤 분수를 뒤집어서 곱하기 (역수×)'
+  rat_hard:'💡 나눗셈: 역수 곱하기  /  혼합 연산: × ÷ 먼저 계산 → 통분 → + −  /  결과 항상 약분!'
 };
 
 // ── 정수 문제 생성 ──────────────────────────────────────
@@ -690,7 +692,7 @@ function genInt(diff){
     }
 
   }else{
-    const t=Math.floor(Math.random()*3);
+    const t=Math.floor(Math.random()*5);
     if(t===0){
       const a=ri(-10,10),b=ri(-10,10),c=rnz(-6,6);
       answer=(a+b)*c; question=`(${a} + ${wrap(b)}) × ${wrap(c)} = ?`;
@@ -707,10 +709,9 @@ function genInt(diff){
         `① 곱셈: ${wrap(a)} × ${wrap(b)} = <strong>${a*b}</strong>`,
         `② 뺄셈: ${wrap(a*b)} − ${wrap(c)} = <strong>${answer}</strong>`
       ];
-    }else{
+    }else if(t===2){
       const x=ri(-4,4),b=ri(-6,6),a=ri(-6,6),c=rnz(-3,3);
-      const inner=b-x;
-      const mid=a+inner;
+      const inner=b-x, mid=a+inner;
       answer=c*mid;
       question=`${wrap(c)} × [${a} + {${b} − (${wrap(x)})}] = ?`;
       steps=[
@@ -719,6 +720,32 @@ function genInt(diff){
         `② 중괄호{}: ${b} − (${x}) = <strong>${inner}</strong>`,
         `③ 대괄호[]: ${a} + ${inner} = <strong>${mid}</strong>`,
         `④ 곱셈: ${wrap(c)} × ${mid} = <strong>${answer}</strong>`
+      ];
+    }else if(t===3){
+      // 사칙 3개: a + b×c − d
+      const a=ri(-10,10),b=rnz(-5,5),c=rnz(-5,5),d=ri(-8,8);
+      const bc=b*c;
+      answer=a+bc-d;
+      question=`${wrap(a)} + ${wrap(b)} × ${wrap(c)} − ${wrap(d)} = ?`;
+      steps=[
+        '규칙: × ÷ 먼저, 그 다음 + − (왼→오)!',
+        `① 곱셈 먼저: ${wrap(b)} × ${wrap(c)} = <strong>${bc}</strong>`,
+        `② 덧셈: ${wrap(a)} + ${wrap(bc)} = <strong>${a+bc}</strong>`,
+        `③ 뺄셈: ${wrap(a+bc)} − ${wrap(d)} = <strong>${answer}</strong>`
+      ];
+    }else{
+      // 사칙 4개: a×b + c÷d − e  (가감승제 모두!)
+      const dv=rnz(-4,4), cv=dv*rnz(-3,3);
+      const a=rnz(-5,5), b=rnz(-5,5), e=ri(-8,8);
+      const mult=a*b, div=cv/dv;
+      answer=mult+div-e;
+      question=`${wrap(a)} × ${wrap(b)} + ${wrap(cv)} ÷ ${wrap(dv)} − ${wrap(e)} = ?`;
+      steps=[
+        '가감승제 모두! 규칙: × ÷ 먼저, 왼쪽부터',
+        `① 곱셈: ${wrap(a)} × ${wrap(b)} = <strong>${mult}</strong>`,
+        `② 나눗셈: ${wrap(cv)} ÷ ${wrap(dv)} = <strong>${div}</strong>`,
+        `③ 덧셈: ${mult} + ${div} = <strong>${mult+div}</strong>`,
+        `④ 뺄셈: ${wrap(mult+div)} − ${wrap(e)} = <strong>${answer}</strong>`
       ];
     }
   }
@@ -778,18 +805,56 @@ function genRat(diff){
       else steps.push(`기약분수: <strong>${fh(ansF.n,ansF.d)}</strong>`);
     }
   }else{
-    const d1=DENS[ri(0,5)],d2=DENS[ri(0,5)],n1=ri(1,d1),n2=ri(1,d2);
-    ansF=simp(n1*d2,d1*n2);
-    question=`${fh(n1,d1)} ÷ ${fh(n2,d2)} = ?`;
-    steps=[
-      '분수 나눗셈: 뒤 분수를 뒤집어서 곱하기!',
-      `${fh(n1,d1)} ÷ ${fh(n2,d2)} = ${fh(n1,d1)} × ${fh(d2,n2)}`,
-      `분자: ${n1} × ${d2} = <strong>${n1*d2}</strong>`,
-      `분모: ${d1} × ${n2} = <strong>${d1*n2}</strong>`,
-      `결과: ${fh(n1*d2,d1*n2)}`
-    ];
-    if(ansF.d!==d1*n2||ansF.n!==n1*d2) steps.push(`약분 (÷${gcd(n1*d2,d1*n2)}): <strong>${fh(ansF.n,ansF.d)}</strong>`);
-    else steps.push(`기약분수: <strong>${fh(ansF.n,ansF.d)}</strong>`);
+    const rt=Math.floor(Math.random()*3);
+    if(rt===0){
+      // 기존: 나눗셈
+      const d1=DENS[ri(0,5)],d2=DENS[ri(0,5)],n1=ri(1,d1),n2=ri(1,d2);
+      ansF=simp(n1*d2,d1*n2);
+      question=`${fh(n1,d1)} ÷ ${fh(n2,d2)} = ?`;
+      steps=[
+        '분수 나눗셈: 뒤 분수를 뒤집어서 곱하기!',
+        `${fh(n1,d1)} ÷ ${fh(n2,d2)} = ${fh(n1,d1)} × ${fh(d2,n2)}`,
+        `분자: ${n1} × ${d2} = <strong>${n1*d2}</strong>`,
+        `분모: ${d1} × ${n2} = <strong>${d1*n2}</strong>`,
+        `결과: ${fh(n1*d2,d1*n2)}`
+      ];
+      if(ansF.d!==d1*n2||ansF.n!==n1*d2) steps.push(`약분 (÷${gcd(n1*d2,d1*n2)}): <strong>${fh(ansF.n,ansF.d)}</strong>`);
+      else steps.push(`기약분수: <strong>${fh(ansF.n,ansF.d)}</strong>`);
+    }else if(rt===1){
+      // 분수 3개: a/b + c/d × e/f  (곱셈 먼저!)
+      const d1=DENS[ri(0,3)],n1=ri(1,d1);
+      const d2=DENS[ri(0,3)],n2=ri(1,d2);
+      const d3=DENS[ri(0,3)],n3=ri(1,d3);
+      const mN=n2*n3, mD=d2*d3;
+      const mF=simp(mN,mD);
+      const L=lcm(d1,mF.d);
+      const rN=n1*(L/d1)+mF.n*(L/mF.d);
+      ansF=simp(rN,L);
+      question=`${fh(n1,d1)} + ${fh(n2,d2)} × ${fh(n3,d3)} = ?`;
+      steps=[
+        '분수도 연산 순서 동일! 곱셈(×) 먼저!',
+        `① 곱셈: ${fh(n2,d2)} × ${fh(n3,d3)} = ${fh(mN,mD)} = <strong>${fh(mF.n,mF.d)}</strong>`,
+        `② 통분(LCM=${L}): ${fh(n1*(L/d1),L)} + ${fh(mF.n*(L/mF.d),L)} = ${fh(rN,L)}`,
+        `③ 약분: <strong>${fh(ansF.n,ansF.d)}</strong>`
+      ];
+    }else{
+      // 분수 3개: a/b × c/d − e/f  (곱셈 먼저, 빼기)
+      const d1=DENS[ri(0,3)],n1=ri(1,d1);
+      const d2=DENS[ri(0,3)],n2=ri(1,d2);
+      const d3=DENS[ri(0,3)],n3=ri(1,d3);
+      const mN=n1*n2, mD=d1*d2;
+      const mF=simp(mN,mD);
+      const L=lcm(mF.d,d3);
+      const rN=mF.n*(L/mF.d)-n3*(L/d3);
+      ansF=simp(rN,L);
+      question=`${fh(n1,d1)} × ${fh(n2,d2)} − ${fh(n3,d3)} = ?`;
+      steps=[
+        '분수 곱셈(×) 먼저, 그 다음 뺄셈(−)!',
+        `① 곱셈: ${fh(n1,d1)} × ${fh(n2,d2)} = ${fh(mN,mD)} = <strong>${fh(mF.n,mF.d)}</strong>`,
+        `② 통분(LCM=${L}): ${fh(mF.n*(L/mF.d),L)} − ${fh(n3*(L/d3),L)} = ${fh(rN,L)}`,
+        `③ 약분: <strong>${fh(ansF.n,ansF.d)}</strong>`
+      ];
+    }
   }
 
   steps.push(`✅ 정답: <strong>${fh(ansF.n,ansF.d)}</strong>`);
