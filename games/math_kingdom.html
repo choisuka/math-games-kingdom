@@ -445,7 +445,7 @@ body{font-family:"Segoe UI","Noto Sans KR",sans-serif;
   <div class="card" style="margin-top:.75rem;padding:1rem 1.2rem">
     <div class="sec-label" style="margin-bottom:.6rem">🎓 영통수학여행학원 — 다른 게임</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
-      <a href="algebra.html" target="_blank"
+      <a href="/games/algebra" target="_blank"
         style="display:block;background:linear-gradient(135deg,#1e1050,#2a1a6e);
         border:1.5px solid rgba(167,139,250,.35);border-radius:14px;padding:.85rem .7rem;
         text-decoration:none;text-align:center;transition:.2s;"
@@ -454,7 +454,7 @@ body{font-family:"Segoe UI","Noto Sans KR",sans-serif;
         <div style="font-size:.8rem;font-weight:700;color:#a78bfa">문자와 식<br>마법학교</div>
         <div style="font-size:.65rem;color:#64748b;margin-top:.2rem">중1 문자와 식</div>
       </a>
-      <a href="detective.html" target="_blank"
+      <a href="/games/detective" target="_blank"
         style="display:block;background:linear-gradient(135deg,#1a1000,#2a1800);
         border:1.5px solid rgba(212,160,23,.35);border-radius:14px;padding:.85rem .7rem;
         text-decoration:none;text-align:center;transition:.2s;"
@@ -690,21 +690,35 @@ function genInt(diff){
     }
 
   }else{
-    if(Math.random()<.5){
+    const t=Math.floor(Math.random()*3);
+    if(t===0){
       const a=ri(-10,10),b=ri(-10,10),c=rnz(-6,6);
       answer=(a+b)*c; question=`(${a} + ${wrap(b)}) × ${wrap(c)} = ?`;
       steps=[
-        '괄호 안을 먼저 계산!',
-        `① 괄호: ${a} + ${wrap(b)} = <strong>${a+b}</strong>`,
+        '소괄호 안을 먼저 계산!',
+        `① 소괄호(): ${a} + ${wrap(b)} = <strong>${a+b}</strong>`,
         `② 곱셈: ${wrap(a+b)} × ${wrap(c)} = <strong>${answer}</strong>`
       ];
-    }else{
+    }else if(t===1){
       const a=rnz(-8,8),b=rnz(-8,8),c=ri(-10,10);
       answer=a*b-c; question=`${wrap(a)} × ${wrap(b)} − ${wrap(c)} = ?`;
       steps=[
         '연산 순서: 곱셈(×) 먼저, 그 다음 뺄셈',
         `① 곱셈: ${wrap(a)} × ${wrap(b)} = <strong>${a*b}</strong>`,
         `② 뺄셈: ${wrap(a*b)} − ${wrap(c)} = <strong>${answer}</strong>`
+      ];
+    }else{
+      const x=ri(-4,4),b=ri(-6,6),a=ri(-6,6),c=rnz(-3,3);
+      const inner=b-x;
+      const mid=a+inner;
+      answer=c*mid;
+      question=`${wrap(c)} × [${a} + {${b} − (${wrap(x)})}] = ?`;
+      steps=[
+        '순서: 소괄호() → 중괄호{} → 대괄호[] → 곱셈',
+        `① 소괄호(): ${wrap(x)} = ${x}`,
+        `② 중괄호{}: ${b} − (${x}) = <strong>${inner}</strong>`,
+        `③ 대괄호[]: ${a} + ${inner} = <strong>${mid}</strong>`,
+        `④ 곱셈: ${wrap(c)} × ${mid} = <strong>${answer}</strong>`
       ];
     }
   }
