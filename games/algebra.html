@@ -625,6 +625,46 @@ x²이 있으면 → 이차식 (일차식 아님!)`,
      ex:'x+{2x-(x-4)}=10 → 2x+4=10 → x=3', exl:'() → {} → [] 순서!',
      tip:'괄호 안 계산 완료 후 분배법칙 적용'},
   ],
+  // ch6: 일차부등식 (계수에 문자 포함 & 해 조건)
+  [
+    {h:'부등호 방향 바꾸기',
+     b:`부등식에서 <strong>양수</strong>로 곱·나눌 때 → 부등호 <strong>유지</strong><br>
+<strong>음수</strong>로 곱·나눌 때 → 부등호 <strong>뒤집기!</strong><br><br>
+예: <strong>-2x &gt; 4</strong><br>
+양변 ÷ (-2) → 부등호 뒤집힘 → <strong>x &lt; -2</strong><br><br>
+예: <strong>-3x &lt; 6</strong><br>
+양변 ÷ (-3) → 부등호 뒤집힘 → <strong>x &gt; -2</strong>`,
+     ex:'-2x > 4  →  x < -2', exl:'음수÷ → 부등호 뒤집기',
+     tip:'음수로 나누거나 곱하면 무조건 부등호 방향이 뒤집힙니다!'},
+    {h:'계수에 문자가 있는 경우',
+     b:`<strong>ax &gt; b</strong>의 해는 <strong>a의 부호</strong>에 따라 달라요:<br><br>
+✅ <strong>a &gt; 0</strong>이면: <strong>x &gt; b/a</strong> (부등호 유지)<br>
+✅ <strong>a &lt; 0</strong>이면: <strong>x &lt; b/a</strong> (부등호 뒤집힘)<br><br>
+예: a &gt; 0일 때, ax &gt; 6 → <strong>x &gt; 6/a</strong><br>
+예: a &lt; 0일 때, ax &gt; 6 → <strong>x &lt; 6/a</strong>`,
+     ex:'a>0: ax>6 → x>6/a', exl:'a의 부호가 핵심!',
+     tip:'a의 부호를 먼저 파악! a>0이면 유지, a<0이면 뒤집기'},
+    {h:'해의 조건으로 a 결정 ①',
+     b:`<strong>"부등식의 해가 x &gt; k"</strong> 조건으로 a를 구해요.<br><br>
+예: <strong>ax - 3 &gt; 5</strong>의 해가 <strong>x &gt; 4</strong>이면?<br>
+① ax &gt; 8 (이항)<br>
+② 해가 x &gt; (양수방향) → a &gt; 0<br>
+③ x &gt; 8/a = 4 → <strong>a = 2</strong><br><br>
+예: <strong>2x - a &gt; 0</strong>의 해가 <strong>x &gt; 3</strong>이면?<br>
+2x &gt; a → x &gt; a/2 = 3 → <strong>a = 6</strong>`,
+     ex:'2x-a>0, 해=x>3 → a=6', exl:'해의 경계값으로 a 결정',
+     tip:'풀었을 때 x>(식)=k가 되도록 a를 맞춰요'},
+    {h:'해의 조건으로 a 결정 ②',
+     b:`해가 <strong>x &lt; k</strong> (뒤집힌 방향)이면 → <strong>a &lt; 0</strong>!<br><br>
+예: <strong>ax + 2 &gt; 6</strong>의 해가 <strong>x &lt; -1</strong>이면?<br>
+① ax &gt; 4<br>
+② 해가 x &lt; (반대방향) → a &lt; 0, 부등호 뒤집힘<br>
+③ x &lt; 4/a = -1 → <strong>a = -4</strong><br><br>
+예: <strong>ax + 6 &lt; 0</strong>의 해가 <strong>x &gt; 2</strong>이면?<br>
+ax &lt; -6, 해가 x &gt; → a &lt; 0 → x &gt; -6/a = 2 → <strong>a = -3</strong>`,
+     ex:'ax+2>6, 해=x<-1 → a=-4', exl:'뒤집힌 방향 → a<0',
+     tip:'해의 방향이 원래 부등호와 같으면 a>0, 다르면 a<0'},
+  ],
 ];
 
 // =====================================================
@@ -1033,6 +1073,49 @@ const QS = [
      hint:'① 양변 -3x → ② 양변 +3 → ③ 양변 ÷2',
      st:['5x-3=3x+7','양변 -3x: 2x-3=7','양변 +3: 2x=10','양변 ÷2: <strong>x=5</strong>'],ans_txt:'x=5'},
   ],
+  // ch6: 일차부등식 (계수에 문자 포함 & 해 조건)
+  [
+    {q:'a > 0일 때, ax > 6의 해는?',ex:'ax > 6  (a > 0)',
+     c:['x > 6/a','x < 6/a','x > 6a','x < 6a'],ans:0,fill:'x>6/a',
+     hint:'a>0이므로 양변÷a 해도 부등호 방향 유지',
+     st:['ax > 6','양변 ÷ a  (a>0 → 부등호 유지)','<strong>x > 6/a</strong>'],ans_txt:'x>6/a'},
+    {q:'a < 0일 때, ax > 6의 해는?',ex:'ax > 6  (a < 0)',
+     c:['x > 6/a','x < 6/a','x > -6/a','x < -6/a'],ans:1,fill:'x<6/a',
+     hint:'a<0이므로 양변÷a 하면 부등호 뒤집힘!',
+     st:['ax > 6','양변 ÷ a  (a<0 → 부등호 뒤집힘!)','<strong>x < 6/a</strong>'],ans_txt:'x<6/a'},
+    {q:'ax - 3 > 5의 해가 x > 4일 때, a는?',ex:'ax-3>5, 해: x>4',
+     c:['a=1','a=2','a=3','a=4'],ans:1,fill:'a=2',
+     hint:'ax>8로 정리. 해가 x>4(양수방향) → a>0 → 8/a=4',
+     st:['ax-3>5  →  ax>8','해가 x>4 → a>0','x>8/a=4 → a=2','<strong>a=2</strong>'],ans_txt:'a=2'},
+    {q:'ax + 2 > 6의 해가 x < −1일 때, a는?',ex:'ax+2>6, 해: x<-1',
+     c:['a=-4','a=4','a=-2','a=2'],ans:0,fill:'a=-4',
+     hint:'ax>4로 정리. 해가 x<(반대방향) → a<0 → x<4/a=-1',
+     st:['ax+2>6  →  ax>4','해가 x<-1 → a<0 (부등호 뒤집힘)','x<4/a=-1 → a=-4','<strong>a=-4</strong>'],ans_txt:'a=-4'},
+    {q:'2x - a > 0의 해가 x > 3일 때, a는?',ex:'2x-a>0, 해: x>3',
+     c:['a=3','a=6','a=-6','a=-3'],ans:1,fill:'a=6',
+     hint:'2x>a → x>a/2 = 3',
+     st:['2x-a>0  →  2x>a','x>a/2=3','a/2=3 → a=6','<strong>a=6</strong>'],ans_txt:'a=6'},
+    {q:'3ax > 12의 해가 x > 2일 때, a는?',ex:'3ax>12, 해: x>2',
+     c:['a=1','a=2','a=-2','a=3'],ans:1,fill:'a=2',
+     hint:'해가 x>2(양수방향) → a>0 → 12/(3a)=2',
+     st:['3ax>12','해가 x>2 → a>0','x>12/(3a)=2 → 3a=6 → a=2','<strong>a=2</strong>'],ans_txt:'a=2'},
+    {q:'ax + 6 < 0의 해가 x > 2일 때, a는?',ex:'ax+6<0, 해: x>2',
+     c:['a=-3','a=3','a=-6','a=6'],ans:0,fill:'a=-3',
+     hint:'ax<-6. 해가 x>2(반대방향) → a<0 → x>-6/a=2',
+     st:['ax+6<0  →  ax<-6','해가 x>2 → a<0 (부등호 뒤집힘)','x>-6/a=2 → a=-3','<strong>a=-3</strong>'],ans_txt:'a=-3'},
+    {q:'a < 0일 때, a(x − 1) > 0의 해는?',ex:'a(x-1) > 0  (a < 0)',
+     c:['x > 1','x < 1','x > -1','x < -1'],ans:1,fill:'x<1',
+     hint:'a<0이므로 양변÷a 하면 부등호 뒤집힘: x-1<0',
+     st:['a(x-1)>0','양변÷a  (a<0 → 뒤집힘): x-1<0','x-1<0 → x<1','<strong>x < 1</strong>'],ans_txt:'x<1'},
+    {q:'2(x − a) > x의 해가 x > 3일 때, a는?',ex:'2(x-a)>x, 해: x>3',
+     c:['a=3/2','a=3','a=6','a=-3/2'],ans:0,fill:'a=3/2',
+     hint:'전개: 2x-2a>x → x>2a = 3',
+     st:['2(x-a)>x  →  2x-2a>x','x>2a=3','a=3/2','<strong>a = 3/2</strong>'],ans_txt:'a=3/2'},
+    {q:'ax > 2x − 1의 해가 x < 1일 때, a는?',ex:'ax>2x-1, 해: x<1',
+     c:['a=1','a=-1','a=3','a=-3'],ans:0,fill:'a=1',
+     hint:'(a-2)x>-1. 해가 x<1(반대방향) → a-2<0, -1/(a-2)=1',
+     st:['ax>2x-1  →  (a-2)x>-1','해가 x<1 → a-2<0','x<-1/(a-2)=1 → a-2=-1 → a=1','<strong>a=1</strong>'],ans_txt:'a=1'},
+  ],
 ];
 
 const CH_META = [
@@ -1042,6 +1125,7 @@ const CH_META = [
   {emoji:'📊',title:'항·계수·상수항'},
   {emoji:'🧮',title:'동류항과 일차식'},
   {emoji:'⚖️',title:'등식의 성질'},
+  {emoji:'🔺',title:'일차부등식'},
 ];
 
 // =====================================================
@@ -1052,8 +1136,8 @@ const S = {
   chapter:0, qIdx:0, slideIdx:0,
   chPts:0, correct:0, total:0,
   timer:null, timeLeft:30,
-  unlocked:[true,true,true,true,true,true],
-  done:[false,false,false,false,false,false],
+  unlocked:[true,true,true,true,true,true,true],
+  done:[false,false,false,false,false,false,false],
   qList:[], curQ:null, curCorrectIdx:0,
 };
 
@@ -1061,8 +1145,8 @@ function loadSave(){
   try{
     const d=JSON.parse(localStorage.getItem('alg_v1')||'{}');
     if(d.score!=null) S.score=d.score;
-    if(d.unlocked) S.unlocked=d.unlocked;
-    if(d.done) S.done=d.done;
+    if(d.unlocked) d.unlocked.forEach((v,i)=>{ S.unlocked[i]=v; });
+    if(d.done) d.done.forEach((v,i)=>{ S.done[i]=v; });
   }catch(e){}
 }
 function saveSave(){
