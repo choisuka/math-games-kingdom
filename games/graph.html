@@ -350,12 +350,6 @@ body{
 </head>
 <body>
 <div id="flash" class="flash"></div>
-<div id="msb" class="msb">
-  <span class="msb-e">⚡</span>
-  <div class="msb-t">주관식 도전 시작!</div>
-  <div class="msb-s">500점 달성! 이제 직접 답을 입력하라!</div>
-</div>
-
 <!-- Lecture Overlay -->
 <div id="lec-overlay" class="lec-overlay">
   <div class="lec-modal">
@@ -425,7 +419,7 @@ body{
     <button class="reset-btn" onclick="resetSave()">🗑 기록 초기화</button>
   </div>
   <div style="text-align:center;font-size:.7rem;color:#1e3a5f">
-    500점 달성 → 주관식 도전 · 콤보 3=×2, 5=×3, 10=×5
+    콤보 3=×2, 5=×3, 10=×5
   </div>
 </div>
 
@@ -434,7 +428,6 @@ body{
   <div class="qhdr">
     <div class="q-pts">⭐ <span id="q-score">0</span></div>
     <div class="combo-el c0" id="combo-el">콤보 ×1</div>
-    <span class="m-tag mcq" id="m-tag">객관식</span>
     <button class="home-btn" onclick="goHome()">챕터 선택</button>
   </div>
   <div class="timer-wrap"><div class="timer-bar" id="timer-bar"></div></div>
@@ -450,11 +443,6 @@ body{
         </div>
       </div>
       <div class="choices" id="choices"></div>
-      <div class="fill-wrap" id="fill-wrap" style="display:none">
-        <input class="fill-input" id="fill-input" placeholder="답 입력 (예: 3, (2,1), y=2x+1)"
-          onkeydown="if(event.key==='Enter')checkFill()">
-        <button class="fill-submit" onclick="checkFill()">제출</button>
-      </div>
       <div class="q-ctr" id="q-ctr"></div>
     </div>
     <div class="concept-panel" id="concept-panel"></div>
@@ -1140,7 +1128,7 @@ const QS=[
 // =====================================================
 const S={
   score:0,combo:0,maxCombo:0,
-  chapter:0,qIdx:0,mode:'mcq',
+  chapter:0,qIdx:0,
   chPts:0,correct:0,total:0,
   timer:null,timeLeft:35,
   unlocked:[true,true,true,true,true],
@@ -1154,7 +1142,6 @@ function loadSave(){
     if(d.score!=null) S.score=d.score;
     if(d.unlocked) S.unlocked=d.unlocked;
     if(d.done) S.done=d.done;
-    if(S.score>=500) S.mode='fill';
   }catch(e){}
 }
 function saveSave(){
@@ -1176,7 +1163,7 @@ function goHome(){clearTimer();showScreen('sc-title');renderTitle();}
 // =====================================================
 function renderTitle(){
   document.getElementById('t-score').textContent=S.score.toLocaleString();
-  document.getElementById('t-mode').textContent=S.mode==='fill'?'🔥 주관식':'📝 객관식';
+  document.getElementById('t-mode').textContent='📝 객관식';
   const grid=document.getElementById('ch-grid');
   grid.innerHTML=CH_META.map((m,i)=>`
     <div class="ch-card ${S.unlocked[i]?'':'locked'} ${S.done[i]?'done':''}"
@@ -1279,20 +1266,15 @@ function renderQ(){
   document.getElementById('canvas-qn').textContent=`문제 ${S.qIdx+1} / ${S.qList.length}`;
   document.getElementById('q-text').textContent=q.q;
   document.getElementById('q-ctr').textContent=`${S.qIdx+1} / ${S.qList.length}`;
-  const mt=document.getElementById('m-tag');
-  mt.textContent=S.mode==='mcq'?'객관식':'주관식';
-  mt.className='m-tag '+(S.mode==='mcq'?'mcq':'fill');
   // Draw graph
   const canvas=document.getElementById('graph-canvas');
   const {ctx}=initCanvas(canvas);
   drawScene(canvas, q.cfg||{});
   renderConceptPanel();
-  if(S.mode==='mcq') renderMCQ(q);
-  else renderFill();
+  renderMCQ(q);
   startTimer();
 }
 function renderMCQ(q){
-  document.getElementById('fill-wrap').style.display='none';
   const idxs=shuffle([0,1,2,3]);
   const corPos=idxs.indexOf(q.ans);
   S.curCorrectIdx=corPos;
@@ -1302,14 +1284,6 @@ function renderMCQ(q){
       <span style="color:var(--muted);margin-right:.35rem">${['①','②','③','④'][i]}</span>${q.c[orig]}
     </button>`).join('');
 }
-function renderFill(){
-  document.getElementById('choices').style.display='none';
-  document.getElementById('fill-wrap').style.display='flex';
-  const inp=document.getElementById('fill-input');
-  inp.value='';
-  setTimeout(()=>inp.focus(),80);
-}
-
 // =====================================================
 // ANSWER CHECKING
 // =====================================================
@@ -1325,24 +1299,11 @@ function checkMCQ(idx,correctIdx){
   if(ok){S.correct++;processCorrect();}else{processWrong();}
   setTimeout(()=>showExp(ok),400);
 }
-function checkFill(){
-  const inp=document.getElementById('fill-input');
-  const val=inp.value.trim().replace(/\s/g,'').toLowerCase();
-  const ans=S.curQ.fill.replace(/\s/g,'').toLowerCase();
-  // flexible match
-  const ok=val===ans||val===ans.replace(/[()]/g,'')||
-    (parseFloat(val)===parseFloat(ans)&&!isNaN(parseFloat(ans)));
-  clearTimer();flash(ok);
-  S.total++;
-  if(ok){S.correct++;processCorrect();}else{processWrong();}
-  setTimeout(()=>showExp(ok),300);
-}
 function processCorrect(){
   S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);
   const mult=S.combo>=10?5:S.combo>=5?3:S.combo>=3?2:1;
   const pts=10*mult;
   S.score+=pts;S.chPts+=pts;
-  if(S.score>=500&&S.mode==='mcq'){S.mode='fill';showMSB();}
   updateUI();
 }
 function processWrong(){S.combo=0;updateUI();}
@@ -1412,11 +1373,6 @@ function updateUI(){
   el.className='combo-el '+cls;
   el.textContent=c>=1?`🔥 ${c}콤보 ×${mult}`:'콤보 ×1';
 }
-function showMSB(){
-  const b=document.getElementById('msb');b.classList.add('show');
-  setTimeout(()=>b.classList.remove('show'),2500);
-}
-
 // =====================================================
 // CHAPTER END
 // =====================================================
@@ -1434,7 +1390,7 @@ function endChapter(){
   document.getElementById('d-acc').textContent=acc+'%';
   document.getElementById('d-combo').textContent=S.maxCombo+'콤보';
   document.getElementById('d-total').textContent=S.score.toLocaleString()+'점';
-  document.getElementById('d-mode').textContent=S.mode==='fill'?'🔥주관식':'📝객관식';
+  document.getElementById('d-mode').textContent='📝객관식';
   const nb=document.getElementById('btn-nxt');
   if(S.chapter<4){
     nb.style.display='block';

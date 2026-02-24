@@ -322,10 +322,6 @@ h1{
       <div class="q-text" id="q-text"></div>
       <div class="q-expression" id="q-expr" style="display:none"></div>
       <div class="choices" id="choices"></div>
-      <div class="fill-wrap" id="fill-wrap" style="display:none">
-        <input class="fill-input" id="fill-input" type="text" placeholder="답 입력..." autocomplete="off">
-        <button class="btn-submit" id="btn-submit" onclick="checkFill()">확인</button>
-      </div>
       <div class="feedback" id="feedback"></div>
       <button class="btn-next" id="btn-next" onclick="nextQ()">다음 문제 →</button>
     </div>
@@ -752,7 +748,6 @@ const state = {
   correct: 0, wrong: 0,
   unlocked: new Array(10).fill(false),
   cleared: new Array(10).fill(false),
-  fillMode: false,
 };
 state.unlocked.fill(true);
 
@@ -822,7 +817,6 @@ function startChapter(chId){
   state.score=0;
   state.correct=0;
   state.wrong=0;
-  state.fillMode=false;
   show('quiz-screen');
   renderQ();
 }
@@ -850,34 +844,22 @@ function renderQ(){
   if(q.ex){exEl.style.display='block';exEl.textContent=q.ex;}
   else{exEl.style.display='none';}
 
-  // Choices vs Fill
+  // Choices
   const choicesEl=document.getElementById('choices');
-  const fillEl=document.getElementById('fill-wrap');
   const feedbackEl=document.getElementById('feedback');
   const nextEl=document.getElementById('btn-next');
   feedbackEl.className='feedback';
   nextEl.className='btn-next';
 
-  if(state.fillMode){
-    choicesEl.style.display='none';
-    fillEl.style.display='flex';
-    const inp=document.getElementById('fill-input');
-    inp.value='';inp.className='fill-input';inp.disabled=false;
-    document.getElementById('btn-submit').disabled=false;
-    inp.focus();
-    inp.onkeydown=e=>{if(e.key==='Enter')checkFill();};
-  } else {
-    choicesEl.style.display='grid';
-    fillEl.style.display='none';
-    choicesEl.innerHTML='';
-    q.c.forEach((txt,i)=>{
-      const btn=document.createElement('button');
-      btn.className='choice';
-      btn.textContent=txt;
-      btn.onclick=()=>checkMC(i,btn);
-      choicesEl.appendChild(btn);
-    });
-  }
+  choicesEl.style.display='grid';
+  choicesEl.innerHTML='';
+  q.c.forEach((txt,i)=>{
+    const btn=document.createElement('button');
+    btn.className='choice';
+    btn.textContent=txt;
+    btn.onclick=()=>checkMC(i,btn);
+    choicesEl.appendChild(btn);
+  });
 
   // Concept panel
   renderConcept(state.ch);
@@ -901,21 +883,6 @@ function checkMC(idx,btn){
   else state.wrong++;
 }
 
-// ── Check Fill ──
-function checkFill(){
-  const q=QS[state.ch][state.qIdx];
-  const inp=document.getElementById('fill-input');
-  const val=inp.value.trim().replace(/\s/g,'');
-  const ans=q.fill||q.ans_txt;
-  const ok=val===ans.replace(/\s/g,'');
-  inp.disabled=true;
-  document.getElementById('btn-submit').disabled=true;
-  inp.classList.add(ok?'correct':'wrong');
-  showFeedback(ok,q);
-  if(ok){state.score+=120;state.correct++;}
-  else state.wrong++;
-}
-
 // ── Feedback ──
 function showFeedback(ok,q){
   const fb=document.getElementById('feedback');
@@ -933,9 +900,6 @@ function showFeedback(ok,q){
 // ── Next Q ──
 function nextQ(){
   const total=QS[state.ch].length;
-  // Switch to fill mode at 500 points
-  if(state.score>=500 && !state.fillMode) state.fillMode=true;
-
   if(state.qIdx+1>=total){
     showResult();
   } else {
