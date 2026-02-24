@@ -598,14 +598,14 @@ const CONCEPTS = {
     ex:'1/3 + 1/4: LCM=12 → 4/12+3/12=7/12'
   },
   rat_hard:{
-    title:'유리수 복합 연산 (나눗셈 · 혼합)',
+    title:'유리수 복합 연산 (괄호·혼합·4분수)',
     rules:[
-      'a/b ÷ c/d = a/b × d/c  (역수를 곱함)',
-      '분수도 연산 순서 동일: × ÷ 먼저!',
-      '혼합: × 계산 후 통분하여 + − 계산',
+      '괄호 먼저: (a/b ± c/d) × e/f → 괄호 안 통분 후 곱셈',
+      '연속 × ÷: 왼→오 순서로 차례 계산',
+      '4분수 혼합: ÷와 × 각각 먼저, 결과를 통분하여 ± 계산',
       '최종 결과 반드시 약분!'
     ],
-    ex:'1/2 + 1/3 × 3/4 = 1/2 + 1/4 = 3/4'
+    ex:'(1/2+1/3)×3/5 = 5/6×3/5 = 1/2'
   }
 };
 
@@ -615,7 +615,7 @@ const TIPS = {
   int_hard:'💡 순서: ① 괄호(){}[] ② × ÷ ③ + −  /  가감승제 혼합: × ÷ 모두 계산 후 + −',
   rat_easy:'💡 분모가 같으면 분자끼리만 계산 → 약분 확인',
   rat_medium:'💡 다른 분모: LCM으로 통분  /  곱셈: 분자×분자, 분모×분모',
-  rat_hard:'💡 나눗셈: 역수 곱하기  /  혼합 연산: × ÷ 먼저 계산 → 통분 → + −  /  결과 항상 약분!'
+  rat_hard:'💡 괄호 먼저 → × ÷ 우선 → 통분 → + −  /  연속 × ÷는 왼→오  /  4분수: ÷와 × 각각 계산 후 통분!'
 };
 
 // ── 정수 문제 생성 ──────────────────────────────────────
@@ -805,23 +805,42 @@ function genRat(diff){
       else steps.push(`기약분수: <strong>${fh(ansF.n,ansF.d)}</strong>`);
     }
   }else{
-    const rt=Math.floor(Math.random()*3);
+    const rt=Math.floor(Math.random()*5);
     if(rt===0){
-      // 기존: 나눗셈
-      const d1=DENS[ri(0,5)],d2=DENS[ri(0,5)],n1=ri(1,d1),n2=ri(1,d2);
-      ansF=simp(n1*d2,d1*n2);
-      question=`${fh(n1,d1)} ÷ ${fh(n2,d2)} = ?`;
+      // (a/b + c/d) × e/f — 괄호 먼저
+      const d1=DENS[ri(0,3)],n1=ri(1,d1);
+      const d2=DENS[ri(0,3)],n2=ri(1,d2);
+      const d3=DENS[ri(0,3)],n3=ri(1,d3);
+      const L=lcm(d1,d2);
+      const sN=n1*(L/d1)+n2*(L/d2);
+      const sF=simp(sN,L);
+      const rN=sF.n*n3, rD=sF.d*d3;
+      ansF=simp(rN,rD);
+      question=`(${fh(n1,d1)} + ${fh(n2,d2)}) × ${fh(n3,d3)} = ?`;
       steps=[
-        '분수 나눗셈: 뒤 분수를 뒤집어서 곱하기!',
-        `${fh(n1,d1)} ÷ ${fh(n2,d2)} = ${fh(n1,d1)} × ${fh(d2,n2)}`,
-        `분자: ${n1} × ${d2} = <strong>${n1*d2}</strong>`,
-        `분모: ${d1} × ${n2} = <strong>${d1*n2}</strong>`,
-        `결과: ${fh(n1*d2,d1*n2)}`
+        '괄호 먼저! 안쪽 통분 후 곱셈',
+        `① 통분(LCM=${L}): ${fh(n1*(L/d1),L)} + ${fh(n2*(L/d2),L)} = ${fh(sN,L)} = <strong>${fh(sF.n,sF.d)}</strong>`,
+        `② 곱셈: ${fh(sF.n,sF.d)} × ${fh(n3,d3)} = ${fh(rN,rD)}`,
+        `③ 약분: <strong>${fh(ansF.n,ansF.d)}</strong>`
       ];
-      if(ansF.d!==d1*n2||ansF.n!==n1*d2) steps.push(`약분 (÷${gcd(n1*d2,d1*n2)}): <strong>${fh(ansF.n,ansF.d)}</strong>`);
-      else steps.push(`기약분수: <strong>${fh(ansF.n,ansF.d)}</strong>`);
     }else if(rt===1){
-      // 분수 3개: a/b + c/d × e/f  (곱셈 먼저!)
+      // a/b × c/d ÷ e/f — 연속 곱나눗셈 (왼→오)
+      const d1=DENS[ri(0,3)],n1=ri(1,d1);
+      const d2=DENS[ri(0,3)],n2=ri(1,d2);
+      const d3=DENS[ri(0,3)],n3=ri(1,d3);
+      const m1N=n1*n2, m1D=d1*d2;
+      const m1F=simp(m1N,m1D);
+      const rN=m1F.n*d3, rD=m1F.d*n3;
+      ansF=simp(rN,rD);
+      question=`${fh(n1,d1)} × ${fh(n2,d2)} ÷ ${fh(n3,d3)} = ?`;
+      steps=[
+        '× ÷ 왼쪽부터 차례로 계산!',
+        `① ${fh(n1,d1)} × ${fh(n2,d2)} = ${fh(m1N,m1D)} = <strong>${fh(m1F.n,m1F.d)}</strong>`,
+        `② ${fh(m1F.n,m1F.d)} ÷ ${fh(n3,d3)} = ${fh(m1F.n,m1F.d)} × ${fh(d3,n3)} = ${fh(rN,rD)}`,
+        `③ 약분: <strong>${fh(ansF.n,ansF.d)}</strong>`
+      ];
+    }else if(rt===2){
+      // a/b + c/d × e/f — 곱셈 먼저
       const d1=DENS[ri(0,3)],n1=ri(1,d1);
       const d2=DENS[ri(0,3)],n2=ri(1,d2);
       const d3=DENS[ri(0,3)],n3=ri(1,d3);
@@ -832,27 +851,51 @@ function genRat(diff){
       ansF=simp(rN,L);
       question=`${fh(n1,d1)} + ${fh(n2,d2)} × ${fh(n3,d3)} = ?`;
       steps=[
-        '분수도 연산 순서 동일! 곱셈(×) 먼저!',
-        `① 곱셈: ${fh(n2,d2)} × ${fh(n3,d3)} = ${fh(mN,mD)} = <strong>${fh(mF.n,mF.d)}</strong>`,
+        '곱셈(×) 먼저!',
+        `① ${fh(n2,d2)} × ${fh(n3,d3)} = ${fh(mN,mD)} = <strong>${fh(mF.n,mF.d)}</strong>`,
         `② 통분(LCM=${L}): ${fh(n1*(L/d1),L)} + ${fh(mF.n*(L/mF.d),L)} = ${fh(rN,L)}`,
         `③ 약분: <strong>${fh(ansF.n,ansF.d)}</strong>`
       ];
+    }else if(rt===3){
+      // a/b × (c/d − e/f) — 괄호 뺄셈 후 곱셈
+      const d1=DENS[ri(0,3)],n1=ri(1,d1);
+      let d2=DENS[ri(1,4)],n2=ri(1,d2);
+      let d3=DENS[ri(1,4)],n3=ri(1,d3);
+      let L2=lcm(d2,d3);
+      let sN=n2*(L2/d2)-n3*(L2/d3);
+      // 양수가 되도록 조정
+      if(sN<=0){const tmp=n2;n2=n2+1;sN=n2*(L2/d2)-n3*(L2/d3);}
+      if(sN<=0){n3=Math.max(1,n3-1);sN=n2*(L2/d2)-n3*(L2/d3);}
+      const sF=simp(Math.max(sN,1),L2);
+      const rN=n1*sF.n, rD=d1*sF.d;
+      ansF=simp(rN,rD);
+      question=`${fh(n1,d1)} × (${fh(n2,d2)} − ${fh(n3,d3)}) = ?`;
+      steps=[
+        '괄호 먼저! 뺄셈 통분 후 곱셈',
+        `① 통분(LCM=${L2}): ${fh(n2*(L2/d2),L2)} − ${fh(n3*(L2/d3),L2)} = ${fh(sN,L2)} = <strong>${fh(sF.n,sF.d)}</strong>`,
+        `② 곱셈: ${fh(n1,d1)} × ${fh(sF.n,sF.d)} = ${fh(rN,rD)}`,
+        `③ 약분: <strong>${fh(ansF.n,ansF.d)}</strong>`
+      ];
     }else{
-      // 분수 3개: a/b × c/d − e/f  (곱셈 먼저, 빼기)
+      // a/b ÷ c/d + e/f × g/h — 4분수 혼합
       const d1=DENS[ri(0,3)],n1=ri(1,d1);
       const d2=DENS[ri(0,3)],n2=ri(1,d2);
       const d3=DENS[ri(0,3)],n3=ri(1,d3);
-      const mN=n1*n2, mD=d1*d2;
-      const mF=simp(mN,mD);
-      const L=lcm(mF.d,d3);
-      const rN=mF.n*(L/mF.d)-n3*(L/d3);
+      const d4=DENS[ri(0,3)],n4=ri(1,d4);
+      const p1N=n1*d2, p1D=d1*n2;
+      const p1F=simp(p1N,p1D);
+      const p2N=n3*n4, p2D=d3*d4;
+      const p2F=simp(p2N,p2D);
+      const L=lcm(p1F.d,p2F.d);
+      const rN=p1F.n*(L/p1F.d)+p2F.n*(L/p2F.d);
       ansF=simp(rN,L);
-      question=`${fh(n1,d1)} × ${fh(n2,d2)} − ${fh(n3,d3)} = ?`;
+      question=`${fh(n1,d1)} ÷ ${fh(n2,d2)} + ${fh(n3,d3)} × ${fh(n4,d4)} = ?`;
       steps=[
-        '분수 곱셈(×) 먼저, 그 다음 뺄셈(−)!',
-        `① 곱셈: ${fh(n1,d1)} × ${fh(n2,d2)} = ${fh(mN,mD)} = <strong>${fh(mF.n,mF.d)}</strong>`,
-        `② 통분(LCM=${L}): ${fh(mF.n*(L/mF.d),L)} − ${fh(n3*(L/d3),L)} = ${fh(rN,L)}`,
-        `③ 약분: <strong>${fh(ansF.n,ansF.d)}</strong>`
+        '÷ 와 × 각각 먼저 계산 후 + !',
+        `① ${fh(n1,d1)} ÷ ${fh(n2,d2)} = ${fh(p1N,p1D)} = <strong>${fh(p1F.n,p1F.d)}</strong>`,
+        `② ${fh(n3,d3)} × ${fh(n4,d4)} = ${fh(p2N,p2D)} = <strong>${fh(p2F.n,p2F.d)}</strong>`,
+        `③ 통분(LCM=${L}): ${fh(p1F.n*(L/p1F.d),L)} + ${fh(p2F.n*(L/p2F.d),L)} = ${fh(rN,L)}`,
+        `④ 약분: <strong>${fh(ansF.n,ansF.d)}</strong>`
       ];
     }
   }
