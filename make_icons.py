@@ -85,24 +85,26 @@ def make_icon(size):
     if font is None:
         font = ImageFont.load_default()
 
-    text = "\uc218\ud559\uc655\uad6d"  # 수학왕국
-    try:
-        bbox = draw.textbbox((0, 0), text, font=font)
-        tw = bbox[2] - bbox[0]
-    except Exception:
-        tw = font_size * len(text)
-
+    lines = ["\uc218\ud559\uc5ec\ud589\ud559\uc6d0", "-\uc601\ud1b5"]  # 수학여행학원, -영통
     colors = [(56, 189, 248), (52, 211, 153), (245, 158, 11)]
-    x_start = (s - tw) // 2
-    for i, ch_char in enumerate(text):
-        col = colors[i % len(colors)]
+    line_gap = int(font_size * 1.15)
+    for li, text in enumerate(lines):
+        y = text_y + li * line_gap
         try:
-            char_bbox = draw.textbbox((0, 0), ch_char, font=font)
-            cw2 = char_bbox[2] - char_bbox[0]
+            bbox = draw.textbbox((0, 0), text, font=font)
+            tw = bbox[2] - bbox[0]
         except Exception:
-            cw2 = font_size
-        draw.text((x_start, text_y), ch_char, font=font, fill=col + (255,))
-        x_start += cw2
+            tw = font_size * len(text)
+        x_start = (s - tw) // 2
+        for i, ch_char in enumerate(text):
+            col = colors[i % len(colors)]
+            try:
+                char_bbox = draw.textbbox((0, 0), ch_char, font=font)
+                cw2 = char_bbox[2] - char_bbox[0]
+            except Exception:
+                cw2 = font_size
+            draw.text((x_start, y), ch_char, font=font, fill=col + (255,))
+            x_start += cw2
 
     return img
 

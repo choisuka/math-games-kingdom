@@ -36,7 +36,8 @@
   </g>
 
   <!-- Math symbols -->
-  <text x="256" y="370" text-anchor="middle" font-family="serif" font-size="56" font-weight="bold" fill="url(#text-grad)">수학왕국</text>
+  <text x="256" y="355" text-anchor="middle" font-family="serif" font-size="44" font-weight="bold" fill="url(#text-grad)">수학여행학원</text>
+  <text x="256" y="405" text-anchor="middle" font-family="serif" font-size="44" font-weight="bold" fill="url(#text-grad)">-영통</text>
 
   <!-- Small decorative math symbols -->
   <text x="80" y="160" font-family="monospace" font-size="32" fill="#38bdf8" opacity="0.5">∑</text>
