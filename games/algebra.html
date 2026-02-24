@@ -315,13 +315,6 @@ body{
 
 <div id="flash-overlay" class="flash-overlay"></div>
 
-<!-- Mode Switch Banner -->
-<div id="msb" class="msb">
-  <span class="msb-emoji">🔥</span>
-  <div class="msb-title">주관식 모드 돌입!</div>
-  <div class="msb-sub">500점 달성! 이제 직접 써보세요!</div>
-</div>
-
 <!-- Lecture Overlay -->
 <div id="lec-overlay" class="lec-overlay">
   <div class="lec-modal">
@@ -393,7 +386,6 @@ body{
   <div class="qhdr">
     <div class="q-score">⭐ <span id="q-score">0</span></div>
     <div class="combo-el c0" id="combo-el">콤보 ×1</div>
-    <span class="mtag mcq" id="mtag">객관식</span>
     <button class="home-btn" onclick="goHome()">홈</button>
   </div>
   <div class="timer-wrap"><div class="timer-bar" id="timer-bar"></div></div>
@@ -406,11 +398,6 @@ body{
     </div>
   </div>
   <div class="choices" id="choices"></div>
-  <div class="fill-wrap" id="fill-wrap" style="display:none">
-    <input class="fill-input" id="fill-input" placeholder="답 입력 (예: 5x, 2a+2, -3x+6)"
-      onkeydown="if(event.key==='Enter')checkFill()">
-    <button class="fill-submit" onclick="checkFill()">제출</button>
-  </div>
   <div class="q-ctr" id="q-ctr"></div>
 </div>
 
@@ -594,44 +581,49 @@ x²이 있으면 → 이차식 (일차식 아님!)`,
   ],
   // ch5: 등식의 성질
   [
-    {h:'등식이란?',
-     b:`<strong>등식</strong>: 등호(=)가 있는 식<br><br>
-✅ 등식 예시:<br>
-<strong>x + 1 = 4</strong> → 등호 있음<br>
-<strong>3 × 2 = 6</strong> → 등호 있음<br><br>
-❌ 등식 아님:<br>
-<strong>x + 1</strong> → 등호 없음 (단순 식)<br>
-<strong>x &gt; 3</strong> → 부등호 (부등식)`,
-     ex:'x+1=4', exl:'등식: 좌변 = 우변',
-     tip:'등식의 =는 "같다"는 의미. 좌변과 우변이 같아야 등식!'},
-    {h:'등식의 성질 ① 더하기·빼기',
-     b:`<strong>등식의 성질 1</strong><br><br>
-a = b 이면:<br>
-<strong>a + c = b + c</strong> (양변에 같은 수 더하기)<br>
-<strong>a - c = b - c</strong> (양변에서 같은 수 빼기)<br><br>
-예: x - 3 = 5<br>
-양변에 <strong>+3</strong> → x - 3 + 3 = 5 + 3<br>
-→ <strong>x = 8</strong>`,
-     ex:'x-3=5 → 양변+3 → x=8', exl:'+3으로 x만 남김',
-     tip:'이항의 원리: 한 변의 항을 반대편으로 옮기면 부호가 바뀜'},
-    {h:'등식의 성질 ② 곱하기·나누기',
-     b:`<strong>등식의 성질 2</strong><br><br>
-a = b 이면:<br>
-<strong>a × c = b × c</strong> (양변에 같은 수 곱하기)<br>
-<strong>a ÷ c = b ÷ c</strong> (c ≠ 0, 양변을 같은 수로 나누기)<br><br>
-예: 2x = 8<br>
-양변 <strong>÷ 2</strong> → 2x ÷ 2 = 8 ÷ 2<br>
-→ <strong>x = 4</strong>`,
-     ex:'2x=8 → 양변÷2 → x=4', exl:'÷2로 계수 없애기',
-     tip:'0으로 나누기는 불가! c ≠ 0 조건 필수'},
-    {h:'등식의 성질 활용: 방정식 풀기',
-     b:`등식의 성질을 이용해 <strong>x를 혼자 남기면</strong> 방정식을 풀 수 있어요!<br><br>
-예: x/2 + 1 = 4<br>
-① 양변 <strong>- 1</strong> → x/2 = 3<br>
-② 양변 <strong>× 2</strong> → x = 6<br><br>
-핵심: x가 혼자 남도록 등식의 성질을 반복 적용!`,
-     ex:'x/2+1=4 → -1 → ×2 → x=6', exl:'두 단계로 x 구하기',
-     tip:'① 더하기·빼기로 상수항 이동 → ② 곱하기·나누기로 계수 없애기'},
+    {h:'2단계 방정식',
+     b:`<strong>2단계로 x 구하기</strong><br><br>
+예: <strong>3x - 4 = 11</strong><br>
+① 양변 <strong>+ 4</strong> → 3x = 15<br>
+② 양변 <strong>÷ 3</strong> → x = 5<br><br>
+예: <strong>x/2 + 3 = 7</strong><br>
+① 양변 <strong>- 3</strong> → x/2 = 4<br>
+② 양변 <strong>× 2</strong> → x = 8<br><br>
+순서: ① 상수항 이항 → ② 계수 제거`,
+     ex:'3x-4=11 → +4 → ÷3 → x=5', exl:'상수 먼저, 계수 나중',
+     tip:'역연산: 더하기↔빼기, 곱하기↔나누기'},
+    {h:'음수 계수 방정식',
+     b:`<strong>음수 계수는 부호 주의!</strong><br><br>
+예: <strong>-2x = 8</strong><br>
+양변 <strong>÷ (-2)</strong> → x = -4<br><br>
+예: <strong>-3x + 6 = 15</strong><br>
+① 양변 <strong>- 6</strong> → -3x = 9<br>
+② 양변 <strong>÷ (-3)</strong> → x = -3<br><br>
+⚠️ 음수로 나누면 부호가 바뀜!`,
+     ex:'-3x+6=15 → -6 → ÷(-3) → x=-3', exl:'음수 계수 나누기',
+     tip:'음수÷음수 = 양수 / 양수÷음수 = 음수'},
+    {h:'양변에 x가 있는 경우',
+     b:`<strong>x 항을 한쪽으로 모으기</strong><br><br>
+예: <strong>2x + 1 = x + 7</strong><br>
+① 양변 <strong>- x</strong> → x + 1 = 7<br>
+② 양변 <strong>- 1</strong> → x = 6<br><br>
+예: <strong>3x - 5 = 2x + 3</strong><br>
+① 양변 <strong>- 2x</strong> → x - 5 = 3<br>
+② 양변 <strong>+ 5</strong> → x = 8`,
+     ex:'3x-5=2x+3 → -2x → +5 → x=8', exl:'x 항을 한쪽으로!',
+     tip:'x가 많은 쪽에서 적은 쪽을 빼면 양수로 남음'},
+    {h:'괄호 있는 방정식',
+     b:`<strong>괄호 먼저 풀기!</strong><br><br>
+예: <strong>2(x + 3) = 14</strong><br>
+① 분배: 2x + 6 = 14<br>
+② 양변 <strong>- 6</strong> → 2x = 8<br>
+③ 양변 <strong>÷ 2</strong> → x = 4<br><br>
+예: <strong>-2(x - 1) = 6</strong><br>
+① 분배: -2x + 2 = 6<br>
+② 양변 <strong>- 2</strong> → -2x = 4<br>
+③ 양변 <strong>÷ (-2)</strong> → x = -2`,
+     ex:'2(x+3)=14 → 분배 → -6 → ÷2 → x=4', exl:'괄호 → 2단계',
+     tip:'분배법칙: a(b+c) = ab + ac'},
   ],
 ];
 
@@ -1000,46 +992,46 @@ const QS = [
   ],
   // ch5: 등식의 성질
   [
-    {q:'등식이 무엇인지 고르면?',ex:null,
-     c:['3x+1','2x > 5','x+1 = 4','x+y'],ans:2,fill:'x+1=4',
-     hint:'등호(=)가 있어야 등식이에요',
-     st:['등식: 등호(=)가 있는 식','x+1 = 4 → 등호가 있으므로 등식'],ans_txt:'x+1=4'},
-    {q:'x-3=5의 양변에 3을 더하면?',ex:'x-3=5',
-     c:['x=5','x=8','x=2','x-3=8'],ans:1,fill:'x=8',
-     hint:'등식의 성질: 양변에 같은 수를 더해도 등식 성립',
-     st:['x-3=5','양변에 +3','x-3+3 = 5+3','<strong>x=8</strong>'],ans_txt:'x=8'},
-    {q:'x+4=9의 양변에서 4를 빼면?',ex:'x+4=9',
-     c:['x=13','x=5','x=4','x=9'],ans:1,fill:'x=5',
-     hint:'등식의 성질: 양변에서 같은 수를 빼도 등식 성립',
-     st:['x+4=9','양변에 -4','x+4-4 = 9-4','<strong>x=5</strong>'],ans_txt:'x=5'},
-    {q:'2x=8의 양변을 2로 나누면?',ex:'2x=8',
-     c:['x=16','x=6','x=4','x=2'],ans:2,fill:'x=4',
-     hint:'등식의 성질: 양변을 0이 아닌 같은 수로 나눠도 등식 성립',
-     st:['2x=8','양변을 ÷2','2x/2 = 8/2','<strong>x=4</strong>'],ans_txt:'x=4'},
-    {q:'x/3=5의 양변에 3을 곱하면?',ex:'x/3=5',
-     c:['x=5/3','x=8','x=15','x=2'],ans:2,fill:'x=15',
-     hint:'등식의 성질: 양변에 같은 수를 곱해도 등식 성립',
-     st:['x/3=5','양변에 ×3','x/3×3 = 5×3','<strong>x=15</strong>'],ans_txt:'x=15'},
-    {q:'a=b일 때 옳은 것은?',ex:null,
-     c:['a+1=b-1','2a=b','a-3=b+3','a+5=b+5'],ans:3,fill:'a+5=b+5',
-     hint:'등식의 성질: 양변에 같은 수를 더하면 등식이 성립',
-     st:['a=b이면','양변에 +5를 해도 등식 성립','<strong>a+5=b+5</strong>'],ans_txt:'a+5=b+5'},
-    {q:'a=b일 때 옳은 것은?',ex:null,
-     c:['3a=b','a=3b','3a=3b','a+3=b'],ans:2,fill:'3a=3b',
-     hint:'등식의 성질: 양변에 같은 수를 곱해도 등식이 성립',
-     st:['a=b이면','양변에 ×3을 해도 등식 성립','<strong>3a=3b</strong>'],ans_txt:'3a=3b'},
-    {q:'x-7=2를 등식의 성질로 풀면 x=?',ex:'x-7=2',
-     c:['x=5','x=9','x=-5','x=14'],ans:1,fill:'x=9',
-     hint:'양변에 7을 더하면?',
-     st:['x-7=2','양변에 +7','x-7+7=2+7','<strong>x=9</strong>'],ans_txt:'x=9'},
-    {q:'3x=12를 등식의 성질로 풀면 x=?',ex:'3x=12',
-     c:['x=9','x=4','x=36','x=15'],ans:1,fill:'x=4',
-     hint:'양변을 3으로 나누면?',
-     st:['3x=12','양변을 ÷3','3x÷3=12÷3','<strong>x=4</strong>'],ans_txt:'x=4'},
-    {q:'x/2+1=4를 등식의 성질로 풀면 x=?',ex:'x/2+1=4',
-     c:['x=6','x=10','x=3','x=5'],ans:0,fill:'x=6',
-     hint:'① 양변에서 1 빼기 → ② 양변에 2 곱하기',
-     st:['x/2+1=4','양변 -1: x/2=3','양변 ×2: x=6','<strong>x=6</strong>'],ans_txt:'x=6'},
+    {q:'2x + 5 = 13을 풀면 x = ?',ex:'2x+5=13',
+     c:['x=4','x=9','x=3','x=6'],ans:0,fill:'x=4',
+     hint:'① 양변 -5 → ② 양변 ÷2',
+     st:['2x+5=13','양변 -5: 2x=8','양변 ÷2: x=4','<strong>x=4</strong>'],ans_txt:'x=4'},
+    {q:'3x - 4 = 11을 풀면 x = ?',ex:'3x-4=11',
+     c:['x=7','x=5','x=3','x=9'],ans:1,fill:'x=5',
+     hint:'① 양변 +4 → ② 양변 ÷3',
+     st:['3x-4=11','양변 +4: 3x=15','양변 ÷3: x=5','<strong>x=5</strong>'],ans_txt:'x=5'},
+    {q:'-3x = 12를 풀면 x = ?',ex:'-3x=12',
+     c:['x=4','x=-4','x=9','x=-9'],ans:1,fill:'x=-4',
+     hint:'양변 ÷(-3) — 음수로 나누면 부호 바뀜!',
+     st:['-3x=12','양변 ÷(-3)','x = 12÷(-3)','<strong>x=-4</strong>'],ans_txt:'x=-4'},
+    {q:'x/4 - 1 = 2를 풀면 x = ?',ex:'x/4-1=2',
+     c:['x=12','x=4','x=8','x=3'],ans:0,fill:'x=12',
+     hint:'① 양변 +1 → ② 양변 ×4',
+     st:['x/4-1=2','양변 +1: x/4=3','양변 ×4: x=12','<strong>x=12</strong>'],ans_txt:'x=12'},
+    {q:'2x + 1 = x + 7을 풀면 x = ?',ex:'2x+1=x+7',
+     c:['x=8','x=6','x=4','x=3'],ans:1,fill:'x=6',
+     hint:'① 양변 -x → ② 양변 -1',
+     st:['2x+1=x+7','양변 -x: x+1=7','양변 -1: x=6','<strong>x=6</strong>'],ans_txt:'x=6'},
+    {q:'3x - 5 = 2x + 3을 풀면 x = ?',ex:'3x-5=2x+3',
+     c:['x=8','x=2','x=-2','x=6'],ans:0,fill:'x=8',
+     hint:'① 양변 -2x → ② 양변 +5',
+     st:['3x-5=2x+3','양변 -2x: x-5=3','양변 +5: x=8','<strong>x=8</strong>'],ans_txt:'x=8'},
+    {q:'2(x + 3) = 14를 풀면 x = ?',ex:'2(x+3)=14',
+     c:['x=4','x=11','x=8','x=2'],ans:0,fill:'x=4',
+     hint:'① 분배법칙으로 괄호 풀기 → ② 2단계',
+     st:['2(x+3)=14','분배: 2x+6=14','양변 -6: 2x=8','양변 ÷2: <strong>x=4</strong>'],ans_txt:'x=4'},
+    {q:'-2x + 6 = 10을 풀면 x = ?',ex:'-2x+6=10',
+     c:['x=8','x=-2','x=2','x=-8'],ans:1,fill:'x=-2',
+     hint:'① 양변 -6 → ② 양변 ÷(-2)',
+     st:['-2x+6=10','양변 -6: -2x=4','양변 ÷(-2): x=-2','<strong>x=-2</strong>'],ans_txt:'x=-2'},
+    {q:'a = b일 때 2a - 1과 같은 것은?',ex:'a=b',
+     c:['2b+1','2b','2b-1','2b-2'],ans:2,fill:'2b-1',
+     hint:'a=b → 양변 ×2 → 양변 -1',
+     st:['a=b','양변 ×2: 2a=2b','양변 -1: 2a-1=2b-1','<strong>2b-1</strong>'],ans_txt:'2b-1'},
+    {q:'5x - 3 = 3x + 7을 풀면 x = ?',ex:'5x-3=3x+7',
+     c:['x=5','x=2','x=10','x=4'],ans:0,fill:'x=5',
+     hint:'① 양변 -3x → ② 양변 +3 → ③ 양변 ÷2',
+     st:['5x-3=3x+7','양변 -3x: 2x-3=7','양변 +3: 2x=10','양변 ÷2: <strong>x=5</strong>'],ans_txt:'x=5'},
   ],
 ];
 
@@ -1057,8 +1049,7 @@ const CH_META = [
 // =====================================================
 const S = {
   score:0, combo:0, maxCombo:0,
-  chapter:0, qIdx:0, mode:'mcq',
-  modeSwitched:false, slideIdx:0,
+  chapter:0, qIdx:0, slideIdx:0,
   chPts:0, correct:0, total:0,
   timer:null, timeLeft:30,
   unlocked:[true,true,true,true,true,true],
@@ -1072,7 +1063,6 @@ function loadSave(){
     if(d.score!=null) S.score=d.score;
     if(d.unlocked) S.unlocked=d.unlocked;
     if(d.done) S.done=d.done;
-    if(S.score>=500){S.mode='fill';}
   }catch(e){}
 }
 function saveSave(){
@@ -1097,8 +1087,7 @@ function showScreen(id){
 function renderTitle(){
   document.getElementById('t-score').textContent=S.score.toLocaleString();
   const mp=document.getElementById('t-mode');
-  if(S.score>=500){mp.textContent='🔥 주관식';mp.className='mode-pill fill';}
-  else{mp.textContent='📝 객관식 (500점→주관식)';mp.className='mode-pill mcq';}
+  mp.textContent='📝 객관식';mp.className='mode-pill mcq';
   document.getElementById('ch-grid').innerHTML=CH_META.map((m,i)=>`
     <div class="ch-card ${S.unlocked[i]?'':'locked'} ${S.done[i]?'done':''}"
       onclick="${S.unlocked[i]?`startCh(${i})`:''}">
@@ -1203,16 +1192,11 @@ function renderQ(){
   if(q.ex){ex.style.display='block';ex.textContent=q.ex;}
   else{ex.style.display='none';}
   document.getElementById('q-ctr').textContent=`${S.qIdx+1} / ${S.qList.length} 문제`;
-  const mt=document.getElementById('mtag');
-  mt.textContent=S.mode==='mcq'?'객관식':'주관식';
-  mt.className='mtag '+(S.mode==='mcq'?'mcq':'fill');
-  if(S.mode==='mcq') renderMCQ(q);
-  else renderFill();
+  renderMCQ(q);
   startTimer();
 }
 
 function renderMCQ(q){
-  document.getElementById('fill-wrap').style.display='none';
   const idxs=shuffle([0,1,2,3]);
   const correctPos=idxs.indexOf(q.ans);
   S.curCorrectIdx=correctPos;
@@ -1224,14 +1208,6 @@ function renderMCQ(q){
   `).join('');
 }
 
-function renderFill(){
-  document.getElementById('choices').style.display='none';
-  document.getElementById('fill-wrap').style.display='flex';
-  const inp=document.getElementById('fill-input');
-  inp.value=''; inp.placeholder='답을 입력하세요 (예: 5x, 2a+2, -3x+6)';
-  setTimeout(()=>inp.focus(),80);
-}
-
 function checkMCQ(clicked, correct){
   clearTimer();
   document.querySelectorAll('.cbtn').forEach(b=>b.disabled=true);
@@ -1241,19 +1217,6 @@ function checkMCQ(clicked, correct){
   handleAnswer(isOK);
 }
 
-function checkFill(){
-  clearTimer();
-  const raw=document.getElementById('fill-input').value.trim();
-  const isOK=norm(raw)===norm(String(S.curQ.fill));
-  handleAnswer(isOK);
-}
-
-function norm(s){
-  return s.toLowerCase().replace(/\s/g,'')
-    .replace(/×/g,'*').replace(/÷/g,'/')
-    .replace(/[（）]/g,m=>m==='（'?'(':')')
-    .replace(/[－＋]/g,m=>m==='－'?'-':'+');
-}
 
 function handleAnswer(isOK){
   S.total++;
@@ -1263,14 +1226,8 @@ function handleAnswer(isOK){
   if(isOK){
     S.combo++; S.maxCombo=Math.max(S.maxCombo,S.combo); S.correct++;
     const mult=S.combo>=10?5:S.combo>=5?3:S.combo>=3?2:1;
-    const base=S.mode==='mcq'?200:500;
-    const earned=base*mult;
-    const prev=S.score;
+    const earned=200*mult;
     S.score+=earned; S.chPts+=earned;
-    if(prev<500&&S.score>=500&&!S.modeSwitched){
-      S.modeSwitched=true; S.mode='fill';
-      showMSB();
-    }
     updateScoreUI();
     showExp(S.curQ,true,false);
   } else {
@@ -1356,15 +1313,6 @@ function updateScoreUI(){
 }
 
 // =====================================================
-// MODE SWITCH
-// =====================================================
-function showMSB(){
-  const b=document.getElementById('msb');
-  b.classList.add('show');
-  setTimeout(()=>b.classList.remove('show'),2500);
-}
-
-// =====================================================
 // CHAPTER END
 // =====================================================
 function endChapter(){
@@ -1380,7 +1328,7 @@ function endChapter(){
   document.getElementById('st-acc').textContent=acc+'%';
   document.getElementById('st-combo').textContent=S.maxCombo+'콤보';
   document.getElementById('st-total').textContent=S.score.toLocaleString()+'점';
-  document.getElementById('st-mode').textContent=S.mode==='fill'?'🔥주관식':'📝객관식';
+  document.getElementById('st-mode').textContent='📝객관식';
   const nb=document.getElementById('btn-nxt');
   if(S.chapter<4){
     nb.style.display='block';
