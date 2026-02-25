@@ -1,5 +1,5 @@
 // Service Worker for 수학 게임 왕국
-const CACHE_NAME = 'math-games-v6';
+const CACHE_NAME = 'math-games-v7';
 
 const PRECACHE_URLS = [
   './',
@@ -11,6 +11,8 @@ const PRECACHE_URLS = [
   './games/graph.html',
   './games/factor.html',
   './games/sqrt.html',
+  './study/gongsu1.html',
+  './study/micalc2.html',
 ];
 
 // Install: pre-cache all game files
