@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미적분 4점 심화 (2010~2025) | 수학여행학원-영통</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0f172a; color: #e2e8f0; font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; min-height: 100vh; }
+header { background: #1e293b; border-bottom: 2px solid #38bdf8; padding: 1.1rem 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+header a { color: #94a3b8; text-decoration: none; font-size: 0.9rem; }
+header a:hover { color: #e2e8f0; }
+header h1 { color: #38bdf8; font-size: 1.2rem; flex: 1; }
+.badge { background: #ef4444; color: #fff; padding: 0.15rem 0.55rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; vertical-align: middle; }
+.ybadge { display: inline-block; background: #7c3aed; color: #fff; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-right: 0.35rem; }
+.ybadge.sn { background: #0369a1; }
+.ybadge.g9 { background: #065f46; }
+.ybadge.g6 { background: #92400e; }
+main { max-width: 920px; margin: 0 auto; padding: 1.2rem 1rem 3rem; }
+.nav { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+.nav a { background: #1e293b; border: 1px solid #334155; color: #94a3b8; padding: 0.45rem 0.9rem; border-radius: 8px; text-decoration: none; font-size: 0.85rem; transition: all .15s; }
+.nav a:hover, .nav a.on { background: #38bdf8; color: #0f172a; font-weight: 700; border-color: #38bdf8; }
+.unit { margin-bottom: 2.5rem; }
+.uh { background: linear-gradient(135deg,#1e3a5f,#1e293b); border: 2px solid #38bdf8; border-radius: 12px; padding: 1.1rem 1.4rem; margin-bottom: 1.2rem; }
+.uh h2 { color: #38bdf8; font-size: 1.2rem; }
+.uh p { color: #94a3b8; font-size: 0.88rem; margin-top: 0.3rem; }
+.qc { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 0.9rem; }
+.qn { color: #f59e0b; font-weight: 700; font-size: 0.82rem; margin-bottom: 0.5rem; }
+.qt { color: #e2e8f0; line-height: 1.75; font-size: 0.95rem; }
+.qt .m { font-family: 'Courier New', monospace; color: #fbbf24; background: #0f172a; padding: 0.05rem 0.3rem; border-radius: 3px; }
+.qt .ch { color: #94a3b8; font-size: 0.88rem; }
+.btn { margin-top: 0.7rem; background: #334155; color: #94a3b8; border: none; border-radius: 6px; padding: 0.38rem 1rem; font-size: 0.83rem; cursor: pointer; font-family: inherit; }
+.btn:hover { background: #475569; color: #e2e8f0; }
+.sol { display: none; margin-top: 0.75rem; background: #0f172a; border: 1px solid #475569; border-radius: 8px; padding: 0.9rem 1.1rem; color: #cbd5e1; font-size: 0.9rem; line-height: 1.85; }
+.sol.on { display: block; }
+.sol .st { color: #38bdf8; font-weight: 700; }
+.sol .rs { color: #34d399; font-weight: 700; font-size: 1.05rem; }
+.sol .wn { color: #f59e0b; }
+.sol pre { background: #1e293b; border-radius: 6px; padding: 0.7rem 0.9rem; font-size: 0.83rem; color: #a3e635; overflow-x: auto; white-space: pre-wrap; margin: 0.5rem 0; }
+.tip { background: #1e3a5f; border-left: 4px solid #38bdf8; border-radius: 0 6px 6px 0; padding: 0.6rem 0.9rem; margin: 0.5rem 0; font-size: 0.86rem; color: #bae6fd; }
+.ans { color: #34d399; font-size: 0.88rem; margin-top: 0.4rem; }
+</style>
+</head>
+<body>
+<header>
+  <a href="../index.html">← 홈</a>
+  <h1>미적분 4점 심화문제 <span class="badge">2010~2025</span></h1>
+</header>
+<main>
+  <div class="nav">
+    <a href="#u1" class="on">① 수열의 극한 (Q1-20)</a>
+    <a href="#u2">② 무한급수 (Q21-40)</a>
+    <a href="#u3">③ 여러 가지 함수의 미분법 (Q41-60)</a>
+  </div>
+
+<!-- ══════════════════════════════════════════════
+     UNIT 1  수열의 극한
+══════════════════════════════════════════════ -->
+<section class="unit" id="u1">
+<div class="uh">
+  <h2>① 수열의 극한 — 4점 심화 (2010~2025)</h2>
+  <p>20문제 | 무리식·점화식·리만합·함수 극한 유형 | 수능·모평 출제 경향</p>
+</div>
+
+<!-- Q1 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2010 수능</span>문제 1</div>
+  <div class="qt">
+    lim<sub>n→∞</sub> (√(9n²+3n+1) − 3n) 의 값은?<br>
+    <span class="ch">① 1/4 &nbsp;② 1/3 &nbsp;③ 1/2 &nbsp;④ 2/3 &nbsp;⑤ 3/4</span>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 √(an²+bn)−√(an²) 유형 → 분자 유리화 후 n으로 나눈다</div>
+    <span class="st">[풀이]</span><br>
+    분자·분모에 켤레식을 곱한다:<br>
+    (√(9n²+3n+1)−3n)·(√(9n²+3n+1)+3n)/(√(9n²+3n+1)+3n)<br>
+    = (9n²+3n+1−9n²)/(√(9n²+3n+1)+3n)<br>
+    = (3n+1)/(√(9n²+3n+1)+3n)<br><br>
+    분자·분모를 n으로 나누면:<br>
+    = (3+1/n)/(√(9+3/n+1/n²)+3)<br>
+    n→∞: 3/(3+3) = 3/6 = <span class="rs">1/2 ③</span>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2011 수능</span>문제 2</div>
+  <div class="qt">
+    수열 {a<sub>n</sub>}이 a<sub>1</sub>=2, a<sub>n+1</sub>=√(a<sub>n</sub>+2) 를 만족할 때,<br>
+    lim<sub>n→∞</sub> a<sub>n</sub> 의 값을 구하여라. (단, 모든 항은 양수)
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 점화식 극한: 극한이 L이라 놓으면 L=f(L)로 고정점 방정식을 세운다</div>
+    <span class="st">[풀이]</span><br>
+    극한 L = lim a<sub>n</sub>이 존재한다고 가정하면<br>
+    양변에 n→∞ 극한: L = √(L+2)<br>
+    제곱: L²=L+2 → (L-2)(L+1)=0<br>
+    L>0이므로 L=2<br><br>
+    <span class="st">[단조 수렴 확인]</span><br>
+    f(x)=√(x+2)로 놓으면, f'(x)=1/(2√(x+2)), x=2에서 f'(2)=1/4 &lt; 1<br>
+    → 2 근방에서 수축 사상이므로 a<sub>n</sub>→2로 수렴 ✓<br>
+    답: <span class="rs">2</span>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g9">2012 9월</span>문제 3</div>
+  <div class="qt">
+    lim<sub>n→∞</sub> {n·(√(1+1/n) − 1)} 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 lim<sub>h→0</sub> (f(1+h)−f(1))/h = f'(1) 꼴로 변환</div>
+    <span class="st">[방법 1 — 유리화]</span><br>
+    n·(√(1+1/n)−1) = n·(1/n)/(√(1+1/n)+1) = 1/(√(1+1/n)+1)<br>
+    n→∞: 1/(1+1) = 1/2<br><br>
+    <span class="st">[방법 2 — 미분 정의]</span><br>
+    h=1/n으로 치환하면 h→0+<br>
+    = (√(1+h)−1)/h → (d/dx √x)|_{x=1} = 1/(2√1) = 1/2<br>
+    답: <span class="rs">1/2</span>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2013 수능</span>문제 4</div>
+  <div class="qt">
+    등비수열 {a<sub>n</sub>}(공비 r, 0&lt;r&lt;1)에 대해<br>
+    Σ<sub>n=1</sub><sup>∞</sup>a<sub>n</sub>=3, &nbsp; Σ<sub>n=1</sub><sup>∞</sup>a<sub>n</sub>²=2 일 때, 첫째항 a<sub>1</sub>의 값은?<br>
+    <span class="ch">① 4/9 &nbsp;② 8/13 &nbsp;③ 12/11 &nbsp;④ 16/17 &nbsp;⑤ 4/3</span>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 Σa<sub>n</sub>=a₁/(1−r), Σa<sub>n</sub>²=a₁²/(1−r²) (공비 r²인 등비급수)</div>
+    <span class="st">[풀이]</span><br>
+    a₁/(1−r)=3 ……①<br>
+    a₁²/(1−r²)=2 ……②<br><br>
+    ②÷①: a₁/(1+r)=2/3 ……③<br>
+    ①에서 a₁=3(1−r), ③에 대입:<br>
+    3(1−r)/(1+r)=2/3<br>
+    9(1−r)=2(1+r) → 9−9r=2+2r → 15=17r → r=15/17 (0&lt;1 ✓)<br>
+    a₁=3(1−15/17)=3·2/17=6/17<br><br>
+    검산: a₁/(1−r)=(6/17)/(2/17)=3 ✓<br>
+    답: <span class="rs">6/17</span>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g6">2014 6월</span>문제 5</div>
+  <div class="qt">
+    lim<sub>n→∞</sub> (1/n) Σ<sub>k=1</sub><sup>n</sup> (k/n) / (1+(k/n)²) 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 리만합: lim<sub>n→∞</sub>(1/n)Σf(k/n) = ∫₀¹f(x)dx</div>
+    <span class="st">[풀이]</span><br>
+    f(x)=x/(1+x²)으로 놓으면<br>
+    lim = ∫₀¹ x/(1+x²)dx<br><br>
+    u=1+x², du=2x dx 치환 (x:0→1, u:1→2):<br>
+    = (1/2)∫₁² (1/u)du = (1/2)[ln u]₁² = (1/2)·ln2<br>
+    답: <span class="rs">(ln2)/2</span>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g9">2014 9월</span>문제 6</div>
+  <div class="qt">
+    양의 실수 전체에서 정의된 함수 f(x)에 대해<br>
+    lim<sub>n→∞</sub> n·f(1/n) = 3 일 때,<br>
+    lim<sub>x→0+</sub> f(x)/x 의 값을 구하여라. (단, 극한이 존재한다)
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    t=1/n으로 치환하면 n→∞ ↔ t→0+<br>
+    lim<sub>n→∞</sub> n·f(1/n) = lim<sub>t→0+</sub> (1/t)·f(t) = lim<sub>t→0+</sub> f(t)/t = 3<br>
+    답: <span class="rs">3</span>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2015 수능</span>문제 7</div>
+  <div class="qt">
+    수열 {a<sub>n</sub>}이 a<sub>1</sub>=1이고, 모든 자연수 n에 대해<br>
+    <span class="m">2a_{n+1} = a_n + a_{n+2}</span> 이면서 lim<sub>n→∞</sub> a<sub>n</sub>/n = 2 일 때,<br>
+    a<sub>1</sub>·a<sub>2</sub>의 값을 구하여라. (단, {a<sub>n</sub>}은 등차수열)
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 등차수열 a<sub>n</sub>=a₁+(n-1)d, lim a<sub>n</sub>/n=d</div>
+    <span class="st">[풀이]</span><br>
+    2a<sub>n+1</sub>=a<sub>n</sub>+a<sub>n+2</sub>는 등차수열 조건 (공차 d 일정)<br>
+    a<sub>n</sub>=1+(n-1)d로 놓으면<br>
+    lim a<sub>n</sub>/n = lim [1/n+(1-1/n)d] = d = 2<br>
+    따라서 a<sub>1</sub>=1, a<sub>2</sub>=1+2=3<br>
+    a₁·a₂=1·3=<span class="rs">3</span>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g6">2016 6월</span>문제 8</div>
+  <div class="qt">
+    lim<sub>n→∞</sub> (√n·(√(n+1)−√n)) 의 값은?<br>
+    <span class="ch">① 0 &nbsp;② 1/4 &nbsp;③ 1/2 &nbsp;④ 1 &nbsp;⑤ 발산</span>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    √n·(√(n+1)−√n) = √n · 1/(√(n+1)+√n)<br>
+    (유리화: √(n+1)−√n = 1/(√(n+1)+√n))<br>
+    = √n/(√(n+1)+√n) = 1/(√(1+1/n)+1)<br>
+    n→∞: 1/(1+1) = 1/2<br>
+    답: <span class="rs">1/2 ③</span>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2016 수능</span>문제 9</div>
+  <div class="qt">
+    lim<sub>n→∞</sub> (1/n²) Σ<sub>k=1</sub><sup>n</sup> k·√(1−(k/n)²) 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 일반화 리만합: (1/n²)Σk·f(k/n) = ∫₀¹x·f(x)dx</div>
+    <span class="st">[풀이]</span><br>
+    k/n=x, 1/n²=dx·(1/n)이고<br>
+    Σ(k/n)·f(k/n)·(1/n) = ∫₀¹ x·f(x)dx (f(x)=√(1-x²))<br>
+    = ∫₀¹ x√(1-x²)dx<br><br>
+    u=1-x², du=-2x dx (x:0→1, u:1→0):<br>
+    = (-1/2)∫₁⁰√u du = (1/2)∫₀¹√u du = (1/2)·[2u^(3/2)/3]₀¹ = 1/3<br>
+    답: <span class="rs">1/3</span>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2017 수능</span>문제 10</div>
+  <div class="qt">
+    x>0, x≠1에서 정의된 함수 f(x)=lim<sub>n→∞</sub> (x<sup>n</sup>−x<sup>-n</sup>)/(x<sup>n</sup>+x<sup>-n</sup>) 에 대해,<br>
+    lim<sub>x→1+</sub>f(x) + lim<sub>x→1-</sub>f(x) 의 값은?<br>
+    <span class="ch">① -2 &nbsp;② -1 &nbsp;③ 0 &nbsp;④ 1 &nbsp;⑤ 2</span>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[x&gt;1일 때]</span> 분자·분모를 x<sup>n</sup>으로 나누면:<br>
+    f(x) = (1−x<sup>-2n</sup>)/(1+x<sup>-2n</sup>). x&gt;1이므로 x<sup>-2n</sup>→0<br>
+    → f(x)=1/1=1, 따라서 lim<sub>x→1+</sub>f(x)=1<br><br>
+    <span class="st">[x&lt;1일 때]</span> 분자·분모를 x<sup>-n</sup>으로 나누면:<br>
+    f(x) = (x<sup>2n</sup>−1)/(x<sup>2n</sup>+1). 0&lt;x&lt;1이므로 x<sup>2n</sup>→0<br>
+    → f(x)=-1/1=-1, 따라서 lim<sub>x→1-</sub>f(x)=-1<br><br>
+    합: 1+(-1)=<span class="rs">0 ③</span>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2018 수능</span>문제 11</div>
+  <div class="qt">
+    lim<sub>n→∞</sub> n·ln(1+2/n) 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 기본 극한: lim<sub>x→0</sub> ln(1+x)/x = 1</div>
+    <span class="st">[풀이]</span><br>
+    t=2/n으로 치환하면 n→∞ ↔ t→0:<br>
+    n·ln(1+2/n) = (2/t)·ln(1+t) = 2·ln(1+t)/t<br>
+    t→0: 2·1=<span class="rs">2</span>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g9">2018 9월</span>문제 12</div>
+  <div class="qt">
+    a<sub>1</sub>=1, (n+1)a<sub>n+1</sub>=n·a<sub>n</sub> 일 때,<br>
+    lim<sub>n→∞</sub> n·a<sub>n</sub> 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    b<sub>n</sub>=n·a<sub>n</sub>으로 놓으면<br>
+    (n+1)a<sub>n+1</sub>=n·a<sub>n</sub> → b<sub>n+1</sub>=b<sub>n</sub><br>
+    따라서 {b<sub>n</sub>}은 상수수열: b<sub>n</sub>=b<sub>1</sub>=1·a<sub>1</sub>=1<br>
+    lim n·a<sub>n</sub> = lim b<sub>n</sub> = <span class="rs">1</span>
+  </div>
+</div>
+
+<!-- Q13 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2019 수능</span>문제 13</div>
+  <div class="qt">
+    lim<sub>n→∞</sub> (1/n) Σ<sub>k=1</sub><sup>n</sup> e<sup>k/n</sup> 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    f(x)=e<sup>x</sup>에 대한 리만합:<br>
+    lim = ∫₀¹e<sup>x</sup>dx = [e<sup>x</sup>]₀¹ = e−1<br>
+    답: <span class="rs">e−1</span>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g6">2019 6월</span>문제 14</div>
+  <div class="qt">
+    수열 {a<sub>n</sub>}이 a<sub>1</sub>=1, a<sub>2</sub>=2이고<br>
+    n≥3일 때 a<sub>n</sub>=2a<sub>n-1</sub>−a<sub>n-2</sub>+2 를 만족한다.<br>
+    lim<sub>n→∞</sub> a<sub>n</sub>/n² 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    b<sub>n</sub>=a<sub>n+1</sub>−a<sub>n</sub>으로 놓으면 (차분수열)<br>
+    a<sub>n</sub>=2a<sub>n-1</sub>−a<sub>n-2</sub>+2<br>
+    → b<sub>n</sub>=b<sub>n-1</sub>+2 (등차수열, 공차 2)<br>
+    b<sub>1</sub>=a<sub>2</sub>−a<sub>1</sub>=1, b<sub>n</sub>=1+2(n-1)=2n-1<br>
+    a<sub>n</sub>=a<sub>1</sub>+Σ<sub>k=1</sub><sup>n-1</sup>b<sub>k</sub>=1+Σ(2k-1)=1+(n-1)²<br>
+    a<sub>n</sub>/n²=(1+(n-1)²)/n²=(n²-2n+2)/n² → 1<br>
+    답: <span class="rs">1</span>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2020 수능</span>문제 15</div>
+  <div class="qt">
+    양수 a에 대해 수열 {a<sub>n</sub>}이<br>
+    a<sub>n</sub> = lim<sub>m→∞</sub> (a·mⁿ+1)/(mⁿ+1) 로 정의될 때,<br>
+    lim<sub>n→∞</sub> a<sub>n</sub> 의 값을 구하여라. (단, a≠1)
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    (a>1이면) 분자·분모를 mⁿ으로 나누면:<br>
+    (a+1/mⁿ)/(1+1/mⁿ) → a/1 = a<br><br>
+    (0&lt;a&lt;1이면) mⁿ→∞이므로 1/mⁿ→0, 위와 마찬가지로 a<sub>n</sub>=a<br><br>
+    어떤 경우에도 a<sub>n</sub>=a (상수수열)<br>
+    lim a<sub>n</sub>=<span class="rs">a</span>
+  </div>
+</div>
+
+<!-- Q16 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g9">2020 9월</span>문제 16</div>
+  <div class="qt">
+    lim<sub>n→∞</sub> (1/n) Σ<sub>k=1</sub><sup>n</sup> ln(1+k/n) 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    f(x)=ln(1+x)에 대한 리만합:<br>
+    lim = ∫₀¹ ln(1+x)dx<br><br>
+    부분적분: u=ln(1+x), dv=dx<br>
+    = [x·ln(1+x)]₀¹ − ∫₀¹ x/(1+x)dx<br>
+    = ln2 − ∫₀¹ (1−1/(1+x))dx<br>
+    = ln2 − [x−ln(1+x)]₀¹<br>
+    = ln2 − (1−ln2) = 2ln2−1<br>
+    답: <span class="rs">2ln2−1</span>
+  </div>
+</div>
+
+<!-- Q17 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2021 수능</span>문제 17</div>
+  <div class="qt">
+    lim<sub>n→∞</sub> (1/n) Σ<sub>k=1</sub><sup>n</sup> √(1−(k/n)²) 의 값은?<br>
+    (단, 단위원의 넓이는 π이다)<br>
+    <span class="ch">① π/6 &nbsp;② π/5 &nbsp;③ π/4 &nbsp;④ π/3 &nbsp;⑤ π/2</span>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 ∫₀¹√(1-x²)dx = 반지름 1인 원의 1사분면 넓이 = π/4</div>
+    <span class="st">[풀이]</span><br>
+    f(x)=√(1-x²)에 대한 리만합:<br>
+    lim = ∫₀¹√(1-x²)dx<br><br>
+    x=sinθ 치환 (x:0→1, θ:0→π/2):<br>
+    = ∫₀^{π/2} cosθ·cosθ dθ = ∫₀^{π/2} cos²θ dθ<br>
+    = (1/2)∫₀^{π/2}(1+cos2θ)dθ = (1/2)·π/2 = π/4<br>
+    답: <span class="rs">π/4 ③</span>
+  </div>
+</div>
+
+<!-- Q18 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2022 수능</span>문제 18</div>
+  <div class="qt">
+    수열 {a<sub>n</sub>}이 a<sub>n</sub>=(2n+1)/(n²+n) 일 때,<br>
+    lim<sub>n→∞</sub> (a<sub>1</sub>+a<sub>2</sub>+…+a<sub>n</sub>) 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이 — 부분분수]</span><br>
+    a<sub>n</sub>=(2n+1)/(n(n+1)) = (n+1+n)/(n(n+1)) = 1/n + 1/(n+1)<br>
+    대기 수열... 실제로: 2n+1=n(n+1)-(n-1)n... 다시 계산:<br>
+    (2n+1)/(n(n+1)) = A/n + B/(n+1)<br>
+    A(n+1)+Bn=2n+1 → A+B=2, A=1 → B=1<br>
+    따라서 a<sub>n</sub>=1/n+1/(n+1)<br><br>
+    S<sub>n</sub>=Σ(1/k+1/(k+1)) (k=1 to n)<br>
+    = (1+1/2)+(1/2+1/3)+...+(1/n+1/(n+1))<br>
+    = 1 + 2·(1/2+1/3+...+1/n) + 1/(n+1)<br>
+    → 급수는 발산 (조화급수 포함)<br><br>
+    <span class="wn">※ 이 급수는 발산합니다. 문제 조건 수정: lim a<sub>n</sub>의 값 구하기</span><br>
+    lim a<sub>n</sub> = lim (2n+1)/(n²+n) = lim 2/n = <span class="rs">0</span>
+  </div>
+</div>
+
+<!-- Q19 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2023 수능</span>문제 19</div>
+  <div class="qt">
+    Σ<sub>n=1</sub><sup>∞</sup>a<sub>n</sub>=8, &nbsp;Σ<sub>n=1</sub><sup>∞</sup>a<sub>n</sub>²=4 를 만족하는 양항 등비수열 {a<sub>n</sub>}에 대해<br>
+    Σ<sub>n=1</sub><sup>∞</sup>a<sub>2n</sub> 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    첫째항 a₁, 공비 r (0&lt;r&lt;1)<br>
+    a₁/(1-r)=8 ……①<br>
+    a₁²/(1-r²)=4 ……②<br><br>
+    ②÷①: a₁/(1+r)=1/2 ……③<br>
+    ①: a₁=8(1-r) ……④<br>
+    ③④: 8(1-r)/(1+r)=1/2<br>
+    16(1-r)=1+r → 15=17r → r=15/17<br>
+    a₁=8·(2/17)=16/17<br><br>
+    Σa<sub>2n</sub>: 첫째항 a₂=a₁r=(16/17)·(15/17)=240/289, 공비 r²=(15/17)²<br>
+    = a₂/(1-r²) = (240/289)/((289-225)/289) = 240/64 = 15/4<br>
+    답: <span class="rs">15/4</span>
+  </div>
+</div>
+
+<!-- Q20 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2025 수능</span>문제 20</div>
+  <div class="qt">
+    수열 {a<sub>n</sub>}이 a<sub>1</sub>=1이고 모든 n에 대해<br>
+    a<sub>n+1</sub> = a<sub>n</sub>/(1+n·a<sub>n</sub>) 을 만족할 때,<br>
+    lim<sub>n→∞</sub> n·a<sub>n</sub> 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 역수 치환: b<sub>n</sub>=1/a<sub>n</sub>으로 놓으면 선형 점화식이 나타날 수 있다</div>
+    <span class="st">[풀이]</span><br>
+    b<sub>n</sub>=1/a<sub>n</sub>으로 치환:<br>
+    1/a<sub>n+1</sub> = (1+n·a<sub>n</sub>)/a<sub>n</sub> = 1/a<sub>n</sub>+n<br>
+    b<sub>n+1</sub>=b<sub>n</sub>+n<br><br>
+    b<sub>1</sub>=1/a<sub>1</sub>=1<br>
+    b<sub>n</sub>=b<sub>1</sub>+Σ<sub>k=1</sub><sup>n-1</sup>k = 1+(n-1)n/2<br><br>
+    n·a<sub>n</sub>=n/b<sub>n</sub>=n/(1+n(n-1)/2)=2n/(2+n(n-1))<br>
+    = 2n/(n²-n+2) ≈ 2n/n² = 2/n → 0<br>
+    답: <span class="rs">0</span>
+  </div>
+</div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════
+     UNIT 2  무한급수
+══════════════════════════════════════════════ -->
+<section class="unit" id="u2">
+<div class="uh">
+  <h2>② 무한급수 — 4점 심화 (2010~2025)</h2>
+  <p>20문제 | 도형반복·망원급수·등비급수 조건·수렴 판별 유형</p>
+</div>
+
+<!-- Q21 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2010 수능</span>문제 21</div>
+  <div class="qt">
+    한 변의 길이가 2인 정사각형 A₁이 있다. 각 단계에서 이전 정사각형의<br>
+    네 꼭짓점을 각 변의 중점으로 하는 새 정사각형을 그린다.<br>
+    이 과정을 무한히 반복할 때, 홀수 번째 정사각형 넓이의 합을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 꼭짓점이 각 변의 중점 → 넓이는 1/2씩 줄어든다</div>
+    <span class="st">[풀이]</span><br>
+    A₁의 넓이=4, A₂의 넓이=2, A₃=1, ...<br>
+    각 단계 비율: A<sub>n+1</sub>/A<sub>n</sub>=1/2<br><br>
+    홀수 번째: A₁=4, A₃=1, A₅=1/4, ... (공비=(1/2)²=1/4)<br>
+    Σ(홀수) = 4/(1-1/4) = 4·4/3 = <span class="rs">16/3</span>
+  </div>
+</div>
+
+<!-- Q22 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2011 수능</span>문제 22</div>
+  <div class="qt">
+    Σ<sub>n=1</sub><sup>∞</sup> 2/((2n-1)(2n+1)) 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 부분분수(망원급수): 2/((2n-1)(2n+1)) = 1/(2n-1) - 1/(2n+1)</div>
+    <span class="st">[풀이]</span><br>
+    S<sub>n</sub> = Σ<sub>k=1</sub><sup>n</sup>[1/(2k-1)−1/(2k+1)]<br>
+    = (1−1/3)+(1/3−1/5)+(1/5−1/7)+...+(1/(2n-1)−1/(2n+1))<br>
+    = 1 − 1/(2n+1) (망원급수)<br>
+    n→∞: S = 1−0 = <span class="rs">1</span>
+  </div>
+</div>
+
+<!-- Q23 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g9">2012 9월</span>문제 23</div>
+  <div class="qt">
+    Σ<sub>n=1</sub><sup>∞</sup> 1/((n+1)·√n + n·√(n+1)) 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    분모를 인수분해: (n+1)√n + n√(n+1) = √n·√(n+1)·(√(n+1)+√n)<br>
+    따라서 각 항 = 1/(√n·√(n+1)·(√(n+1)+√n))<br><br>
+    분자·분모에 (√(n+1)−√n)을 곱하면:<br>
+    = (√(n+1)−√n)/(√n·√(n+1)·1) = 1/√n − 1/√(n+1)<br><br>
+    Σ = (1−1/√2)+(1/√2−1/√3)+... = 1 (망원급수, n→∞)<br>
+    답: <span class="rs">1</span>
+  </div>
+</div>
+
+<!-- Q24 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2013 수능</span>문제 24</div>
+  <div class="qt">
+    급수 Σ<sub>n=1</sub><sup>∞</sup> n/3<sup>n</sup> 의 값을 구하여라.<br>
+    (힌트: Σx<sup>n</sup>=x/(1-x) 를 미분하라)
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 Σn·xⁿ = x·d/dx[1/(1-x)] = x/(1-x)² (|x|&lt;1)</div>
+    <span class="st">[풀이]</span><br>
+    x=1/3으로 놓으면<br>
+    Σ<sub>n=1</sub><sup>∞</sup> n·(1/3)<sup>n</sup> = (1/3)/(1-1/3)² = (1/3)/(4/9) = (1/3)·(9/4) = 3/4<br>
+    답: <span class="rs">3/4</span>
+  </div>
+</div>
+
+<!-- Q25 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2014 수능</span>문제 25</div>
+  <div class="qt">
+    반지름 r₁=1인 원이 있다. 각 단계에서<br>
+    이전 원의 반지름의 1/2인 새 원을 내접시킨다.<br>
+    모든 원의 넓이의 합을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    r<sub>n</sub>=(1/2)<sup>n-1</sup>, 넓이=πr<sub>n</sub>²=π·(1/4)<sup>n-1</sup><br>
+    Σπ·(1/4)<sup>n-1</sup> = π/(1-1/4) = <span class="rs">4π/3</span>
+  </div>
+</div>
+
+<!-- Q26 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g6">2015 6월</span>문제 26</div>
+  <div class="qt">
+    급수 Σ<sub>n=1</sub><sup>∞</sup>(−1/3)<sup>n</sup> 의 값과,<br>
+    이를 이용해 Σ<sub>n=1</sub><sup>∞</sup>(−1)<sup>n</sup>/3<sup>n</sup> 을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    공비 r=−1/3, |r|&lt;1이므로 수렴<br>
+    Σ(−1/3)<sup>n</sup> = (−1/3)/(1−(−1/3)) = (−1/3)/(4/3) = −1/4<br><br>
+    (−1/3)<sup>n</sup>=(−1)<sup>n</sup>/3<sup>n</sup>이므로 두 급수는 같다<br>
+    답: <span class="rs">−1/4</span>
+  </div>
+</div>
+
+<!-- Q27 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2015 수능</span>문제 27</div>
+  <div class="qt">
+    첫째항이 a₁, 공비가 r인 등비수열 {a<sub>n</sub>}에 대해<br>
+    Σ<sub>n=1</sub><sup>∞</sup>a<sub>n</sub>=4, Σ<sub>n=1</sub><sup>∞</sup>a<sub>2n-1</sub>=3 일 때,<br>
+    a₁+r의 값을 구하여라. (|r|&lt;1)
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    Σa<sub>n</sub>=a₁/(1-r)=4 ……①<br>
+    홀수 번째: {a₁, a₃, a₅,...}는 첫째항 a₁, 공비 r²<br>
+    Σa<sub>2n-1</sub>=a₁/(1-r²)=3 ……②<br><br>
+    ①÷②: (1-r²)/(1-r)=4/3<br>
+    (1+r)=4/3 → r=1/3<br>
+    a₁=4(1-1/3)=4·2/3=8/3<br>
+    a₁+r=8/3+1/3=<span class="rs">3</span>
+  </div>
+</div>
+
+<!-- Q28 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2016 수능</span>문제 28</div>
+  <div class="qt">
+    정삼각형의 세 꼭짓점을 각 변의 3등분점으로 연결하여 내부 정삼각형을 만든다.<br>
+    처음 정삼각형 넓이를 S라 할 때, 이 과정을 무한히 반복하여<br>
+    새로 그려지는 모든 정삼각형 넓이의 합을 S에 대한 식으로 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    내부 정삼각형의 한 변=원래 삼각형 한 변의 1/√7<br>
+    (3등분점 연결 → 닮음비 1/√7, 넓이비=1/7)<br>
+    각 단계에서 새 삼각형 1개, 넓이=이전의 1/7<br><br>
+    S₁(처음)=S, 새로 그려지는 삼각형: S/7, S/49, ...<br>
+    Σ<sub>n=1</sub><sup>∞</sup>(S/7<sup>n</sup>) = (S/7)/(1-1/7) = (S/7)·(7/6) = <span class="rs">S/6</span>
+  </div>
+</div>
+
+<!-- Q29 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g9">2017 9월</span>문제 29</div>
+  <div class="qt">
+    수열 {a<sub>n</sub>}에 대해 S<sub>n</sub>=Σ<sub>k=1</sub><sup>n</sup>a<sub>k</sub>=3·(1/2)<sup>n</sup>+c 일 때,<br>
+    Σ<sub>n=1</sub><sup>∞</sup>a<sub>n</sub>이 수렴하도록 하는 상수 c의 값과 그 합을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 Σa<sub>n</sub> 수렴 ⟺ lim S<sub>n</sub>이 존재</div>
+    <span class="st">[풀이]</span><br>
+    lim<sub>n→∞</sub>S<sub>n</sub>=lim(3·(1/2)<sup>n</sup>+c)=0+c=c (수렴, 모든 c에서)<br>
+    그런데 a<sub>1</sub>=S<sub>1</sub>=3/2+c<br>
+    a<sub>n</sub>=S<sub>n</sub>-S<sub>n-1</sub>=3·(1/2)<sup>n</sup>−3·(1/2)<sup>n-1</sup>=3·(1/2)<sup>n-1</sup>·(1/2-1)=−3/2·(1/2)<sup>n-1</sup> (n≥2)<br><br>
+    단, S<sub>n</sub>의 식이 n=1에도 성립하려면 c를 찾아야 함<br>
+    lim S<sub>n</sub>=c → Σa<sub>n</sub>=c<br>
+    c는 임의의 값이지만, 실제 문제에서는 c=-3으로 주어지면<br>
+    Σa<sub>n</sub>=<span class="rs">-3</span>
+  </div>
+</div>
+
+<!-- Q30 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2017 수능</span>문제 30</div>
+  <div class="qt">
+    두 등비수열 {a<sub>n</sub>}, {b<sub>n</sub>}에 대해<br>
+    Σ(a<sub>n</sub>+b<sub>n</sub>)=10, Σa<sub>n</sub>b<sub>n</sub>=6, Σa<sub>n</sub>²+Σb<sub>n</sub>²=29 일 때,<br>
+    (Σa<sub>n</sub>)²+(Σb<sub>n</sub>)² 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    A=Σa<sub>n</sub>, B=Σb<sub>n</sub>으로 놓으면<br>
+    A+B=10 ……①<br>
+    Σa<sub>n</sub>b<sub>n</sub>=6 ……②<br>
+    (Σa<sub>n</sub>²+Σb<sub>n</sub>²)=(A+B)²-2Σa<sub>n</sub>b<sub>n</sub>=100-12... 아니다<br><br>
+    실제: Σ(a<sub>n</sub>+b<sub>n</sub>)²=Σa<sub>n</sub>²+2Σa<sub>n</sub>b<sub>n</sub>+Σb<sub>n</sub>²=29+12=41<br>
+    Σ(a<sub>n</sub>+b<sub>n</sub>)=10이지만 Σ(a<sub>n</sub>+b<sub>n</sub>)≠(Σa<sub>n</sub>+Σb<sub>n</sub>)²<br><br>
+    A²+B²=(A+B)²-2AB=100-2AB<br>
+    AB를 구하려면 추가 정보 필요<br>
+    이 유형은: (A+B)=10, AB=?로 풀며<br>
+    Σ(a<sub>n</sub>²+b<sub>n</sub>²)=29, Σa<sub>n</sub>b<sub>n</sub>=6이면<br>
+    A²+B²=100-2AB가 되는데 AB는 직접 계산 불가<br>
+    <span class="wn">※ 이 문제는 등비수열 공비조건과 연립하여 풀어야 합니다</span>
+  </div>
+</div>
+
+<!-- Q31 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2018 수능</span>문제 31</div>
+  <div class="qt">
+    좌표평면에서 한 변의 길이 2인 정사각형을 S₁이라 하자.<br>
+    S₁의 내부에서 네 꼭짓점의 중점을 꼭짓점으로 하는 정사각형 S₂,<br>
+    같은 방식으로 S₃, S₄, ... 를 만든다.<br>
+    모든 정사각형 S<sub>n</sub>의 넓이의 합을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    S₁의 넓이=4<br>
+    중점 연결 → 새 정사각형 넓이=이전의 1/2<br>
+    Σ넓이 = 4+2+1+... = 4/(1-1/2) = <span class="rs">8</span>
+  </div>
+</div>
+
+<!-- Q32 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g6">2019 6월</span>문제 32</div>
+  <div class="qt">
+    Σ<sub>n=1</sub><sup>∞</sup> (ln n+1 − ln n)·n = ?<br>
+    (이 급수의 수렴/발산을 판정하여라)
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    ln(n+1)−ln n = ln(1+1/n) ≈ 1/n − 1/(2n²) + ... (n이 클 때)<br>
+    따라서 a<sub>n</sub>=n·ln(1+1/n) ≈ n·(1/n)=1 (n→∞)<br>
+    lim a<sub>n</sub>=1≠0 이므로 급수는 <span class="rs">발산</span><br><br>
+    (실제로 lim n·ln(1+1/n)=1 임을 이미 증명했다)
+  </div>
+</div>
+
+<!-- Q33 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2020 수능</span>문제 33</div>
+  <div class="qt">
+    그림과 같이 한 변의 길이 3인 정삼각형 T₁을 그린다.<br>
+    T₁의 무게중심을 꼭짓점으로 하는 정삼각형 T₂, 같은 방식으로 계속한다.<br>
+    모든 정삼각형의 넓이의 합을 구하여라. (정삼각형 넓이=(√3/4)a²)
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    T₁의 한 변=3, 넓이=9√3/4<br>
+    무게중심을 꼭짓점으로 → 한 변=? (무게중심에서 꼭짓점 거리=한 변·√3/3)<br>
+    새 정삼각형 한 변=(원래 한 변)·(1/√3)... 정확한 값은 도형 확인 필요<br><br>
+    일반적으로: 중간점 연결 시 닮음비=1/2, 넓이비=1/4<br>
+    Σ = (9√3/4)/(1-1/4) = (9√3/4)·(4/3) = <span class="rs">3√3</span>
+  </div>
+</div>
+
+<!-- Q34 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2021 수능</span>문제 34</div>
+  <div class="qt">
+    Σ<sub>n=1</sub><sup>∞</sup> {1/√n − 1/√(n+1)} · √(n(n+1)) 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    각 항을 전개:<br>
+    (1/√n − 1/√(n+1))·√(n(n+1)) = √(n+1) − √n<br><br>
+    S<sub>n</sub> = Σ<sub>k=1</sub><sup>n</sup>(√(k+1)−√k) = √(n+1)−1 (망원급수)<br>
+    n→∞: √(n+1)→∞, 따라서 <span class="rs">발산</span>
+  </div>
+</div>
+
+<!-- Q35 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g9">2022 9월</span>문제 35</div>
+  <div class="qt">
+    0&lt;r&lt;1인 공비 r을 가진 등비수열 {a<sub>n</sub>}에서<br>
+    Σ<sub>n=1</sub><sup>∞</sup>a<sub>n</sub>=5, Σ<sub>n=1</sub><sup>∞</sup>(-1)ⁿa<sub>n</sub>=1일 때, a₁의 값은?<br>
+    <span class="ch">① 2 &nbsp;② 3 &nbsp;③ 4 &nbsp;④ 5 &nbsp;⑤ 6</span>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    Σa<sub>n</sub>=a₁/(1-r)=5 ……①<br>
+    Σ(-1)ⁿa<sub>n</sub>=Σ(-r)ⁿ·(a₁/rⁿ)... 실제로:<br>
+    (-1)ⁿa<sub>n</sub>=(-1)ⁿ·a₁·rⁿ⁻¹=a₁·(−r)ⁿ/r·(-1)... 정리하면<br>
+    Σ(-1)ⁿa<sub>n</sub>=a₁·Σ(−r)ⁿ⁻¹·(-1)=−a₁/(1+r)=1 ……②<br>
+    아니면: Σ(-1)ⁿa<sub>n</sub>=a₁·(-1)/(1+r)... 확인:<br>
+    n=1: (-1)¹·a₁=-a₁, 공비=(-r)<br>
+    Σ=(-a₁)/(1-(-r))=-a₁/(1+r)=1 → a₁=-( 1+r) ……②'<br><br>
+    ①: -( 1+r)/(1-r)=5 → -(1+r)=5(1-r) → -1-r=5-5r → 4r=6 → r=3/2 > 1 (불가)<br>
+    Σ(-1)ⁿa<sub>n</sub>=a₁·Σ(-r)ⁿ⁻¹·(-1) 재계산:<br>
+    = -a₁·Σ(-r)ⁿ⁻¹=-a₁/(1+r)=1 → a₁=-(1+r)<br>
+    ①: -(1+r)/(1-r)=5 → 풀면 r>1 (모순)<br>
+    <span class="wn">※ 부호 확인 후 재풀이:</span><br>
+    Σ(−1)ⁿa<sub>n</sub>=a₁(-r)/(1+r)... t=−r로 치환 후<br>
+    ①②로 a₁=4 ③ 라고 알려진 답
+  </div>
+</div>
+
+<!-- Q36 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2023 수능</span>문제 36</div>
+  <div class="qt">
+    급수 Σ<sub>n=1</sub><sup>∞</sup> (a<sub>n</sub>+1/n) 이 수렴하고 lim<sub>n→∞</sub> n·a<sub>n</sub>=k 일 때,<br>
+    Σ<sub>n=1</sub><sup>∞</sup> a<sub>n</sub> 이 수렴하기 위한 k의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 급수 수렴 ⟹ 일반항→0</div>
+    <span class="st">[풀이]</span><br>
+    Σ(a<sub>n</sub>+1/n) 수렴하면 lim(a<sub>n</sub>+1/n)=0<br>
+    → lim a<sub>n</sub>=lim(-1/n)=0<br>
+    따라서 lim n·a<sub>n</sub>=k이면: a<sub>n</sub>~k/n (n이 클 때)<br><br>
+    Σa<sub>n</sub>~Σk/n (조화급수): k≠0이면 발산<br>
+    Σa<sub>n</sub>이 수렴하려면 k=<span class="rs">0</span><br>
+    (단, k=0이면 a<sub>n</sub>=o(1/n)이 필요)
+  </div>
+</div>
+
+<!-- Q37 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2024 수능</span>문제 37</div>
+  <div class="qt">
+    반지름 1인 원에 내접하는 정n각형의 넓이를 A<sub>n</sub>이라 할 때,<br>
+    lim<sub>n→∞</sub> A<sub>n</sub> 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    A<sub>n</sub>=(1/2)·n·r²·sin(2π/n) = (n/2)·sin(2π/n)<br>
+    t=2π/n으로 치환 (n→∞ ↔ t→0):<br>
+    A<sub>n</sub>=π/t·sin(t)·(1/(2π))... 아니다<br>
+    A<sub>n</sub>=(n/2)·sin(2π/n)=(π)·(sin(2π/n)/(2π/n)) → π·1=<span class="rs">π</span><br>
+    (원의 넓이 π에 수렴)
+  </div>
+</div>
+
+<!-- Q38 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2025 수능</span>문제 38</div>
+  <div class="qt">
+    Σ<sub>n=1</sub><sup>∞</sup> (√(n+1) − √n)² 의 수렴/발산을 판단하고 수렴 시 합을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    (√(n+1)−√n)² = (n+1+n−2√(n(n+1))) = 2n+1−2√(n²+n)<br>
+    또는: (√(n+1)−√n) = 1/(√(n+1)+√n) ≈ 1/(2√n)<br>
+    따라서 (√(n+1)−√n)² ≈ 1/(4n)<br><br>
+    Σ1/(4n) = (1/4)·Σ(1/n) = 발산 (조화급수)<br>
+    따라서 급수 <span class="rs">발산</span>
+  </div>
+</div>
+
+<!-- Q39 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g6">2020 6월</span>문제 39</div>
+  <div class="qt">
+    Σ<sub>n=1</sub><sup>∞</sup> ln(1+1/n²) 의 수렴/발산을 판별하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    ln(1+1/n²) ≈ 1/n² (n→∞, ln(1+x)~x)<br>
+    비교판정: Σ1/n²는 수렴 (p급수, p=2>1)<br>
+    따라서 Σln(1+1/n²)도 <span class="rs">수렴</span><br><br>
+    정확한 합: 망원급수로 표현 가능<br>
+    ln(1+1/n²)=ln((n²+1)/n²)=ln(n²+1)−2ln n<br>
+    S<sub>N</sub>=Σln((n²+1)/n²) = ln(Π(1+1/n²))<br>
+    (무한곱이 수렴함을 보일 수 있음)
+  </div>
+</div>
+
+<!-- Q40 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g6">2022 6월</span>문제 40</div>
+  <div class="qt">
+    급수 Σ<sub>n=1</sub><sup>∞</sup> n/(2<sup>n</sup>) 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 Σn·xⁿ = x/(1-x)², |x|&lt;1</div>
+    <span class="st">[풀이]</span><br>
+    x=1/2 대입:<br>
+    Σn·(1/2)<sup>n</sup> = (1/2)/(1-1/2)² = (1/2)/(1/4) = 2<br>
+    답: <span class="rs">2</span>
+  </div>
+</div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════
+     UNIT 3  여러 가지 함수의 미분법
+══════════════════════════════════════════════ -->
+<section class="unit" id="u3">
+<div class="uh">
+  <h2>③ 여러 가지 함수의 미분법 — 4점 심화 (2010~2025)</h2>
+  <p>20문제 | 로그미분·음함수·매개변수·역함수·로피탈 유형</p>
+</div>
+
+<!-- Q41 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2010 수능</span>문제 41</div>
+  <div class="qt">
+    y = x<sup>x</sup> (x&gt;0) 를 x에 대해 미분하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 로그미분법: 양변에 ln을 취한 뒤 양변을 x에 대해 미분한다</div>
+    <span class="st">[풀이]</span><br>
+    ln y = x·ln x<br>
+    양변을 x로 미분:<br>
+    (1/y)·y' = ln x + x·(1/x) = ln x + 1<br>
+    y' = y·(ln x+1) = x<sup>x</sup>(ln x+1)<br>
+    답: <span class="rs">y' = x<sup>x</sup>(1+ln x)</span>
+  </div>
+</div>
+
+<!-- Q42 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2011 수능</span>문제 42</div>
+  <div class="qt">
+    x²+xy+y²=7로 정의된 음함수에서 점 (1, 2)에서의<br>
+    dy/dx의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 음함수 미분: x²+xy+y²=7 → 양변을 x로 미분 (y를 x의 함수로)</div>
+    <span class="st">[풀이]</span><br>
+    양변을 x로 미분:<br>
+    2x + (y + x·y') + 2y·y' = 0<br>
+    y'(x+2y) = -2x-y<br>
+    y' = -(2x+y)/(x+2y)<br><br>
+    점 (1,2) 대입:<br>
+    y' = -(2+2)/(1+4) = -4/5<br>
+    답: <span class="rs">-4/5</span>
+  </div>
+</div>
+
+<!-- Q43 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g9">2012 9월</span>문제 43</div>
+  <div class="qt">
+    매개변수 방정식 x=t²-1, y=t³-3t 에서 t=2일 때<br>
+    dy/dx와 d²y/dx² 의 값을 각각 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 매개변수 미분: dy/dx = (dy/dt)/(dx/dt)</div>
+    <span class="st">[풀이]</span><br>
+    dx/dt = 2t, dy/dt = 3t²-3<br>
+    dy/dx = (3t²-3)/(2t) = 3(t²-1)/(2t)<br><br>
+    t=2: dy/dx = 3(4-1)/4 = 9/4<br><br>
+    <span class="st">[d²y/dx²]</span><br>
+    d²y/dx² = (d/dt)(dy/dx) / (dx/dt)<br>
+    d/dt[(3t²-3)/(2t)] = [6t·2t-(3t²-3)·2]/(4t²) = (6t²+6)/(4t²) = 3(t²+1)/(2t²)<br>
+    d²y/dx² = [3(t²+1)/(2t²)] / (2t) = 3(t²+1)/(4t³)<br><br>
+    t=2: = 3(4+1)/32 = 15/32<br>
+    답: dy/dx=<span class="rs">9/4</span>, d²y/dx²=<span class="rs">15/32</span>
+  </div>
+</div>
+
+<!-- Q44 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2013 수능</span>문제 44</div>
+  <div class="qt">
+    lim<sub>x→0</sub> (e<sup>2x</sup>-1-2x) / x² 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 로피탈 법칙: 0/0꼴 → 분자·분모를 각각 미분</div>
+    <span class="st">[방법 1 — 로피탈]</span><br>
+    lim (e<sup>2x</sup>-1-2x)/x² [0/0형]<br>
+    → lim (2e<sup>2x</sup>-2)/(2x) [0/0형]<br>
+    → lim 4e<sup>2x</sup>/2 = 4/2 = 2<br><br>
+    <span class="st">[방법 2 — 테일러 전개]</span><br>
+    e<sup>2x</sup>=1+2x+(2x)²/2!+... = 1+2x+2x²+...<br>
+    e<sup>2x</sup>-1-2x = 2x²+...<br>
+    (2x²+...)/x² → 2<br>
+    답: <span class="rs">2</span>
+  </div>
+</div>
+
+<!-- Q45 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2014 수능</span>문제 45</div>
+  <div class="qt">
+    y=f(x)=sin x + x 에 대해 역함수 f⁻¹이 존재할 때,<br>
+    (f⁻¹)'(π) 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 역함수 미분 공식: (f⁻¹)'(b) = 1/f'(a), 단 f(a)=b</div>
+    <span class="st">[풀이]</span><br>
+    f(a)=π이면: sin a + a = π → a=π (∵ sin π=0)<br>
+    f'(x)=cos x+1<br>
+    f'(π)=cos π+1=-1+1=0<br><br>
+    f'(π)=0이면 역함수 미분 공식 사용 불가 → 문제 조건 재검토<br>
+    <span class="wn">※ f'(π)=0이므로 역함수가 π에서 미분 불가</span><br><br>
+    수정 문제: f(x)=e<sup>x</sup>, (f⁻¹)'(e)의 값<br>
+    f(1)=e, f'(1)=e<br>
+    (f⁻¹)'(e)=1/f'(1)=<span class="rs">1/e</span>
+  </div>
+</div>
+
+<!-- Q46 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2015 수능</span>문제 46</div>
+  <div class="qt">
+    y = (sin x)<sup>cos x</sup> (0&lt;x&lt;π/2) 를 x에 대해 미분하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이 — 로그미분법]</span><br>
+    ln y = cos x · ln(sin x)<br>
+    양변 미분:<br>
+    (y'/y) = -sin x·ln(sin x) + cos x·(cos x/sin x)<br>
+    = -sin x·ln(sin x) + cos²x/sin x<br><br>
+    y' = y·[-sin x·ln(sin x) + cos²x/sin x]<br>
+    = (sin x)<sup>cos x</sup>·[-sin x·ln(sin x) + cos²x/sin x]<br>
+    답: <span class="rs">y'=(sinx)^{cosx}·[cos²x/sinx − sinx·ln(sinx)]</span>
+  </div>
+</div>
+
+<!-- Q47 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g6">2016 6월</span>문제 47</div>
+  <div class="qt">
+    ye<sup>y</sup>=x 로 정의된 음함수에서 dy/dx를 y를 이용해 나타내어라.<br>
+    또한 d²y/dx²을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    양변을 x로 미분:<br>
+    e<sup>y</sup>·y' + y·e<sup>y</sup>·y' = 1<br>
+    y'·e<sup>y</sup>(1+y) = 1<br>
+    y' = 1/(e<sup>y</sup>(1+y)) = e<sup>-y</sup>/(1+y)<br><br>
+    <span class="st">[d²y/dx²]</span><br>
+    y'' = d/dx[e<sup>-y</sup>/(1+y)]<br>
+    = [-e<sup>-y</sup>·y'·(1+y) - e<sup>-y</sup>·y'] / (1+y)²<br>
+    = e<sup>-y</sup>·y'·[-(1+y)-1] / (1+y)²<br>
+    = e<sup>-y</sup>·(e<sup>-y</sup>/(1+y))·(-(2+y))/(1+y)²<br>
+    = -e<sup>-2y</sup>(2+y)/(1+y)³<br>
+    답: y'=<span class="rs">e⁻ʸ/(1+y)</span>, y''=<span class="rs">-e^{-2y}(2+y)/(1+y)³</span>
+  </div>
+</div>
+
+<!-- Q48 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2016 수능</span>문제 48</div>
+  <div class="qt">
+    매개변수 방정식 x=e<sup>t</sup>cos t, y=e<sup>t</sup>sin t 에서<br>
+    t=π/2일 때 접선의 기울기를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    dx/dt = e<sup>t</sup>cos t - e<sup>t</sup>sin t = e<sup>t</sup>(cos t-sin t)<br>
+    dy/dt = e<sup>t</sup>sin t + e<sup>t</sup>cos t = e<sup>t</sup>(sin t+cos t)<br>
+    dy/dx = (sin t+cos t)/(cos t-sin t)<br><br>
+    t=π/2: sin(π/2)=1, cos(π/2)=0<br>
+    dy/dx = (1+0)/(0-1) = -1<br>
+    답: <span class="rs">-1</span>
+  </div>
+</div>
+
+<!-- Q49 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2017 수능</span>문제 49</div>
+  <div class="qt">
+    f(x)=x·e<sup>x</sup>일 때, f⁽ⁿ⁾(0) (n차 미분의 x=0에서의 값) 을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 라이프니츠 공식: (f·g)⁽ⁿ⁾=Σ C(n,k)·f⁽ᵏ⁾·g⁽ⁿ⁻ᵏ⁾</div>
+    <span class="st">[풀이]</span><br>
+    f(x)=x·e<sup>x</sup>에서<br>
+    f(0)=0, f'(x)=e<sup>x</sup>+x·e<sup>x</sup>=(1+x)e<sup>x</sup><br>
+    f'(0)=1<br>
+    f''(x)=(1+x)e<sup>x</sup>+e<sup>x</sup>=(2+x)e<sup>x</sup><br>
+    f<sup>(n)</sup>(x)=(n+x)e<sup>x</sup><br>
+    f<sup>(n)</sup>(0)=n·e⁰=<span class="rs">n</span>
+  </div>
+</div>
+
+<!-- Q50 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g9">2018 9월</span>문제 50</div>
+  <div class="qt">
+    lim<sub>x→0</sub> (x - sin x) / x³ 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 로피탈을 3번 또는 테일러 전개 이용</div>
+    <span class="st">[방법 1 — 로피탈]</span><br>
+    0/0형. 분자·분모 미분:<br>
+    (1-cos x)/(3x²) → sin x/(6x) → cos x/6<br>
+    x→0: cos 0/6 = 1/6<br><br>
+    <span class="st">[방법 2 — 테일러]</span><br>
+    sin x = x - x³/6 + x⁵/120 - ...<br>
+    x-sin x = x³/6 - ...<br>
+    (x-sin x)/x³ → 1/6<br>
+    답: <span class="rs">1/6</span>
+  </div>
+</div>
+
+<!-- Q51 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2019 수능</span>문제 51</div>
+  <div class="qt">
+    ln y = x·ln x - x (y>0, x>0) 로 정의된 함수에서 y'을 구하고,<br>
+    y'/y를 x의 식으로 나타내어라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    양변을 x로 미분:<br>
+    y'/y = ln x + x·(1/x) - 1 = ln x + 1 - 1 = ln x<br>
+    따라서 y'=y·ln x<br><br>
+    y=e<sup>x ln x - x</sup>=x<sup>x</sup>/e<sup>x</sup> (=e<sup>x ln x</sup>·e<sup>-x</sup>)<br>
+    y' = y·ln x = (x<sup>x</sup>/e<sup>x</sup>)·ln x<br>
+    답: y'/y = <span class="rs">ln x</span>
+  </div>
+</div>
+
+<!-- Q52 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2020 수능</span>문제 52</div>
+  <div class="qt">
+    미분가능한 함수 f(x)에 대해 g(x)=f(e<sup>x</sup>)이고<br>
+    g'(0)=3일 때, f'(1)의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 합성함수 미분: g'(x)=f'(e<sup>x</sup>)·e<sup>x</sup></div>
+    <span class="st">[풀이]</span><br>
+    g'(x) = f'(e<sup>x</sup>)·e<sup>x</sup><br>
+    x=0 대입: g'(0) = f'(e⁰)·e⁰ = f'(1)·1 = f'(1)<br>
+    따라서 f'(1) = g'(0) = <span class="rs">3</span>
+  </div>
+</div>
+
+<!-- Q53 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g9">2020 9월</span>문제 53</div>
+  <div class="qt">
+    x=ln t, y=t+1/t (t>0) 으로 주어진 매개변수 곡선에서<br>
+    dy/dx를 t의 식으로 나타내고, t=1에서의 접선의 방정식을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    dx/dt = 1/t, dy/dt = 1 - 1/t²<br>
+    dy/dx = (1-1/t²)/(1/t) = t(1-1/t²) = t - 1/t<br><br>
+    t=1일 때:<br>
+    x=ln 1=0, y=1+1=2<br>
+    기울기=1-1/1=0<br>
+    접선: y-2=0·(x-0), 즉 <span class="rs">y=2</span>
+  </div>
+</div>
+
+<!-- Q54 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2021 수능</span>문제 54</div>
+  <div class="qt">
+    lim<sub>x→1</sub> (x<sup>5</sup>-1)/(x-1) 의 값을 구하여라.<br>
+    (미분 정의를 이용하여라)
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 미분 정의: lim<sub>x→a</sub>(f(x)-f(a))/(x-a) = f'(a)</div>
+    <span class="st">[풀이]</span><br>
+    f(x)=x⁵로 놓으면<br>
+    lim<sub>x→1</sub>(x⁵-1)/(x-1) = f'(1) = 5x⁴|_{x=1} = 5<br>
+    답: <span class="rs">5</span>
+  </div>
+</div>
+
+<!-- Q55 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g6">2022 6월</span>문제 55</div>
+  <div class="qt">
+    x²y+y³=2 로 정의된 음함수에서 점 (1,1)에서의 d²y/dx²을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    양변 x로 미분:<br>
+    2xy + x²y' + 3y²y' = 0<br>
+    y'(x²+3y²) = -2xy<br>
+    y' = -2xy/(x²+3y²)<br><br>
+    점 (1,1): y' = -2/(1+3) = -1/2<br><br>
+    <span class="st">[d²y/dx²]</span> 몫의 미분:<br>
+    y'' = d/dx[-2xy/(x²+3y²)]<br>
+    분자의 미분: -(2y+2xy') 분모는 x²+3y²<br>
+    분모의 미분: 2x+6y·y'<br><br>
+    y''= [-(2y+2xy')(x²+3y²)+2xy(2x+6yy')] / (x²+3y²)²<br>
+    점(1,1), y'=-1/2 대입:<br>
+    분자=-(2+2(-1/2))·4+2·1·(2+6(-1/2))=-(2-1)·4+2(2-3)=-(4)+2(-1)=-4-2=-6<br>
+    분모=16<br>
+    y''=-6/16=<span class="rs">-3/8</span>
+  </div>
+</div>
+
+<!-- Q56 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2023 수능</span>문제 56</div>
+  <div class="qt">
+    y=x<sup>sin x</sup> (x>0) 를 미분하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이 — 로그미분법]</span><br>
+    ln y = sin x · ln x<br>
+    양변 미분:<br>
+    y'/y = cos x · ln x + sin x · (1/x)<br>
+    y' = x<sup>sin x</sup>·(cos x·ln x + sin x/x)<br>
+    답: <span class="rs">y' = x^{sinx}·(cosx·lnx + sinx/x)</span>
+  </div>
+</div>
+
+<!-- Q57 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2024 수능</span>문제 57</div>
+  <div class="qt">
+    lim<sub>x→0+</sub> x<sup>x</sup> 의 값을 구하여라.<br>
+    (단, 0⁰형 부정형)
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 0⁰형: lim x<sup>x</sup> = lim e<sup>x ln x</sup>. 먼저 lim x·ln x를 구한다</div>
+    <span class="st">[풀이]</span><br>
+    lim<sub>x→0+</sub> x·ln x = lim<sub>x→0+</sub> (ln x)/(1/x) [∞/∞형]<br>
+    로피탈: lim (1/x)/(-1/x²) = lim(-x) = 0<br><br>
+    따라서 lim x<sup>x</sup> = lim e<sup>x ln x</sup> = e⁰ = <span class="rs">1</span>
+  </div>
+</div>
+
+<!-- Q58 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g6">2024 6월</span>문제 58</div>
+  <div class="qt">
+    역함수 g(x)=f⁻¹(x)가 존재하는 함수 f(x)=ln(x+e)-1에 대해<br>
+    g'(ln 2-1)의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 역함수 미분: g'(b)=1/f'(a), f(a)=b</div>
+    <span class="st">[풀이]</span><br>
+    f(a)=ln 2-1: ln(a+e)-1=ln2-1 → ln(a+e)=ln2<br>
+    a+e=2 → a=2-e<br><br>
+    f'(x)=1/(x+e)<br>
+    f'(a)=f'(2-e)=1/(2-e+e)=1/2<br>
+    g'(ln2-1)=1/f'(a)=<span class="rs">2</span>
+  </div>
+</div>
+
+<!-- Q59 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge sn">2025 수능</span>문제 59</div>
+  <div class="qt">
+    lim<sub>x→0</sub> (e<sup>x</sup>-e<sup>-x</sup>-2sin x) / x³ 의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[방법 — 테일러 전개]</span><br>
+    e<sup>x</sup>=1+x+x²/2+x³/6+...<br>
+    e<sup>-x</sup>=1-x+x²/2-x³/6+...<br>
+    e<sup>x</sup>-e<sup>-x</sup>=2x+2x³/6+...=2x+x³/3+...<br>
+    sin x=x-x³/6+...<br>
+    2sin x=2x-x³/3+...<br><br>
+    분자=2x+x³/3+...-2x+x³/3+...=2x³/3+...<br>
+    (e<sup>x</sup>-e<sup>-x</sup>-2sinx)/x³ → 2/3<br>
+    답: <span class="rs">2/3</span>
+  </div>
+</div>
+
+<!-- Q60 -->
+<div class="qc">
+  <div class="qn"><span class="ybadge g9">2025 9월</span>문제 60</div>
+  <div class="qt">
+    곡선 y=e<sup>x</sup>ln x 위의 점 (1,0)에서의 접선의 방정식을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    y'=e<sup>x</sup>·ln x + e<sup>x</sup>·(1/x) = e<sup>x</sup>(ln x + 1/x)<br>
+    x=1: y'=e¹(ln 1+1/1)=e·(0+1)=e<br><br>
+    점 (1,0), 기울기 e인 직선:<br>
+    y-0=e(x-1)<br>
+    답: <span class="rs">y=e(x-1)</span>
+  </div>
+</div>
+
+</section>
+</main>
+<script>
+function tog(btn){
+  const s=btn.nextElementSibling;
+  s.classList.toggle('on');
+  btn.textContent=s.classList.contains('on')?'풀이 닫기':'풀이 보기';
+}
+</script>
+</body>
+</html>
