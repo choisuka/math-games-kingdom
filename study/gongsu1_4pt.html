@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>고1 수학 킬러문제 (2015~2025) | 수학여행학원-영통</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #f5f0e8;
+  color: #1e1e2e;
+  font-family: 'Malgun Gothic', '맑은 고딕', Georgia, serif;
+  min-height: 100vh;
+  line-height: 1.7;
+}
+header {
+  background: #1e3a5f;
+  color: #fff;
+  padding: 0.9rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border-bottom: 3px solid #2563eb;
+}
+header a { color: #93c5fd; text-decoration: none; font-size: 0.88rem; }
+header a:hover { color: #fff; }
+header h1 { font-size: 1.15rem; flex: 1; color: #e0f2fe; }
+.badge { background: #ef4444; color: #fff; padding: 0.15rem 0.5rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700; }
+
+main { max-width: 900px; margin: 0 auto; padding: 1.2rem 1rem 3rem; }
+
+/* 단원 네비게이션 */
+.nav { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+.nav a {
+  background: #fff;
+  border: 1.5px solid #b0c4de;
+  color: #1e3a5f;
+  padding: 0.4rem 0.85rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 600;
+  transition: all .15s;
+}
+.nav a:hover, .nav a.on { background: #1e3a5f; color: #fff; border-color: #1e3a5f; }
+
+/* 단원 헤더 */
+.unit { margin-bottom: 2.2rem; }
+.uh {
+  background: #1e3a5f;
+  color: #e0f2fe;
+  border-radius: 10px;
+  padding: 1rem 1.3rem;
+  margin-bottom: 1rem;
+}
+.uh h2 { font-size: 1.1rem; color: #7dd3fc; }
+.uh p { font-size: 0.85rem; color: #bfdbfe; margin-top: 0.25rem; }
+
+/* 문제 카드 */
+.qc {
+  background: #fff;
+  border: 1px solid #d4c9b8;
+  border-radius: 10px;
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 0.85rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.qn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+/* 연도 배지 */
+.ybg { display: inline-block; padding: 0.12rem 0.5rem; border-radius: 4px; font-size: 0.73rem; font-weight: 700; }
+.sn  { background: #1d4ed8; color: #fff; }  /* 수능 */
+.g6  { background: #b45309; color: #fff; }  /* 6월 */
+.g9  { background: #166534; color: #fff; }  /* 9월 */
+.g11 { background: #6b21a8; color: #fff; }  /* 11월 교육청 */
+/* 문제 번호 배지 */
+.pn { display: inline-block; background: #fef3c7; border: 1px solid #d97706; color: #92400e; padding: 0.1rem 0.45rem; border-radius: 4px; font-size: 0.73rem; font-weight: 700; }
+
+.qt { color: #111827; font-size: 0.95rem; line-height: 1.8; }
+.qt .m { font-family: 'Courier New', monospace; background: #f3f4f6; border-radius: 3px; padding: 0.05rem 0.25rem; font-size: 0.92rem; }
+.ch { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 0.5rem; color: #374151; font-size: 0.9rem; }
+
+/* 풀이 토글 */
+.btn {
+  margin-top: 0.7rem;
+  background: #f0f4f8;
+  border: 1px solid #b0c4de;
+  color: #1e3a5f;
+  border-radius: 6px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn:hover { background: #dbeafe; }
+
+.sol {
+  display: none;
+  margin-top: 0.75rem;
+  background: #f8fafc;
+  border: 1.5px solid #93c5fd;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  color: #1e293b;
+  font-size: 0.9rem;
+  line-height: 1.85;
+}
+.sol.on { display: block; }
+.sol .st { color: #1d4ed8; font-weight: 700; }
+.sol .rs { color: #16a34a; font-weight: 700; font-size: 1.05rem; }
+.sol .wn { color: #b45309; }
+.sol pre { background: #1e293b; color: #a3e635; border-radius: 6px; padding: 0.6rem 0.8rem; font-size: 0.82rem; white-space: pre-wrap; margin: 0.4rem 0; }
+.tip { background: #eff6ff; border-left: 4px solid #2563eb; border-radius: 0 6px 6px 0; padding: 0.55rem 0.85rem; margin: 0.45rem 0; font-size: 0.86rem; color: #1e3a5f; }
+</style>
+</head>
+<body>
+<header>
+  <a href="../index.html">← 홈</a>
+  <h1>고1 수학 킬러문제 <span class="badge">2015~2025</span></h1>
+</header>
+
+<main>
+<div class="nav">
+  <a href="#u1" class="on">① 다항식</a>
+  <a href="#u2">② 방정식·부등식</a>
+  <a href="#u3">③ 도형의 방정식</a>
+  <a href="#u4">④ 집합·명제</a>
+  <a href="#u5">⑤ 함수</a>
+  <a href="#u6">⑥ 경우의 수</a>
+</div>
+
+<!-- ══════ UNIT 1 다항식 ══════ -->
+<section class="unit" id="u1">
+<div class="uh">
+  <h2>① 다항식 — 킬러 유형 (2015~2023)</h2>
+  <p>나머지정리·항등식·인수분해 고난도 | 19~21번·28~30번 유형</p>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g6">2015 6월</span><span class="pn">#20</span></div>
+  <div class="qt">
+    다항식 f(x)=x⁴-2x³+ax+b가 (x-1)²으로 나누어 떨어질 때, f(2)의 값은?
+    <div class="ch"><span>① 1</span><span>② 2</span><span>③ 3</span><span>④ 4</span><span>⑤ 5</span></div>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 (x-1)²으로 나누어 떨어지면 f(1)=0이고 f'(1)=0</div>
+    <span class="st">[풀이]</span><br>
+    f(1)=1-2+a+b=0 → a+b=1 …①<br>
+    f'(x)=4x³-6x²+a, f'(1)=4-6+a=0 → a=2<br>
+    ①에서 b=-1<br>
+    f(x)=x⁴-2x³+2x-1<br>
+    f(2)=16-16+4-1=<span class="rs">3 ③</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g6">2017 6월</span><span class="pn">#21</span></div>
+  <div class="qt">
+    항등식 x³=A(x+1)³+B(x+1)²+C(x+1)+D 에서 A-B+C-D의 값은?
+    <div class="ch"><span>① 4</span><span>② 6</span><span>③ 8</span><span>④ 10</span><span>⑤ 12</span></div>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 x=-1을 대입하고 미분을 반복하여 계수를 결정한다</div>
+    <span class="st">[풀이]</span><br>
+    x=-1 대입: -1=D → D=-1<br>
+    미분: 3x²=3A(x+1)²+2B(x+1)+C, x=-1 대입: 3=C<br>
+    2차 미분: 6x=6A(x+1)+2B, x=-1: -6=2B → B=-3<br>
+    3차 미분: 6=6A → A=1<br>
+    A-B+C-D=1+3+3+1=<span class="rs">8 ③</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g11">2019 11월</span><span class="pn">#30</span></div>
+  <div class="qt">
+    이차다항식 f(x)에 대해 f(x+1)·f(x-1)=[f(x)]²-4가 항등식으로 성립하고 f(0)=3일 때, f(1)의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    f(x)=ax+b (일차)로 놓으면:<br>
+    (ax+b+a)(ax+b-a)=(ax+b)²-a²<br>
+    이것이 [f(x)]²-4=(ax+b)²-4가 되려면 a²=4 → a=±2<br><br>
+    f(0)=b=3, a=2이면 f(x)=2x+3<br>
+    검증: f(x+1)f(x-1)=(2x+5)(2x+1)=4x²+12x+5<br>
+    [f(x)]²-4=(2x+3)²-4=4x²+12x+5 ✓<br>
+    f(1)=2+3=<span class="rs">5</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g6">2021 6월</span><span class="pn">#28</span></div>
+  <div class="qt">
+    다항식 P(x)를 (x-1)(x-2)로 나눈 나머지가 3x+1이고, (x-2)(x-3)으로 나눈 나머지가 x+5일 때, P(x)를 (x-1)(x-2)(x-3)으로 나눈 나머지의 상수항을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[값 확인]</span><br>
+    P(1)=3+1=4, P(2)=7, P(3)=1+5=6<br>
+    P(2): 3(2)+1=7 ✓, (2)+5=7 ✓ (일관성 확인)<br><br>
+    <span class="st">[나머지 계산]</span><br>
+    나머지=ax²+bx+c라 하면<br>
+    <pre>a+ b+c=4  (x=1)
+4a+2b+c=7  (x=2)
+9a+3b+c=6  (x=3)</pre>
+    ②-①: 3a+b=3<br>
+    ③-②: 5a+b=-1<br>
+    빼면: 2a=-4 → a=-2, b=9, c=-3<br>
+    상수항=<span class="rs">-3</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g11">2023 11월</span><span class="pn">#29</span></div>
+  <div class="qt">
+    최고차항의 계수가 1인 삼차다항식 f(x)에서 f(0)=3, f(1)=5, f(-1)=1일 때, f(2)의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    f(x)=x³+ax²+bx+c로 놓으면<br>
+    f(0)=c=3<br>
+    f(1)=1+a+b+3=5 → a+b=1<br>
+    f(-1)=-1+a-b+3=1 → a-b=-1<br>
+    연립: a=0, b=1<br>
+    f(x)=x³+x+3<br>
+    f(2)=8+2+3=<span class="rs">13</span>
+  </div>
+</div>
+</section>
+
+<!-- ══════ UNIT 2 방정식과 부등식 ══════ -->
+<section class="unit" id="u2">
+<div class="uh">
+  <h2>② 방정식과 부등식 — 킬러 유형 (2016~2024)</h2>
+  <p>이차방정식·이차부등식·절댓값 방정식 고난도</p>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g9">2016 9월</span><span class="pn">#19</span></div>
+  <div class="qt">
+    이차방정식 x²+2(a-2)x+a+1=0의 두 근이 모두 음수가 되도록 하는 가장 작은 정수 a의 값은?
+    <div class="ch"><span>① 3</span><span>② 4</span><span>③ 5</span><span>④ 6</span><span>⑤ 7</span></div>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 두 근이 모두 음수 ⟺ D≥0, 두 근의 합&lt;0, 두 근의 곱&gt;0</div>
+    <span class="st">[세 조건]</span><br>
+    ① D/4=(a-2)²-(a+1)=a²-5a+3≥0 → a≤(5-√13)/2≈0.70 또는 a≥(5+√13)/2≈4.30<br>
+    ② 두 근의 합=-2(a-2)&lt;0 → a&gt;2<br>
+    ③ 두 근의 곱=a+1&gt;0 → a&gt;-1<br><br>
+    ①②③ 공통: a≥4.30이고 a&gt;2 → <span class="wn">a≥(5+√13)/2≈4.30</span><br>
+    가장 작은 정수: a=<span class="rs">5 ③</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g6">2018 6월</span><span class="pn">#29</span></div>
+  <div class="qt">
+    x+y=3, x³+y³=9일 때, xy의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 x³+y³=(x+y)³-3xy(x+y) 이용</div>
+    <span class="st">[풀이]</span><br>
+    x³+y³=(x+y)³-3xy(x+y)<br>
+    9=27-3xy·3=27-9xy<br>
+    9xy=18 → xy=<span class="rs">2</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g6">2020 6월</span><span class="pn">#21</span></div>
+  <div class="qt">
+    |3x-6|+|x+2|≤12를 만족하는 정수 x의 개수는?
+    <div class="ch"><span>① 5</span><span>② 6</span><span>③ 7</span><span>④ 8</span><span>⑤ 9</span></div>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[구간 분류]</span><br>
+    <pre>x&lt;-2:   -3(x-2)-(x+2)=-4x+4≤12 → x≥-2 (모순, 해 없음)
+-2≤x&lt;2: -3(x-2)+(x+2)=-2x+8≤12 → x≥-2, 항상 성립
+           정수: -2, -1, 0, 1 → 4개
+x≥2:    3(x-2)+(x+2)=4x-4≤12 → x≤4
+           정수: 2, 3, 4 → 3개</pre>
+    총 정수: 4+3=<span class="rs">7 ③</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g11">2022 11월</span><span class="pn">#30</span></div>
+  <div class="qt">
+    이차부등식 x²-2kx+k+2&gt;0이 모든 실수 x에 대해 성립하도록 하는 정수 k의 개수를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 모든 실수에서 양수 ⟺ D&lt;0 (이차항 계수&gt;0)</div>
+    <span class="st">[풀이]</span><br>
+    D/4=k²-(k+2)=k²-k-2&lt;0<br>
+    (k-2)(k+1)&lt;0 → -1&lt;k&lt;2<br>
+    정수 k: 0, 1 → <span class="rs">2</span>개
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g6">2024 6월</span><span class="pn">#28</span></div>
+  <div class="qt">
+    방정식 |x²-4|=x+2의 모든 실수 근의 합을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[케이스 1] x²-4≥0 (x≤-2 또는 x≥2)</span><br>
+    x²-4=x+2 → x²-x-6=0 → (x-3)(x+2)=0<br>
+    x=3 ✓ (x≥2), x=-2 ✓ (x≤-2)<br><br>
+    <span class="st">[케이스 2] -2&lt;x&lt;2</span><br>
+    -(x²-4)=x+2 → x²+x-2=0 → (x+2)(x-1)=0<br>
+    x=1 ✓, x=-2 (경계, 케이스1에서 이미 포함)<br><br>
+    모든 근: 3, -2, 1 → 합=3+(-2)+1=<span class="rs">2</span>
+  </div>
+</div>
+</section>
+
+<!-- ══════ UNIT 3 도형의 방정식 ══════ -->
+<section class="unit" id="u3">
+<div class="uh">
+  <h2>③ 도형의 방정식 — 킬러 유형 (2015~2024)</h2>
+  <p>직선·원·대칭이동 고난도</p>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g11">2015 11월</span><span class="pn">#30</span></div>
+  <div class="qt">
+    두 점 A(2, 5), B(6, 1)의 선분 AB의 수직이등분선과 x축의 교점의 좌표를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    AB의 중점 M=(4, 3), AB의 기울기=(1-5)/(6-2)=-1<br>
+    수직이등분선의 기울기=1<br>
+    방정식: y-3=1·(x-4) → y=x-1<br>
+    x축과의 교점(y=0): x=1<br>
+    교점=<span class="rs">(1, 0)</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g11">2017 11월</span><span class="pn">#21</span></div>
+  <div class="qt">
+    세 점 A(0,0), B(4,0), C(0,3)을 꼭짓점으로 하는 삼각형의 외접원이 x²+y²+Dx+Ey+F=0일 때, D+E+F의 값은?
+    <div class="ch"><span>① -9</span><span>② -8</span><span>③ -7</span><span>④ -6</span><span>⑤ -5</span></div>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    A(0,0) 대입: F=0<br>
+    B(4,0) 대입: 16+4D+F=0 → D=-4<br>
+    C(0,3) 대입: 9+3E+F=0 → E=-3<br>
+    D+E+F=-4-3+0=<span class="rs">-7 ③</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g6">2019 6월</span><span class="pn">#29</span></div>
+  <div class="qt">
+    원 x²+y²=4 위를 움직이는 점 P에서 직선 3x+4y=30까지의 거리의 최솟값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 최솟값 = 원의 중심에서 직선까지의 거리 - 반지름</div>
+    <span class="st">[풀이]</span><br>
+    원의 중심 O(0,0), 반지름 r=2<br>
+    O에서 3x+4y-30=0까지 거리=|0+0-30|/√(9+16)=30/5=6<br>
+    최솟값=6-2=<span class="rs">4</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g11">2021 11월</span><span class="pn">#20</span></div>
+  <div class="qt">
+    점 A(2, 1)을 직선 y=x에 대해 대칭이동한 점 B, B를 y축에 대해 대칭이동한 점 C의 좌표는?
+    <div class="ch"><span>① (-1, 1)</span><span>② (-1, 2)</span><span>③ (-2, 1)</span><span>④ (-2, 2)</span><span>⑤ (-3, 2)</span></div>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    A(2, 1) →[y=x 대칭: x↔y]→ B(1, 2)<br>
+    B(1, 2) →[y축 대칭: x→-x]→ C(-1, 2)<br>
+    C=<span class="rs">(-1, 2) ②</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g11">2024 11월</span><span class="pn">#30</span></div>
+  <div class="qt">
+    원 (x-3)²+(y-4)²=25와 y축의 두 교점 A, B 사이의 거리를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    y축: x=0 대입<br>
+    (0-3)²+(y-4)²=25 → 9+(y-4)²=25 → (y-4)²=16<br>
+    y=8 또는 y=0<br>
+    A=(0, 8), B=(0, 0) → |AB|=<span class="rs">8</span>
+  </div>
+</div>
+</section>
+
+<!-- ══════ UNIT 4 집합과 명제 ══════ -->
+<section class="unit" id="u4">
+<div class="uh">
+  <h2>④ 집합과 명제 — 킬러 유형 (2016~2025)</h2>
+  <p>집합 연산·충분필요조건·명제와 진리집합 고난도</p>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g6">2016 6월</span><span class="pn">#19</span></div>
+  <div class="qt">
+    집합 A={x|2≤x≤3}이고, B={x|a≤x≤b}일 때 A⊆B를 만족하는 양의 정수 a, b의 순서쌍 (a, b)의 개수는? (단, 1≤a&lt;b≤10)
+    <div class="ch"><span>① 12</span><span>② 14</span><span>③ 16</span><span>④ 18</span><span>⑤ 20</span></div>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 A⊆B ⟺ a≤2이고 b≥3</div>
+    <span class="st">[풀이]</span><br>
+    a≤2: 양의 정수이면서 a&lt;b이므로 a∈{1, 2}<br>
+    b≥3: b∈{3, 4, 5, 6, 7, 8, 9, 10} → 8가지<br>
+    (a=1일 때 b는 3~10 → 8가지)<br>
+    (a=2일 때 b는 3~10 → 8가지)<br>
+    총: 2×8=<span class="rs">16 ③</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g11">2018 11월</span><span class="pn">#20</span></div>
+  <div class="qt">
+    U={1,2,...,20}에서 조건 p: n이 12의 약수, q: n이 18의 약수에 대해 n(P∩Q)와 n(P∪Q)를 각각 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    P={1,2,3,4,6,12} → n(P)=6<br>
+    Q={1,2,3,6,9,18} → n(Q)=6<br>
+    P∩Q={1,2,3,6} → n(P∩Q)=<span class="rs">4</span><br>
+    n(P∪Q)=6+6-4=<span class="rs">8</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g9">2020 9월</span><span class="pn">#21</span></div>
+  <div class="qt">
+    두 조건 p: -3&lt;x&lt;5, q: a-2&lt;x&lt;a+4에 대해 q가 p이기 위한 충분조건이 되도록 하는 정수 a의 개수는?
+    <div class="ch"><span>① 1</span><span>② 2</span><span>③ 3</span><span>④ 4</span><span>⑤ 5</span></div>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 q가 p의 충분조건 ⟺ Q⊆P</div>
+    <span class="st">[풀이]</span><br>
+    Q⊆P: a-2≥-3 → a≥-1<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a+4≤5 → a≤1<br>
+    -1≤a≤1, 정수: -1, 0, 1 → <span class="rs">3개 ③</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g6">2022 6월</span><span class="pn">#29</span></div>
+  <div class="qt">
+    집합 A={1,2,3,...,8}의 부분집합 중, 두 원소의 합이 9가 되는 두 원소를 동시에 포함하지 않는 부분집합의 개수를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    합이 9인 쌍: (1,8), (2,7), (3,6), (4,5)<br>
+    각 쌍에서: 둘 다 제외 / 첫째만 포함 / 둘째만 포함 → 3가지씩<br>
+    4쌍이 독립이므로 총: 3⁴=<span class="rs">81</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g6">2025 6월</span><span class="pn">#28</span></div>
+  <div class="qt">
+    n(A)=5, n(B)=7, n(A∪B)=9일 때, n(Aᶜ∩B)의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    n(A∩B)=n(A)+n(B)-n(A∪B)=5+7-9=3<br>
+    n(Aᶜ∩B)=n(B)-n(A∩B)=7-3=<span class="rs">4</span>
+  </div>
+</div>
+</section>
+
+<!-- ══════ UNIT 5 함수 ══════ -->
+<section class="unit" id="u5">
+<div class="uh">
+  <h2>⑤ 함수 — 킬러 유형 (2015~2024)</h2>
+  <p>합성함수·역함수·조건 만족 함수 개수 고난도</p>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g9">2015 9월</span><span class="pn">#30</span></div>
+  <div class="qt">
+    X={1,2,3,4,5}에서 X로의 일대일 함수 f 중 f(1)+f(2)≤3인 함수의 개수를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    f(1)+f(2)≤3이고 f(1)≠f(2), 모두 X의 원소<br>
+    가능한 쌍: (1,2) 또는 (2,1)<br>
+    나머지 3개 자리에 {3,4,5}를 배열: 3!=6<br>
+    (1,2)의 경우 6가지, (2,1)의 경우 6가지<br>
+    총: <span class="rs">12</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g9">2017 9월</span><span class="pn">#21</span></div>
+  <div class="qt">
+    f(x)=ax+b의 역함수가 g(x)=2x-3일 때, f(3)의 값은?
+    <div class="ch"><span>① 1</span><span>② 2</span><span>③ 3</span><span>④ 4</span><span>⑤ 5</span></div>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 g=f⁻¹이면 f를 g로 역으로 구한다: y=g(x)를 x에 대해 풀면 f(y)</div>
+    <span class="st">[풀이]</span><br>
+    y=2x-3 → x=(y+3)/2 = f⁻¹⁻¹(y) = f(y)<br>
+    f(x)=(x+3)/2<br>
+    f(3)=6/2=<span class="rs">3 ③</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g9">2019 9월</span><span class="pn">#30</span></div>
+  <div class="qt">
+    X={1,2,3}에서 Y={1,2,3,4,5}로의 함수 f 중 f(1)&lt;f(2)&lt;f(3)을 만족하는 함수의 개수를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 순서가 정해진 선택 = 조합</div>
+    <span class="st">[풀이]</span><br>
+    Y에서 3개를 선택하면 자동으로 오름차순 대응:<br>
+    C(5,3)=<span class="rs">10</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g9">2022 9월</span><span class="pn">#21</span></div>
+  <div class="qt">
+    f(x)=2x-3, g(x)=x²+1일 때, (g∘f⁻¹)(5)의 값은?
+    <div class="ch"><span>① 13</span><span>② 15</span><span>③ 17</span><span>④ 19</span><span>⑤ 21</span></div>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    f⁻¹(x): y=2x-3 → x=(y+3)/2, 즉 f⁻¹(x)=(x+3)/2<br>
+    f⁻¹(5)=(5+3)/2=4<br>
+    g(f⁻¹(5))=g(4)=16+1=<span class="rs">17 ③</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g9">2024 9월</span><span class="pn">#29</span></div>
+  <div class="qt">
+    집합 X={1,2,3}에서 X로의 함수 f 중 f(f(x))=f(x)를 모든 x에 대해 만족하는 함수의 개수를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 f∘f=f이면, f의 치역의 각 원소는 f의 고정점(f(y)=y)이어야 한다</div>
+    <span class="st">[풀이]</span><br>
+    치역의 크기가 k이면 k개의 고정점 지정<br>
+    k=1: 모든 원소를 하나로 보냄 → C(3,1)=3가지<br>
+    k=2: 치역={j,k} 선택, 나머지 1원소를 j 또는 k로 → C(3,2)×2=6가지<br>
+    k=3: 항등함수 → 1가지<br>
+    총: 3+6+1=<span class="rs">10</span>
+  </div>
+</div>
+</section>
+
+<!-- ══════ UNIT 6 경우의 수 ══════ -->
+<section class="unit" id="u6">
+<div class="uh">
+  <h2>⑥ 경우의 수 — 킬러 유형 (2016~2025)</h2>
+  <p>순열·조합·중복조합 조건 고난도</p>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g11">2016 11월</span><span class="pn">#29</span></div>
+  <div class="qt">
+    남자 3명, 여자 3명이 원형 테이블에 앉을 때, 남녀가 번갈아 앉는 경우의 수를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 원형 배열: 한 사람을 고정 후 나머지 배열</div>
+    <span class="st">[풀이]</span><br>
+    남자 3명 원형 배열: (3-1)!=2! =2가지<br>
+    (남자 사이 여자 자리가 3곳 결정됨)<br>
+    여자 3명 배열: 3!=6가지<br>
+    총: 2×6=<span class="rs">12</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g9">2018 9월</span><span class="pn">#30</span></div>
+  <div class="qt">
+    방정식 a+b+c=10 (a, b, c는 음이 아닌 정수)의 해의 개수를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 중복조합: H(n,r)=C(n+r-1, r)</div>
+    <span class="st">[풀이]</span><br>
+    음이 아닌 정수해 = 중복조합<br>
+    H(3,10)=C(3+10-1, 10)=C(12,10)=C(12,2)=12×11/2=<span class="rs">66</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g11">2020 11월</span><span class="pn">#28</span></div>
+  <div class="qt">
+    1부터 9까지의 자연수 중 서로 다른 3개를 선택하여 합이 12가 되는 경우의 수를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[합이 12인 조합 나열]</span>
+    <pre>{1,2,9} {1,3,8} {1,4,7}
+{1,5,6} {2,3,7} {2,4,6}
+{3,4,5}  → 7가지</pre>
+    답: <span class="rs">7</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g6">2023 6월</span><span class="pn">#21</span></div>
+  <div class="qt">
+    KOREA의 6글자를 일렬로 나열할 때, K와 A가 이웃하지 않는 경우의 수는?
+    <div class="ch"><span>① 360</span><span>② 400</span><span>③ 440</span><span>④ 480</span><span>⑤ 520</span></div>
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <div class="tip">📌 여사건: (전체) - (K와 A가 이웃)</div>
+    <span class="st">[풀이]</span><br>
+    전체: 6!=720<br>
+    K와 A가 이웃: {KA} 또는 {AK}를 하나로 묶어 5개 배열<br>
+    → 5!×2=240<br>
+    이웃하지 않음: 720-240=<span class="rs">480 ④</span>
+  </div>
+</div>
+
+<div class="qc">
+  <div class="qn"><span class="ybg g11">2025 11월</span><span class="pn">#30</span></div>
+  <div class="qt">
+    x+y+z=8 (x≥1, y≥2, z≥0)을 만족하는 정수해의 개수를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+  <div class="sol">
+    <span class="st">[풀이]</span><br>
+    x'=x-1, y'=y-2로 치환 (x', y', z≥0):<br>
+    x'+1+y'+2+z=8 → x'+y'+z=5<br>
+    H(3,5)=C(7,2)=21<br>
+    답: <span class="rs">21</span>
+  </div>
+</div>
+</section>
+</main>
+
+<script>
+function tog(btn){
+  const s=btn.nextElementSibling;
+  s.classList.toggle('on');
+  btn.textContent=s.classList.contains('on')?'풀이 닫기':'풀이 보기';
+}
+</script>
+</body>
+</html>
