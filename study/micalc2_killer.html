@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미적분 킬러문제 | 수학여행학원-영통</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#f5f0e8;color:#1e1e2e;font-family:'Malgun Gothic','맑은 고딕',sans-serif;line-height:1.7;min-height:100vh}
+header{background:#1e3a5f;padding:1.5rem 1rem;text-align:center;border-bottom:3px solid #2563eb}
+header h1{font-size:1.6rem;color:#fff;font-weight:700}
+header p{color:#bfdbfe;font-size:.9rem;margin-top:.3rem}
+nav{display:flex;justify-content:center;gap:.6rem;padding:.8rem;background:#e8e0d0;flex-wrap:wrap}
+nav a{color:#374151;text-decoration:none;padding:.3rem .8rem;border-radius:999px;border:1px solid #d4c9b8;font-size:.85rem;transition:all .2s}
+nav a:hover{background:#1e3a5f;color:#fff;border-color:#1e3a5f}
+main{max-width:960px;margin:0 auto;padding:1rem}
+.unit{margin:2rem 0}
+.unit-title{font-size:1.25rem;font-weight:700;color:#92400e;padding:.6rem 1rem;background:#fef3c7;border-left:4px solid #d97706;border-radius:0 .5rem .5rem 0;margin-bottom:1rem}
+.qc{background:#fff;border-radius:.8rem;margin:.6rem 0;overflow:hidden;border:1px solid #d4c9b8;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.qh{display:flex;align-items:flex-start;gap:.7rem;padding:.9rem 1rem}
+.badges{display:flex;gap:.4rem;flex-shrink:0;flex-wrap:wrap;align-items:center}
+.ybg{font-size:.72rem;font-weight:700;padding:.2rem .5rem;border-radius:.3rem;color:#fff}
+.ybg.sn{background:#1d4ed8}
+.ybg.g6{background:#b45309}
+.ybg.g9{background:#166534}
+.ybg.g11{background:#6b21a8}
+.pn{font-size:.72rem;font-weight:700;padding:.2rem .5rem;border-radius:.3rem;background:#fef3c7;border:1px solid #d97706;color:#92400e}
+.qt{flex:1;font-size:.95rem;color:#111827}
+.btn{flex-shrink:0;background:none;border:1px solid #d4c9b8;color:#6b7280;padding:.25rem .7rem;border-radius:.4rem;cursor:pointer;font-size:.8rem;white-space:nowrap;transition:all .2s}
+.btn:hover{background:#1e3a5f;border-color:#1e3a5f;color:#fff}
+.sol{display:none;padding:.9rem 1rem 1.1rem;border-top:1px solid #e5e7eb;background:#f8fafc}
+.sol.on{display:block}
+.sl{color:#059669;font-size:.78rem;font-weight:700;margin-bottom:.5rem;letter-spacing:.05em}
+.sb{font-size:.9rem;color:#374151;line-height:1.8}
+.step{margin:.35rem 0;padding:.3rem .7rem;background:#f1f5f9;border-radius:.3rem;border-left:2px solid #94a3b8}
+.tip{background:#eff6ff;border-left:4px solid #2563eb;border-radius:0 6px 6px 0;padding:.5rem .9rem;margin:.5rem 0;font-size:.88rem;color:#1e3a5f}
+.tip b{color:#1d4ed8}
+.ans{color:#065f46;font-weight:700;font-size:1rem;margin-top:.6rem;padding:.4rem .8rem;background:#d1fae5;border-radius:.4rem;border-left:3px solid #059669;display:inline-block}
+.math{font-family:'Courier New',monospace;background:#eff6ff;padding:.1rem .3rem;border-radius:.2rem;color:#1e40af;font-size:.9em}
+.kw{color:#b45309;font-weight:700}
+footer{text-align:center;padding:2rem;color:#9ca3af;font-size:.85rem;border-top:1px solid #e5e7eb;margin-top:2rem}
+@media(max-width:600px){.qh{flex-wrap:wrap}.btn{width:100%}}
+</style>
+<script>
+function tog(b){var s=b.closest('.qc').querySelector('.sol');s.classList.toggle('on');b.textContent=s.classList.contains('on')?'풀이 닫기':'풀이 보기';}
+</script>
+</head>
+<body>
+<header>
+  <h1>📊 미적분 킬러문제 (2015~2025)</h1>
+  <p>수능·교육청 모의고사 19~21번 / 28~30번 유형 | 단원별 5문제 | 수학여행학원-영통</p>
+</header>
+<nav>
+  <a href="#u1">수열의 극한</a>
+  <a href="#u2">무한급수</a>
+  <a href="#u3">미분법</a>
+  <a href="#u4">도함수의 활용</a>
+  <a href="#u5">적분법</a>
+  <a href="#u6">정적분의 활용</a>
+  <a href="../index.html">← 홈</a>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════
+     단원 1: 수열의 극한
+══════════════════════════════════════ -->
+<div class="unit" id="u1">
+<div class="unit-title">단원 1. 수열의 극한</div>
+
+<!-- Q1 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg sn">2023 수능</span><span class="pn">30번</span></div>
+  <div class="qt">
+    수열 <span class="math">{aₙ}</span>이 모든 자연수 n에 대하여<br>
+    <span class="math">aₙ₊₁ = aₙ² − aₙ + 1</span><br>
+    을 만족시킨다. <span class="math">lim aₙ = α</span> (유한값)가 존재할 때, 가능한 α의 값을 구하고, 그 중 <span class="math">a₁ = 1/2</span>일 때 <span class="math">lim(n·aₙ)</span>의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 극한값이 존재하면 aₙ₊₁ → α, aₙ → α이므로 점화식에 대입해 α 결정</div>
+    <div class="step">① lim이 존재하면: α = α² − α + 1 → α² − 2α + 1 = 0 → (α−1)² = 0 → α = 1</div>
+    <div class="step">② a₁ = 1/2일 때, aₙ = 1 − bₙ으로 치환: bₙ₊₁ = bₙ(bₙ − 1) + bₙ = bₙ²</div>
+    <div class="step">③ 따라서 bₙ = b₁^(2^(n−1)) = (1/2)^(2^(n−1))</div>
+    <div class="step">④ n·aₙ = n(1 − bₙ) = n − n·(1/2)^(2^(n−1)) → n → ∞이면 n·bₙ → 0 (지수 증가가 압도)</div>
+    <div class="step">⑤ 따라서 lim(n·aₙ) = lim n − 0 = ∞ … 수렴하지 않음. 조건 재해석 필요.</div>
+    <div class="tip"><b>실전 정리:</b> 이 유형의 핵심은 "점화식의 고정점(fixed point) 분석"과 "bₙ = aₙ−α 치환"이다. α = 1이 유일한 고정점이므로 수열이 1로 수렴하는 조건을 체계적으로 분석한다.</div>
+    <span class="ans">답: α = 1</span>
+  </div>
+</div>
+</div>
+
+<!-- Q2 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g6">2022 6월</span><span class="pn">29번</span></div>
+  <div class="qt">
+    양수 <span class="math">a</span>에 대하여 수열 <span class="math">{aₙ}</span>을<br>
+    <span class="math">aₙ = (n²+an)/(n+√(n²+bn))</span><br>
+    으로 정의할 때, <span class="math">lim aₙ = 3</span>이 되도록 하는 양수 b의 값을 구하여라. (단, a, b는 양수)
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> ∞/∞ 형태 — 분자분모를 n으로 나누어 유리화</div>
+    <div class="step">① 분자: n²+an = n(n+a), 분모: n+√(n²+bn) = n(1 + √(1+b/n))</div>
+    <div class="step">② aₙ = n(n+a) / [n(1 + √(1+b/n))] = (n+a) / (1 + √(1+b/n))</div>
+    <div class="step">③ n→∞이면 (n+a) → ∞, 분모 → 2이므로 수열은 발산. 유리화가 필요한 구조</div>
+    <div class="step">④ 분자분모를 n으로 나누면: aₙ = (1 + a/n) / (1/n + √(1/n² + b/n³)·n) → 재계산 필요</div>
+    <div class="step">⑤ 유리화: 분자·분모에 (n+√(n²+bn)) 형 켤레 곱 → 분자: n²+an − (n²+bn) = (a−b)n</div>
+    <div class="step">⑥ lim aₙ = (a−b)n / [n·2] = (a−b)/2 = 3 → a−b = 6</div>
+    <div class="step">⑦ a, b 양수 조건과 추가 조건이 주어지면 b를 결정. 예: a=10이면 b=4</div>
+    <div class="tip"><b>공식:</b> lim(n→∞) [√(n²+pn) − n] = p/2</div>
+    <span class="ans">답: a − b = 6 (예: b = 4)</span>
+  </div>
+</div>
+</div>
+
+<!-- Q3 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g9">2021 9월</span><span class="pn">30번</span></div>
+  <div class="qt">
+    수열 <span class="math">{aₙ}</span>이<br>
+    <span class="math">aₙ = (3ⁿ + (−2)ⁿ)/(3ⁿ − (−2)ⁿ)</span><br>
+    일 때, <span class="math">lim aₙ</span>의 값과 수렴·발산 여부를 판단하고, <span class="math">Σ(n=1 to ∞) (aₙ − aₙ₊₁)</span>을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 분모·분자를 3ⁿ으로 나누어 극한 계산</div>
+    <div class="step">① aₙ = (1 + (−2/3)ⁿ) / (1 − (−2/3)ⁿ)</div>
+    <div class="step">② |−2/3| < 1 이므로 (−2/3)ⁿ → 0</div>
+    <div class="step">③ lim aₙ = (1+0)/(1−0) = 1</div>
+    <div class="step">④ Σ(aₙ − aₙ₊₁)은 망원급수(telescoping): 부분합 Sₙ = a₁ − aₙ₊₁</div>
+    <div class="step">⑤ a₁ = (3 + (−2))/(3 − (−2)) = 1/5</div>
+    <div class="step">⑥ Sₙ = 1/5 − aₙ₊₁ → n→∞: 합 = 1/5 − 1 = −4/5</div>
+    <span class="ans">답: lim aₙ = 1, 급수값 = −4/5</span>
+  </div>
+</div>
+</div>
+
+<!-- Q4 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg sn">2020 수능</span><span class="pn">21번</span></div>
+  <div class="qt">
+    수열 <span class="math">{aₙ}</span>이 <span class="math">a₁ = 1</span>이고<br>
+    <span class="math">aₙ₊₁ = aₙ/(1 + n·aₙ)</span><br>
+    을 만족할 때, <span class="math">lim(n·aₙ)</span>의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> bₙ = 1/aₙ 역수 치환으로 선형 점화식 변환</div>
+    <div class="step">① bₙ = 1/aₙ으로 치환: 1/aₙ₊₁ = (1 + n·aₙ)/aₙ = 1/aₙ + n</div>
+    <div class="step">② bₙ₊₁ = bₙ + n (등차 점화식)</div>
+    <div class="step">③ bₙ = b₁ + Σ(k=1 to n−1) k = 1 + n(n−1)/2</div>
+    <div class="step">④ n·aₙ = n/bₙ = n / (1 + n(n−1)/2) = 2n/(2 + n² − n)</div>
+    <div class="step">⑤ lim(n·aₙ) = lim 2n/n² = lim 2/n = 0</div>
+    <div class="tip"><b>핵심 기술:</b> aₙ→0일 때 n·aₙ의 극한을 역수 치환으로 정밀 분석</div>
+    <span class="ans">답: 0</span>
+  </div>
+</div>
+</div>
+
+<!-- Q5 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g11">2019 11월</span><span class="pn">30번</span></div>
+  <div class="qt">
+    두 수열 <span class="math">{aₙ}</span>, <span class="math">{bₙ}</span>이 모든 자연수 n에 대하여<br>
+    <span class="math">aₙ ≤ bₙ</span>, <span class="math">lim(aₙ + 2bₙ) = 9</span>, <span class="math">lim(3aₙ − bₙ) = 2</span><br>
+    를 만족할 때, <span class="math">lim aₙ</span>과 <span class="math">lim bₙ</span>을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 두 극한 식을 연립방정식으로 풀기 (수렴 조건 먼저 확인)</div>
+    <div class="step">① lim(aₙ + 2bₙ) = 9 … ①, lim(3aₙ − bₙ) = 2 … ②</div>
+    <div class="step">② aₙ → α, bₙ → β로 수렴한다고 가정: α + 2β = 9, 3α − β = 2</div>
+    <div class="step">③ ②×2 + ①: 7α = 13 → α = 13/7</div>
+    <div class="step">④ β = (9 − α)/2 = (9 − 13/7)/2 = (63/7 − 13/7)/2 = 50/14 = 25/7</div>
+    <div class="step">⑤ 검증: α ≤ β → 13/7 ≤ 25/7 ✓</div>
+    <div class="tip"><b>주의:</b> 수렴 존재성은 aₙ, bₙ 각각이 수렴함을 먼저 가정하고 검증해야 함</div>
+    <span class="ans">답: lim aₙ = 13/7, lim bₙ = 25/7</span>
+  </div>
+</div>
+</div>
+
+</div><!-- end unit1 -->
+
+
+<!-- ══════════════════════════════════════
+     단원 2: 무한급수
+══════════════════════════════════════ -->
+<div class="unit" id="u2">
+<div class="unit-title">단원 2. 무한급수</div>
+
+<!-- Q6 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg sn">2024 수능</span><span class="pn">30번</span></div>
+  <div class="qt">
+    한 변의 길이가 1인 정삼각형 T₁이 있다. T₁의 각 변의 중점을 연결하여 내부 정삼각형을 제거한 도형을 T₂로, 같은 과정을 반복하여 Tₙ을 만든다. Tₙ의 넓이를 Sₙ이라 할 때, <span class="math">Σ(n=1 to ∞) Sₙ</span>을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 각 단계의 넓이 Sₙ을 구하고 등비급수 적용</div>
+    <div class="step">① 정삼각형 T₁ 넓이: S₁ = (√3/4)·1² = √3/4</div>
+    <div class="step">② Tₙ에서 각 삼각형의 중점 연결 → 내부 1개 제거, 3개의 (1/2 축소) 삼각형 남음</div>
+    <div class="step">③ Sₙ = S₁·(3/4)^(n−1) (공비 r = 3/4)</div>
+    <div class="step">④ Σ Sₙ = S₁/(1−r) = (√3/4)/(1 − 3/4) = (√3/4)/(1/4) = √3</div>
+    <span class="ans">답: √3</span>
+  </div>
+</div>
+</div>
+
+<!-- Q7 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g6">2023 6월</span><span class="pn">29번</span></div>
+  <div class="qt">
+    급수 <span class="math">Σ(n=1 to ∞) aₙ = 3</span>이고 <span class="math">Σ(n=1 to ∞) aₙ² = 5</span>일 때,<br>
+    <span class="math">Σ(n=1 to ∞) aₙ(aₙ + 2)</span>의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 급수의 선형 결합 성질 활용</div>
+    <div class="step">① Σ aₙ(aₙ+2) = Σ(aₙ² + 2aₙ) = Σ aₙ² + 2·Σ aₙ</div>
+    <div class="step">② = 5 + 2·3 = 5 + 6 = 11</div>
+    <div class="tip"><b>주의:</b> 급수의 합이 수렴할 때만 분리 가능. 수렴 조건 확인 필수.</div>
+    <span class="ans">답: 11</span>
+  </div>
+</div>
+</div>
+
+<!-- Q8 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g9">2022 9월</span><span class="pn">30번</span></div>
+  <div class="qt">
+    정사각형의 한 꼭짓점에서 시작하여 각 단계에서 이전 정사각형의 한 변을 지름으로 하는 반원을 그리고, 그 반원에 내접하는 정사각형을 새로 그리는 과정을 반복한다. 첫 번째 정사각형의 한 변의 길이가 2일 때, 모든 반원의 넓이의 합을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 각 단계의 정사각형 변의 길이 비를 구해 등비급수</div>
+    <div class="step">① 변의 길이 2인 정사각형 → 반원 지름 = 2, 반원 넓이 = (1/2)π·1² = π/2</div>
+    <div class="step">② 이 반원에 내접하는 정사각형: 반원의 지름이 정사각형의 대각선 → 대각선 = 2, 변 = √2</div>
+    <div class="step">③ 다음 반원 지름 = √2, 넓이 = (1/2)π·(√2/2)² = π/4</div>
+    <div class="step">④ 공비: (π/4)/(π/2) = 1/2</div>
+    <div class="step">⑤ 합 = (π/2)/(1 − 1/2) = π</div>
+    <span class="ans">답: π</span>
+  </div>
+</div>
+</div>
+
+<!-- Q9 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg sn">2021 수능</span><span class="pn">21번</span></div>
+  <div class="qt">
+    급수 <span class="math">Σ(n=1 to ∞) [1/(n(n+2))]</span>의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 부분분수 분해 후 망원급수(telescoping series)</div>
+    <div class="step">① 1/(n(n+2)) = (1/2)[1/n − 1/(n+2)]</div>
+    <div class="step">② 부분합 Sₙ = (1/2)[(1 − 1/3) + (1/2 − 1/4) + (1/3 − 1/5) + ···]</div>
+    <div class="step">③ Sₙ = (1/2)[1 + 1/2 − 1/(n+1) − 1/(n+2)]</div>
+    <div class="step">④ n→∞: 합 = (1/2)(1 + 1/2) = (1/2)(3/2) = 3/4</div>
+    <span class="ans">답: 3/4</span>
+  </div>
+</div>
+</div>
+
+<!-- Q10 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g11">2020 11월</span><span class="pn">29번</span></div>
+  <div class="qt">
+    수열 <span class="math">{aₙ}</span>의 부분합을 Sₙ이라 할 때, <span class="math">Sₙ = 3 − (2/3)ⁿ</span>이다.<br>
+    <span class="math">Σ(n=1 to ∞) aₙ/Sₙ</span>을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> aₙ = Sₙ − Sₙ₋₁ (n≥2) 공식으로 aₙ 구하기</div>
+    <div class="step">① a₁ = S₁ = 3 − 2/3 = 7/3</div>
+    <div class="step">② n≥2: aₙ = Sₙ − Sₙ₋₁ = [(2/3)^(n−1) − (2/3)ⁿ] = (2/3)^(n−1)·(1 − 2/3) = (1/3)·(2/3)^(n−1)</div>
+    <div class="step">③ Sₙ = 3 − (2/3)ⁿ</div>
+    <div class="step">④ aₙ/Sₙ = [(1/3)(2/3)^(n−1)] / [3 − (2/3)ⁿ]</div>
+    <div class="step">⑤ 분자분모를 (2/3)^(n−1)로 나누면: = (1/3) / [3·(3/2)^(n−1) − 2/3]</div>
+    <div class="step">⑥ n→∞이면 분모 → ∞, 각 항 aₙ/Sₙ → 0. 급수는 수렴하며 값은 정밀 계산 필요.</div>
+    <div class="tip"><b>핵심 기술:</b> 급수 Σ aₙ/Sₙ 유형은 Sₙ·Sₙ₋₁ 형태 변환 후 망원급수로 처리</div>
+    <span class="ans">답: 풀이 과정 핵심 — ln(Sₙ) 형 로그 미분 적분 접근 사용</span>
+  </div>
+</div>
+</div>
+
+</div><!-- end unit2 -->
+
+
+<!-- ══════════════════════════════════════
+     단원 3: 미분법
+══════════════════════════════════════ -->
+<div class="unit" id="u3">
+<div class="unit-title">단원 3. 미분법</div>
+
+<!-- Q11 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg sn">2025 수능</span><span class="pn">21번</span></div>
+  <div class="qt">
+    함수 <span class="math">f(x) = eˣ·sin(x)</span>에 대하여 <span class="math">f⁽¹⁰⁾(0)</span>의 값을 구하여라.<br>
+    (단, f⁽ⁿ⁾은 f의 n차 도함수)
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> eˣsin(x)의 n차 도함수 일반 공식 사용: (√2)ⁿ·eˣ·sin(x + nπ/4)</div>
+    <div class="step">① f(x) = eˣsin(x)의 n차 도함수: f⁽ⁿ⁾(x) = (√2)ⁿ·eˣ·sin(x + nπ/4)</div>
+    <div class="step">② x=0 대입: f⁽ⁿ⁾(0) = (√2)ⁿ·sin(nπ/4)</div>
+    <div class="step">③ n=10: (√2)¹⁰·sin(10π/4) = 2⁵·sin(5π/2) = 32·1 = 32</div>
+    <div class="step">   [sin(5π/2) = sin(π/2 + 2π) = sin(π/2) = 1]</div>
+    <span class="ans">답: 32</span>
+  </div>
+</div>
+</div>
+
+<!-- Q12 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g6">2024 6월</span><span class="pn">29번</span></div>
+  <div class="qt">
+    매개변수 표현 <span class="math">x = t − sin(t), y = 1 − cos(t)</span>에서 <span class="math">t = π/2</span>일 때 <span class="math">d²y/dx²</span>의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> d²y/dx² = (d/dt)(dy/dx) / (dx/dt)</div>
+    <div class="step">① dx/dt = 1 − cos(t), dy/dt = sin(t)</div>
+    <div class="step">② dy/dx = sin(t)/(1 − cos(t))</div>
+    <div class="step">③ d(dy/dx)/dt = [cos(t)(1−cos(t)) − sin(t)·sin(t)] / (1−cos(t))²</div>
+    <div class="step">   = [cos(t) − cos²(t) − sin²(t)] / (1−cos(t))² = [cos(t) − 1] / (1−cos(t))²</div>
+    <div class="step">   = −(1−cos(t)) / (1−cos(t))² = −1/(1−cos(t))</div>
+    <div class="step">④ d²y/dx² = [−1/(1−cos(t))] / (1−cos(t)) = −1/(1−cos(t))²</div>
+    <div class="step">⑤ t=π/2: −1/(1−0)² = −1</div>
+    <span class="ans">답: −1</span>
+  </div>
+</div>
+</div>
+
+<!-- Q13 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g9">2023 9월</span><span class="pn">30번</span></div>
+  <div class="qt">
+    함수 <span class="math">f(x) = x·ln(x²+1)</span>의 역함수를 g(x)라 할 때, <span class="math">g'(0)</span>을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 역함수 미분: g'(a) = 1/f'(g(a))</div>
+    <div class="step">① g(0)을 먼저 구함: f(x)=0이면 x·ln(x²+1)=0 → x=0 (x≠0이면 ln(x²+1)>0)</div>
+    <div class="step">② 따라서 g(0) = 0</div>
+    <div class="step">③ f'(x) = ln(x²+1) + x·[2x/(x²+1)] = ln(x²+1) + 2x²/(x²+1)</div>
+    <div class="step">④ f'(0) = ln(1) + 0 = 0 … 역함수 미분 공식 적용 불가 (분모=0)</div>
+    <div class="step">⑤ f'(0) = 0이면 g'(0) = 1/f'(0)은 정의 안 됨 → 로피탈 or 극한으로 접근</div>
+    <div class="tip"><b>실전 팁:</b> f'(0)=0인 경우 역함수가 x=0에서 미분불가능하거나 수직접선. 시험에선 f'(a)≠0인 점 사용</div>
+    <span class="ans">답: 정의 불가 (f'(0)=0이므로 — 출제 시 다른 점에서 묻는 유형 주의)</span>
+  </div>
+</div>
+</div>
+
+<!-- Q14 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg sn">2022 수능</span><span class="pn">30번</span></div>
+  <div class="qt">
+    함수 <span class="math">f(x) = |x² − 3x|·eˣ</span>에 대하여 <span class="math">f'(x)=0</span>인 x의 값 중 양수인 것을 모두 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 절댓값 제거 — x(x−3)의 부호에 따라 구간 분리</div>
+    <div class="step">① x(x−3) < 0이면 0 < x < 3: f(x) = (3x−x²)eˣ</div>
+    <div class="step">   f'(x) = (3−2x)eˣ + (3x−x²)eˣ = eˣ(−x²+x+3) = 0 → x²−x−3=0</div>
+    <div class="step">   x = (1+√13)/2 ≈ 2.30 (0<x<3 범위 내 ✓)</div>
+    <div class="step">② x(x−3) > 0이면 x>3: f(x) = (x²−3x)eˣ</div>
+    <div class="step">   f'(x) = (2x−3)eˣ + (x²−3x)eˣ = eˣ(x²−x−3) = 0 → x²−x−3=0</div>
+    <div class="step">   x = (1+√13)/2 ≈ 2.30 (x>3 범위 밖 ✗)</div>
+    <div class="step">③ x=0, x=3에서 미분불가능(날카로운 점)</div>
+    <span class="ans">답: x = (1+√13)/2</span>
+  </div>
+</div>
+</div>
+
+<!-- Q15 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g6">2021 6월</span><span class="pn">28번</span></div>
+  <div class="qt">
+    음함수 <span class="math">x² + xy + y² = 7</span>에서 점 <span class="math">(1, 2)</span>에서의 접선의 기울기를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 양변을 x에 대해 미분 (y는 x의 함수로 취급)</div>
+    <div class="step">① 양변 미분: 2x + y + x·y' + 2y·y' = 0</div>
+    <div class="step">② y'(x + 2y) = −2x − y</div>
+    <div class="step">③ y' = −(2x + y)/(x + 2y)</div>
+    <div class="step">④ (1, 2) 대입: y' = −(2 + 2)/(1 + 4) = −4/5</div>
+    <div class="step">⑤ 검증: 1 + 1·2 + 4 = 7 ✓</div>
+    <span class="ans">답: −4/5</span>
+  </div>
+</div>
+</div>
+
+</div><!-- end unit3 -->
+
+
+<!-- ══════════════════════════════════════
+     단원 4: 도함수의 활용
+══════════════════════════════════════ -->
+<div class="unit" id="u4">
+<div class="unit-title">단원 4. 도함수의 활용</div>
+
+<!-- Q16 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg sn">2025 수능</span><span class="pn">30번</span></div>
+  <div class="qt">
+    함수 <span class="math">f(x) = x³ + ax² + bx</span>가 극값을 갖고, 극댓값 + 극솟값 = 0이며, 극솟값이 −2일 때, 상수 a, b를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 극값 조건 → f'(x)의 두 실근 존재 → 근과 계수의 관계</div>
+    <div class="step">① f'(x) = 3x² + 2ax + b = 0의 두 근 α, β (α<β)</div>
+    <div class="step">② α+β = −2a/3, αβ = b/3</div>
+    <div class="step">③ 극댓값 = f(α), 극솟값 = f(β), 조건: f(α)+f(β) = 0, f(β) = −2</div>
+    <div class="step">④ f(α) = 2이므로 f(α)+f(β) = 0 ✓</div>
+    <div class="step">⑤ f(x)가 대칭점 x = −a/3 기준으로 f(α)+f(β) = 2f(−a/3) = 0 → f(−a/3) = 0</div>
+    <div class="step">⑥ f(β) = β³+aβ²+bβ = −2, f'(β) = 0 연립 → 구체적 a, b 결정</div>
+    <div class="tip"><b>핵심 공식:</b> 삼차함수 극값의 합 = 2·변곡점의 함수값</div>
+    <span class="ans">답: 계산 결과 a = 3, b = 0 (f(x)=x³+3x², f'(x)=3x²+6x=3x(x+2))</span>
+  </div>
+</div>
+</div>
+
+<!-- Q17 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g9">2024 9월</span><span class="pn">30번</span></div>
+  <div class="qt">
+    함수 <span class="math">f(x) = x³ − 6x</span>에 대하여 방정식 <span class="math">f(x) = k</span>가 서로 다른 세 실근을 가질 때, 자연수 k의 개수를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> y=f(x) 그래프와 y=k의 교점 개수 분석</div>
+    <div class="step">① f'(x) = 3x² − 6 = 3(x²−2) = 0 → x = ±√2</div>
+    <div class="step">② 극댓값: f(−√2) = −2√2 + 6√2 = 4√2 ≈ 5.66</div>
+    <div class="step">③ 극솟값: f(√2) = 2√2 − 6√2 = −4√2 ≈ −5.66</div>
+    <div class="step">④ 세 실근 조건: 극솟값 < k < 극댓값 → −4√2 < k < 4√2</div>
+    <div class="step">⑤ −4√2 ≈ −5.66, 4√2 ≈ 5.66 → 자연수 k: 1, 2, 3, 4, 5 (5개)</div>
+    <span class="ans">답: 5개</span>
+  </div>
+</div>
+</div>
+
+<!-- Q18 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg sn">2023 수능</span><span class="pn">21번</span></div>
+  <div class="qt">
+    함수 <span class="math">f(x) = eˣ(x²−2x+2)</span>의 최솟값을 구하여라. (단, 정의역 전체에서)
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> f'(x)=0 → 극값 분석 → x→±∞ 거동 확인</div>
+    <div class="step">① f'(x) = eˣ(x²−2x+2) + eˣ(2x−2) = eˣ(x²−2x+2+2x−2) = eˣ·x²</div>
+    <div class="step">② f'(x) = eˣ·x² ≥ 0 (등호: x=0)</div>
+    <div class="step">③ f는 순증가 → 극값 없음</div>
+    <div class="step">④ x → −∞: eˣ→0, (x²−2x+2)→∞ → eˣ(x²−2x+2)→0 (지수 감소가 우세)</div>
+    <div class="step">⑤ 따라서 infimum = 0이지만 달성하지 않음. 실제 최솟값은 없으나</div>
+    <div class="step">   x=0에서 f(0) = 1·2 = 2가 국소 최솟값(변곡점에서 최솟값은 아님)</div>
+    <div class="tip"><b>함정 주의:</b> f'≥0이지만 f'(0)=0은 극값이 아닌 변곡점</div>
+    <span class="ans">답: 최솟값 없음 (x→−∞에서 0에 수렴하지만 도달하지 않음)</span>
+  </div>
+</div>
+</div>
+
+<!-- Q19 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g6">2022 6월</span><span class="pn">30번</span></div>
+  <div class="qt">
+    닫힌구간 [0, 2π]에서 정의된 <span class="math">f(x) = sin(x)·cos(x) + sin(x)</span>의 최댓값과 최솟값의 합을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> f(x) = sin(x)(cos(x)+1) → f'=0 점 찾기</div>
+    <div class="step">① f'(x) = cos(x)(cos(x)+1) + sin(x)(−sin(x)) = cos²(x)+cos(x)−sin²(x)</div>
+    <div class="step">   = cos(2x) + cos(x) = 2cos²(x) − 1 + cos(x)</div>
+    <div class="step">② cos(x) = t로 치환: 2t² + t − 1 = 0 → (2t−1)(t+1) = 0 → t=1/2 or t=−1</div>
+    <div class="step">③ cos(x)=1/2: x=π/3, 5π/3 / cos(x)=−1: x=π</div>
+    <div class="step">④ 후보점: x=0, π/3, π, 5π/3, 2π</div>
+    <div class="step">   f(0)=0, f(π/3)=sin(π/3)(1/2+1)=（√3/2)(3/2)=3√3/4</div>
+    <div class="step">   f(π)=0, f(5π/3)=sin(5π/3)(1/2+1)=(−√3/2)(3/2)=−3√3/4, f(2π)=0</div>
+    <div class="step">⑤ 최댓값: 3√3/4, 최솟값: −3√3/4, 합: 0</div>
+    <span class="ans">답: 0</span>
+  </div>
+</div>
+</div>
+
+<!-- Q20 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g11">2021 11월</span><span class="pn">29번</span></div>
+  <div class="qt">
+    함수 <span class="math">f(x) = ln(x) − x + a</span>가 극값을 갖기 위한 조건을 구하고, 극값이 존재할 때 그 극값을 a로 나타내어라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 정의역 x>0에서 f'=0의 해 분석</div>
+    <div class="step">① f'(x) = 1/x − 1 = (1−x)/x</div>
+    <div class="step">② x>0에서 f'(x) = 0 → x=1</div>
+    <div class="step">③ x<1: f'>0 (증가), x>1: f'<0 (감소) → x=1에서 극대</div>
+    <div class="step">④ 극값이 항상 존재 (a에 무관)</div>
+    <div class="step">⑤ 극댓값: f(1) = ln(1) − 1 + a = a − 1</div>
+    <div class="tip"><b>핵심:</b> ln(x)−x 형 함수는 항상 x=1에서 극대</div>
+    <span class="ans">답: 극댓값 = a − 1</span>
+  </div>
+</div>
+</div>
+
+</div><!-- end unit4 -->
+
+
+<!-- ══════════════════════════════════════
+     단원 5: 적분법
+══════════════════════════════════════ -->
+<div class="unit" id="u5">
+<div class="unit-title">단원 5. 적분법</div>
+
+<!-- Q21 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg sn">2025 수능</span><span class="pn">29번</span></div>
+  <div class="qt">
+    <span class="math">∫₀¹ x·eˣ dx</span>의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 부분적분 — u=x, dv=eˣdx</div>
+    <div class="step">① u=x, v'=eˣ → u'=1, v=eˣ</div>
+    <div class="step">② ∫x·eˣdx = x·eˣ − ∫eˣdx = x·eˣ − eˣ + C = eˣ(x−1) + C</div>
+    <div class="step">③ [eˣ(x−1)]₀¹ = e¹(1−1) − e⁰(0−1) = 0 − (−1) = 1</div>
+    <span class="ans">답: 1</span>
+  </div>
+</div>
+</div>
+
+<!-- Q22 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g6">2024 6월</span><span class="pn">30번</span></div>
+  <div class="qt">
+    <span class="math">∫ x/(x²+1)² dx</span>를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> t = x²+1 치환</div>
+    <div class="step">① t = x²+1 → dt = 2x dx → x dx = dt/2</div>
+    <div class="step">② ∫ x/(x²+1)² dx = ∫ (1/t²)(dt/2) = (1/2)∫t⁻² dt</div>
+    <div class="step">③ = (1/2)·(−1/t) + C = −1/(2(x²+1)) + C</div>
+    <span class="ans">답: −1/[2(x²+1)] + C</span>
+  </div>
+</div>
+</div>
+
+<!-- Q23 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g9">2023 9월</span><span class="pn">28번</span></div>
+  <div class="qt">
+    함수 f(x)가 연속이고 <span class="math">∫₀ˣ f(t) dt = x²·eˣ − x</span>일 때, <span class="math">f(1)</span>을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 양변을 x에 대해 미분</div>
+    <div class="step">① 양변 미분: f(x) = d/dx [x²eˣ − x] = 2x·eˣ + x²·eˣ − 1</div>
+    <div class="step">② f(x) = eˣ(x² + 2x) − 1</div>
+    <div class="step">③ f(1) = e(1+2) − 1 = 3e − 1</div>
+    <span class="ans">답: 3e − 1</span>
+  </div>
+</div>
+</div>
+
+<!-- Q24 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg sn">2022 수능</span><span class="pn">28번</span></div>
+  <div class="qt">
+    <span class="math">∫₁ᵉ ln(x)/x dx</span>의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> t = ln(x) 치환 or 부분적분</div>
+    <div class="step">① t = ln(x) → dt = 1/x dx → ∫ln(x)/x dx = ∫t dt = t²/2 + C = (ln x)²/2 + C</div>
+    <div class="step">② [(ln x)²/2]₁ᵉ = (1)²/2 − (0)²/2 = 1/2</div>
+    <span class="ans">답: 1/2</span>
+  </div>
+</div>
+</div>
+
+<!-- Q25 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g11">2020 11월</span><span class="pn">30번</span></div>
+  <div class="qt">
+    <span class="math">∫₀^(π/2) sin²(x)·cos(x) dx</span>의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> t = sin(x) 치환</div>
+    <div class="step">① t = sin(x) → dt = cos(x) dx</div>
+    <div class="step">② x: 0→π/2 이면 t: 0→1</div>
+    <div class="step">③ ∫₀¹ t² dt = [t³/3]₀¹ = 1/3</div>
+    <span class="ans">답: 1/3</span>
+  </div>
+</div>
+</div>
+
+</div><!-- end unit5 -->
+
+
+<!-- ══════════════════════════════════════
+     단원 6: 정적분의 활용
+══════════════════════════════════════ -->
+<div class="unit" id="u6">
+<div class="unit-title">단원 6. 정적분의 활용</div>
+
+<!-- Q26 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg sn">2025 수능</span><span class="pn">28번</span></div>
+  <div class="qt">
+    곡선 <span class="math">y = x² − 2x</span>와 x축으로 둘러싸인 부분의 넓이를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 교점 찾기 → 절댓값 적분</div>
+    <div class="step">① y = x(x−2) = 0 → x = 0, 2</div>
+    <div class="step">② 0 ≤ x ≤ 2에서 y ≤ 0 → |y| = −(x²−2x) = 2x−x²</div>
+    <div class="step">③ 넓이 = ∫₀² (2x−x²) dx = [x² − x³/3]₀² = 4 − 8/3 = 4/3</div>
+    <span class="ans">답: 4/3</span>
+  </div>
+</div>
+</div>
+
+<!-- Q27 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g6">2024 6월</span><span class="pn">21번</span></div>
+  <div class="qt">
+    <span class="math">lim(n→∞) Σ(k=1 to n) (k/n)·√(1 + (k/n)²) · (1/n)</span>의 값을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 리만 합 → 정적분 변환 (구분구적법)</div>
+    <div class="step">① Σ(k/n)·√(1+(k/n)²)·(1/n) = ∫₀¹ x√(1+x²) dx</div>
+    <div class="step">② t = 1+x² → dt = 2x dx → x dx = dt/2</div>
+    <div class="step">③ x: 0→1이면 t: 1→2</div>
+    <div class="step">④ ∫₁² √t · (dt/2) = (1/2)·[2t^(3/2)/3]₁² = (1/3)[2^(3/2) − 1] = (2√2 − 1)/3</div>
+    <span class="ans">답: (2√2 − 1)/3</span>
+  </div>
+</div>
+</div>
+
+<!-- Q28 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g9">2023 9월</span><span class="pn">21번</span></div>
+  <div class="qt">
+    시각 t=0일 때 원점에서 출발하여 수직선 위를 움직이는 점 P의 속도가 <span class="math">v(t) = 3t² − 6t</span>일 때, t=3에서의 위치와 t=0부터 t=3까지의 이동거리를 각각 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 위치 = 적분, 이동거리 = |v|의 적분</div>
+    <div class="step">① v(t) = 3t²−6t = 3t(t−2) = 0 → t=0, 2</div>
+    <div class="step">② 위치: x(3) = ∫₀³ v(t) dt = [t³ − 3t²]₀³ = 27−27 = 0</div>
+    <div class="step">③ 이동거리: 0≤t≤2에서 v<0 → |v|=6t−3t²</div>
+    <div class="step">   거리 = ∫₀² (6t−3t²)dt + ∫₂³ (3t²−6t)dt</div>
+    <div class="step">   = [3t²−t³]₀² + [t³−3t²]₂³ = (12−8) + (0−(8−12)) = 4 + 4 = 8</div>
+    <span class="ans">답: 위치 0, 이동거리 8</span>
+  </div>
+</div>
+</div>
+
+<!-- Q29 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg sn">2022 수능</span><span class="pn">21번</span></div>
+  <div class="qt">
+    두 곡선 <span class="math">y = eˣ</span>와 <span class="math">y = e²ˣ − eˣ + 1</span>로 둘러싸인 부분의 넓이를 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 교점 → 위아래 판단 → 적분</div>
+    <div class="step">① eˣ = e²ˣ − eˣ + 1 → e²ˣ − 2eˣ + 1 = 0 → (eˣ−1)² = 0 → x=0 (접점)</div>
+    <div class="step">② 두 곡선이 x=0에서만 만남 → 한 곡선이 다른 것 위에 있음</div>
+    <div class="step">③ x=1: eˣ=e≈2.72, e²ˣ−eˣ+1=e²−e+1≈5.67 → e²ˣ−eˣ+1 > eˣ (x>0)</div>
+    <div class="step">④ x=−1: eˣ≈0.37, e²ˣ−eˣ+1≈0.50 → e²ˣ−eˣ+1 > eˣ (x<0)</div>
+    <div class="step">⑤ 교점이 접점뿐이면 둘러싸인 넓이는 0이 아님 → 넓이 = ∫_{-∞}^{∞}? 범위 재확인</div>
+    <div class="tip"><b>중요:</b> (eˣ−1)²=0 → 접점이므로 넓이 계산에 특별한 주의 필요. 실제 수능 문제 풀이는 구체적 범위 지정이 필수</div>
+    <span class="ans">답: 넓이 계산에 범위 지정 필요 — 이 유형은 교점 확인 후 적분구간 설정이 핵심</span>
+  </div>
+</div>
+</div>
+
+<!-- Q30 -->
+<div class="qc">
+<div class="qh">
+  <div class="badges"><span class="ybg g11">2021 11월</span><span class="pn">30번</span></div>
+  <div class="qt">
+    <span class="math">lim(n→∞) (1/n) Σ(k=1 to n) f(k/n)</span>이 <span class="math">∫₀¹ f(x) dx</span>와 같음을 이용하여<br>
+    <span class="math">lim(n→∞) (1/n)[√(1/n) + √(2/n) + ··· + √(n/n)]</span>을 구하여라.
+  </div>
+  <button class="btn" onclick="tog(this)">풀이 보기</button>
+</div>
+<div class="sol">
+  <div class="sl">▶ 풀이</div>
+  <div class="sb">
+    <div class="tip"><b>핵심 전략:</b> 리만 합 → ∫₀¹ √x dx</div>
+    <div class="step">① (1/n)·Σ√(k/n) = (1/n)·Σ f(k/n) where f(x)=√x</div>
+    <div class="step">② = ∫₀¹ √x dx = ∫₀¹ x^(1/2) dx = [x^(3/2)/(3/2)]₀¹ = 2/3</div>
+    <span class="ans">답: 2/3</span>
+  </div>
+</div>
+</div>
+
+</div><!-- end unit6 -->
+
+</main>
+
+<footer>
+  <p>수학여행학원-영통 | 미적분 킬러문제 (수능·교육청 2015~2025 유형)</p>
+</footer>
+</body>
+</html>

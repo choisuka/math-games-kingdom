@@ -6,36 +6,36 @@
 <title>공통수학1 심화문제 | 수학여행학원-영통</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:#0f172a;color:#e2e8f0;font-family:'Malgun Gothic','맑은 고딕',sans-serif;line-height:1.7;min-height:100vh}
-header{background:linear-gradient(135deg,#1e3a5f,#0f172a);padding:1.5rem 1rem;text-align:center;border-bottom:2px solid #38bdf8}
-header h1{font-size:1.6rem;color:#38bdf8;font-weight:700}
-header p{color:#94a3b8;font-size:.9rem;margin-top:.3rem}
-nav{display:flex;justify-content:center;gap:.6rem;padding:.8rem;background:#1e293b;flex-wrap:wrap}
-nav a{color:#94a3b8;text-decoration:none;padding:.3rem .8rem;border-radius:999px;border:1px solid #334155;font-size:.85rem;transition:all .2s}
-nav a:hover{background:#38bdf8;color:#0f172a;border-color:#38bdf8}
+body{background:#f5f0e8;color:#1e1e2e;font-family:'Malgun Gothic','맑은 고딕',sans-serif;line-height:1.7;min-height:100vh}
+header{background:#1e3a5f;padding:1.5rem 1rem;text-align:center;border-bottom:3px solid #2563eb}
+header h1{font-size:1.6rem;color:#fff;font-weight:700}
+header p{color:#bfdbfe;font-size:.9rem;margin-top:.3rem}
+nav{display:flex;justify-content:center;gap:.6rem;padding:.8rem;background:#e8e0d0;flex-wrap:wrap}
+nav a{color:#374151;text-decoration:none;padding:.3rem .8rem;border-radius:999px;border:1px solid #d4c9b8;font-size:.85rem;transition:all .2s}
+nav a:hover{background:#1e3a5f;color:#fff;border-color:#1e3a5f}
 main{max-width:900px;margin:0 auto;padding:1rem}
 .unit{margin:2rem 0}
-.unit-title{font-size:1.3rem;font-weight:700;color:#f59e0b;padding:.6rem 1rem;background:#1e293b;border-left:4px solid #f59e0b;border-radius:0 .5rem .5rem 0;margin-bottom:1rem}
+.unit-title{font-size:1.3rem;font-weight:700;color:#92400e;padding:.6rem 1rem;background:#fef3c7;border-left:4px solid #d97706;border-radius:0 .5rem .5rem 0;margin-bottom:1rem}
 .level-title{font-size:1.05rem;font-weight:700;margin:1.2rem 0 .6rem;padding:.4rem .8rem;border-radius:.4rem}
-.level-s{background:#1e3a5f;color:#38bdf8;border-left:3px solid #38bdf8}
-.level-ss{background:#2d1b4e;color:#a78bfa;border-left:3px solid #a78bfa}
-.problem-card{background:#1e293b;border-radius:.8rem;margin:.6rem 0;overflow:hidden;border:1px solid #334155}
+.level-s{background:#dbeafe;color:#1e40af;border-left:3px solid #3b82f6}
+.level-ss{background:#ede9fe;color:#5b21b6;border-left:3px solid #7c3aed}
+.problem-card{background:#fff;border-radius:.8rem;margin:.6rem 0;overflow:hidden;border:1px solid #d4c9b8;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .problem-head{display:flex;align-items:flex-start;gap:.8rem;padding:.9rem 1rem}
 .pnum{flex-shrink:0;width:2rem;height:2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700}
-.level-s .pnum-s,.pnum-s{background:#1e3a5f;color:#38bdf8;border:1px solid #38bdf8}
-.pnum-ss{background:#2d1b4e;color:#a78bfa;border:1px solid #a78bfa}
+.level-s .pnum-s,.pnum-s{background:#dbeafe;color:#1e40af;border:1px solid #3b82f6}
+.pnum-ss{background:#ede9fe;color:#5b21b6;border:1px solid #7c3aed}
 .ptext{flex:1;font-size:.95rem}
-.toggle-btn{flex-shrink:0;background:none;border:1px solid #475569;color:#94a3b8;padding:.25rem .7rem;border-radius:.4rem;cursor:pointer;font-size:.8rem;white-space:nowrap;transition:all .2s}
-.toggle-btn:hover{background:#38bdf8;border-color:#38bdf8;color:#0f172a}
-.solution{display:none;padding:.9rem 1rem 1rem 1rem;border-top:1px solid #334155;background:#0f172a}
+.toggle-btn{flex-shrink:0;background:none;border:1px solid #d4c9b8;color:#6b7280;padding:.25rem .7rem;border-radius:.4rem;cursor:pointer;font-size:.8rem;white-space:nowrap;transition:all .2s}
+.toggle-btn:hover{background:#1e3a5f;border-color:#1e3a5f;color:#fff}
+.solution{display:none;padding:.9rem 1rem 1rem 1rem;border-top:1px solid #e5e7eb;background:#f8fafc}
 .solution.open{display:block}
-.sol-label{color:#34d399;font-size:.8rem;font-weight:700;margin-bottom:.5rem;letter-spacing:.05em}
-.sol-body{font-size:.9rem;color:#cbd5e1;line-height:1.8}
-.sol-body .step{margin:.4rem 0;padding:.3rem .6rem;background:#1e293b;border-radius:.3rem;border-left:2px solid #475569}
-.sol-body .key{color:#f59e0b;font-weight:700}
-.sol-body .ans{color:#34d399;font-weight:700;font-size:1rem;margin-top:.6rem;padding:.4rem .8rem;background:#0d2818;border-radius:.4rem;border-left:3px solid #34d399;display:inline-block}
-.math{font-family:'Courier New',monospace;background:#0f172a;padding:.1rem .3rem;border-radius:.2rem;color:#a5f3fc;font-size:.9em}
-footer{text-align:center;padding:2rem;color:#475569;font-size:.85rem;border-top:1px solid #1e293b;margin-top:2rem}
+.sol-label{color:#059669;font-size:.8rem;font-weight:700;margin-bottom:.5rem;letter-spacing:.05em}
+.sol-body{font-size:.9rem;color:#374151;line-height:1.8}
+.sol-body .step{margin:.4rem 0;padding:.3rem .6rem;background:#f1f5f9;border-radius:.3rem;border-left:2px solid #94a3b8}
+.sol-body .key{color:#b45309;font-weight:700}
+.sol-body .ans{color:#065f46;font-weight:700;font-size:1rem;margin-top:.6rem;padding:.4rem .8rem;background:#d1fae5;border-radius:.4rem;border-left:3px solid #059669;display:inline-block}
+.math{font-family:'Courier New',monospace;background:#eff6ff;padding:.1rem .3rem;border-radius:.2rem;color:#1e40af;font-size:.9em}
+footer{text-align:center;padding:2rem;color:#9ca3af;font-size:.85rem;border-top:1px solid #e5e7eb;margin-top:2rem}
 @media(max-width:600px){.problem-head{flex-wrap:wrap}.toggle-btn{width:100%}}
 </style>
 </head>

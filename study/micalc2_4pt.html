@@ -6,39 +6,39 @@
 <title>미적분 4점 심화 (2010~2025) | 수학여행학원-영통</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: #0f172a; color: #e2e8f0; font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; min-height: 100vh; }
-header { background: #1e293b; border-bottom: 2px solid #38bdf8; padding: 1.1rem 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-header a { color: #94a3b8; text-decoration: none; font-size: 0.9rem; }
-header a:hover { color: #e2e8f0; }
-header h1 { color: #38bdf8; font-size: 1.2rem; flex: 1; }
+body { background: #f5f0e8; color: #1e1e2e; font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; min-height: 100vh; line-height: 1.7; }
+header { background: #1e3a5f; border-bottom: 3px solid #2563eb; padding: 1.1rem 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+header a { color: #93c5fd; text-decoration: none; font-size: 0.9rem; }
+header a:hover { color: #fff; }
+header h1 { color: #e0f2fe; font-size: 1.2rem; flex: 1; }
 .badge { background: #ef4444; color: #fff; padding: 0.15rem 0.55rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; vertical-align: middle; }
 .ybadge { display: inline-block; background: #7c3aed; color: #fff; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-right: 0.35rem; }
-.ybadge.sn { background: #0369a1; }
-.ybadge.g9 { background: #065f46; }
-.ybadge.g6 { background: #92400e; }
+.ybadge.sn { background: #1d4ed8; }
+.ybadge.g9 { background: #166534; }
+.ybadge.g6 { background: #b45309; }
 main { max-width: 920px; margin: 0 auto; padding: 1.2rem 1rem 3rem; }
 .nav { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
-.nav a { background: #1e293b; border: 1px solid #334155; color: #94a3b8; padding: 0.45rem 0.9rem; border-radius: 8px; text-decoration: none; font-size: 0.85rem; transition: all .15s; }
-.nav a:hover, .nav a.on { background: #38bdf8; color: #0f172a; font-weight: 700; border-color: #38bdf8; }
+.nav a { background: #fff; border: 1.5px solid #b0c4de; color: #1e3a5f; padding: 0.45rem 0.9rem; border-radius: 8px; text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: all .15s; }
+.nav a:hover, .nav a.on { background: #1e3a5f; color: #fff; font-weight: 700; border-color: #1e3a5f; }
 .unit { margin-bottom: 2.5rem; }
-.uh { background: linear-gradient(135deg,#1e3a5f,#1e293b); border: 2px solid #38bdf8; border-radius: 12px; padding: 1.1rem 1.4rem; margin-bottom: 1.2rem; }
-.uh h2 { color: #38bdf8; font-size: 1.2rem; }
-.uh p { color: #94a3b8; font-size: 0.88rem; margin-top: 0.3rem; }
-.qc { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 0.9rem; }
-.qn { color: #f59e0b; font-weight: 700; font-size: 0.82rem; margin-bottom: 0.5rem; }
-.qt { color: #e2e8f0; line-height: 1.75; font-size: 0.95rem; }
-.qt .m { font-family: 'Courier New', monospace; color: #fbbf24; background: #0f172a; padding: 0.05rem 0.3rem; border-radius: 3px; }
-.qt .ch { color: #94a3b8; font-size: 0.88rem; }
-.btn { margin-top: 0.7rem; background: #334155; color: #94a3b8; border: none; border-radius: 6px; padding: 0.38rem 1rem; font-size: 0.83rem; cursor: pointer; font-family: inherit; }
-.btn:hover { background: #475569; color: #e2e8f0; }
-.sol { display: none; margin-top: 0.75rem; background: #0f172a; border: 1px solid #475569; border-radius: 8px; padding: 0.9rem 1.1rem; color: #cbd5e1; font-size: 0.9rem; line-height: 1.85; }
+.uh { background: #1e3a5f; border-radius: 12px; padding: 1.1rem 1.4rem; margin-bottom: 1.2rem; }
+.uh h2 { color: #7dd3fc; font-size: 1.2rem; }
+.uh p { color: #bfdbfe; font-size: 0.88rem; margin-top: 0.3rem; }
+.qc { background: #fff; border: 1px solid #d4c9b8; border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 0.9rem; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+.qn { color: #92400e; font-weight: 700; font-size: 0.82rem; margin-bottom: 0.5rem; }
+.qt { color: #111827; line-height: 1.75; font-size: 0.95rem; }
+.qt .m { font-family: 'Courier New', monospace; color: #1e3a5f; background: #f3f4f6; padding: 0.05rem 0.3rem; border-radius: 3px; }
+.qt .ch { color: #374151; font-size: 0.88rem; }
+.btn { margin-top: 0.7rem; background: #f0f4f8; border: 1px solid #b0c4de; color: #1e3a5f; border-radius: 6px; padding: 0.38rem 1rem; font-size: 0.83rem; font-weight: 600; cursor: pointer; font-family: inherit; }
+.btn:hover { background: #dbeafe; }
+.sol { display: none; margin-top: 0.75rem; background: #f8fafc; border: 1.5px solid #93c5fd; border-radius: 8px; padding: 0.9rem 1.1rem; color: #1e293b; font-size: 0.9rem; line-height: 1.85; }
 .sol.on { display: block; }
-.sol .st { color: #38bdf8; font-weight: 700; }
-.sol .rs { color: #34d399; font-weight: 700; font-size: 1.05rem; }
-.sol .wn { color: #f59e0b; }
+.sol .st { color: #1d4ed8; font-weight: 700; }
+.sol .rs { color: #16a34a; font-weight: 700; font-size: 1.05rem; }
+.sol .wn { color: #b45309; }
 .sol pre { background: #1e293b; border-radius: 6px; padding: 0.7rem 0.9rem; font-size: 0.83rem; color: #a3e635; overflow-x: auto; white-space: pre-wrap; margin: 0.5rem 0; }
-.tip { background: #1e3a5f; border-left: 4px solid #38bdf8; border-radius: 0 6px 6px 0; padding: 0.6rem 0.9rem; margin: 0.5rem 0; font-size: 0.86rem; color: #bae6fd; }
-.ans { color: #34d399; font-size: 0.88rem; margin-top: 0.4rem; }
+.tip { background: #eff6ff; border-left: 4px solid #2563eb; border-radius: 0 6px 6px 0; padding: 0.6rem 0.9rem; margin: 0.5rem 0; font-size: 0.86rem; color: #1e3a5f; }
+.ans { color: #16a34a; font-size: 0.88rem; margin-top: 0.4rem; }
 </style>
 </head>
 <body>
