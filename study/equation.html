@@ -326,7 +326,7 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
 ════════════════════════════ -->
 <div class="screen" id="s5">
 <div class="wrap">
-  <span class="tag tag-blue">예제 1 / 4 — 수 문제</span>
+  <span class="tag tag-blue">예제 1 / 10 — 수 문제</span>
   <h2 style="margin-top:.3rem">어떤 수에 5를 더하면<br>그 수의 2배와 같다</h2>
   <p class="muted">어떤 수를 구하여라.</p>
 
@@ -375,7 +375,7 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
 ════════════════════════════ -->
 <div class="screen" id="s6">
 <div class="wrap">
-  <span class="tag tag-amber">예제 2 / 4 — 속력 문제</span>
+  <span class="tag tag-amber">예제 2 / 10 — 속력 문제</span>
   <h2 style="margin-top:.3rem">두 차가 같은 곳에서<br>반대 방향으로 출발</h2>
   <p class="muted">시속 60 km와 시속 40 km. 몇 시간 후 거리가 200 km?</p>
 
@@ -423,7 +423,7 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
 ════════════════════════════ -->
 <div class="screen" id="s7">
 <div class="wrap">
-  <span class="tag tag-blue">예제 3 / 4 — 나이 문제</span>
+  <span class="tag tag-blue">예제 3 / 10 — 나이 문제</span>
   <h2 style="margin-top:.3rem">아버지 나이는 아들의 4배</h2>
   <p class="muted">5년 후 아버지 나이 = 아들의 3배보다 1살 적다. 현재 아들의 나이는?</p>
 
@@ -474,7 +474,7 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
 ════════════════════════════ -->
 <div class="screen" id="s8">
 <div class="wrap">
-  <span class="tag tag-amber">예제 4 / 4 — 가격 문제</span>
+  <span class="tag tag-amber">예제 4 / 10 — 가격 문제</span>
   <h2 style="margin-top:.3rem">사과 3개 + 배 2개 = 4,600원</h2>
   <p class="muted">배 한 개는 사과 한 개보다 200원 비싸다. 사과 한 개의 값은?</p>
 
@@ -512,16 +512,354 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
 
   <div class="btn-row">
     <button class="btn btn-prev" onclick="goTo(7)">← 이전</button>
-    <button class="btn btn-next" onclick="goTo(9)">핵심 정리 →</button>
+    <button class="btn btn-next" onclick="goTo(9)">예제 5 →</button>
   </div>
 </div>
 </div>
 
 
 <!-- ════════════════════════════
-     SCREEN 9: 핵심 정리
+     SCREEN 9: 예제 5 — 터널·기차
 ════════════════════════════ -->
 <div class="screen" id="s9">
+<div class="wrap">
+  <span class="tag tag-blue">예제 5 / 10 — 터널·기차 문제</span>
+  <h2 style="margin-top:.3rem">길이 150 m인 기차가<br>850 m 터널을 완전히 통과</h2>
+  <p class="muted">총 40초가 걸렸다. 기차의 속력은 몇 m/s?</p>
+
+  <div class="card card-amber" style="text-align:center">
+    <p style="font-size:.9rem"><b>⚠️ 핵심 개념:</b> "완전히 통과"란?<br>기차 앞이 들어가서 <b>기차 끝이 빠져나올 때까지</b></p>
+    <p style="font-weight:700;color:#92400e;margin-top:.4rem">→ 이동 거리 = 터널 길이 + 기차 길이</p>
+  </div>
+
+  <div class="think">
+    <p>💭 <span style="font-size:1.2rem">"무엇과 무엇이 같아?"</span></p>
+  </div>
+
+  <div id="p5s1" class="prob-step">
+    <div class="ps-label tag tag-blue">① 미지수 설정</div>
+    <p>기차의 속력을 <b>x m/s</b>라 하자.</p>
+  </div>
+  <div id="p5s2" class="prob-step">
+    <div class="ps-label tag tag-amber">② 관계 찾기 ⭐</div>
+    <p>기차가 이동한 거리 = 터널 길이 + 기차 길이</p>
+    <p>이동 거리: <b>850 + 150 = 1000 m</b></p>
+    <p>또한 이동 거리 = 속력 × 시간 = <b>x × 40</b></p>
+    <p style="color:var(--red);font-weight:700">이동 거리가 같다!</p>
+  </div>
+  <div id="p5s3" class="prob-step">
+    <div class="ps-label tag tag-blue">③ 방정식 작성</div>
+    <div class="eq-box"><span class="eq-hi">40x</span> = <span class="eq-ans">1000</span></div>
+  </div>
+  <div id="p5s4" class="prob-step">
+    <div class="ps-label tag tag-blue">④ 계산</div>
+    <p>양변을 40으로 나누면</p>
+    <div class="eq-box">x = <span class="eq-ans">25</span></div>
+  </div>
+  <div id="p5s5" class="prob-step">
+    <div class="ps-label tag tag-green">⑤ 해석</div>
+    <p>기차의 속력 = 25 m/s<br>검증: 25 × 40 = 1000 = 850 + 150 ✓</p>
+    <div class="card card-green" style="text-align:center;padding:.7rem"><b>정답: 25 m/s</b></div>
+  </div>
+
+  <button class="btn btn-reveal" id="p5btn" onclick="revealProb(5,5)">① 미지수 설정 보기</button>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(8)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(10)">예제 6 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 10: 예제 6 — 일의 양
+════════════════════════════ -->
+<div class="screen" id="s10">
+<div class="wrap">
+  <span class="tag tag-amber">예제 6 / 10 — 일의 양 문제</span>
+  <h2 style="margin-top:.3rem">A는 12일, B는 8일 걸리는 일<br>함께 하면 며칠?</h2>
+  <p class="muted">두 사람이 협력하면 전체를 끝내는 데 며칠이 걸리는가?</p>
+
+  <div class="card card-amber" style="text-align:center">
+    <p style="font-size:.9rem"><b>⚠️ 핵심 개념:</b> 전체 일의 양 = 1<br>하루 작업량 = 1 ÷ 혼자 걸리는 날수</p>
+    <p style="font-weight:700;color:#92400e;margin-top:.4rem">A의 하루: 1/12 &nbsp;|&nbsp; B의 하루: 1/8</p>
+  </div>
+
+  <div class="think">
+    <p>💭 <span style="font-size:1.2rem">"무엇과 무엇이 같아?"</span></p>
+  </div>
+
+  <div id="p6s1" class="prob-step">
+    <div class="ps-label tag tag-blue">① 미지수 설정</div>
+    <p>함께 일하면 <b>x일</b> 걸린다고 하자.</p>
+  </div>
+  <div id="p6s2" class="prob-step">
+    <div class="ps-label tag tag-amber">② 관계 찾기 ⭐</div>
+    <p>x일 동안 두 사람이 한 일의 합</p>
+    <p>A의 x일치 작업: <b>x/12</b></p>
+    <p>B의 x일치 작업: <b>x/8</b></p>
+    <p>이 합이 전체 일 <b>1</b>과 같다!</p>
+  </div>
+  <div id="p6s3" class="prob-step">
+    <div class="ps-label tag tag-blue">③ 방정식 작성</div>
+    <div class="eq-box"><span class="eq-hi">x/12 + x/8</span> = <span class="eq-ans">1</span></div>
+  </div>
+  <div id="p6s4" class="prob-step">
+    <div class="ps-label tag tag-blue">④ 계산</div>
+    <p>통분: 2x/24 + 3x/24 = 5x/24</p>
+    <p>5x/24 = 1 → 5x = 24</p>
+    <div class="eq-box">x = <span class="eq-ans">24/5 = 4.8일</span></div>
+  </div>
+  <div id="p6s5" class="prob-step">
+    <div class="ps-label tag tag-green">⑤ 해석</div>
+    <p>4일 + 나머지 0.8일(약 19시간) 걸림<br>검증: 4.8/12 + 4.8/8 = 0.4 + 0.6 = 1 ✓</p>
+    <div class="card card-green" style="text-align:center;padding:.7rem"><b>정답: 4.8일 (24/5일)</b></div>
+  </div>
+
+  <button class="btn btn-reveal" id="p6btn" onclick="revealProb(6,5)">① 미지수 설정 보기</button>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(9)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(11)">예제 7 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 11: 예제 7 — 농도
+════════════════════════════ -->
+<div class="screen" id="s11">
+<div class="wrap">
+  <span class="tag tag-blue">예제 7 / 10 — 농도 문제</span>
+  <h2 style="margin-top:.3rem">8% 소금물 300 g에<br>물을 넣어 5%로 만들기</h2>
+  <p class="muted">물을 몇 g 더 넣어야 하는가?</p>
+
+  <div class="card card-amber" style="text-align:center">
+    <p style="font-size:.9rem"><b>⚠️ 핵심 개념:</b> 물을 넣어도<br><b>소금의 양은 변하지 않는다</b> (보존의 법칙)</p>
+    <p style="font-weight:700;color:#92400e;margin-top:.4rem">전·후의 소금 양이 같다</p>
+  </div>
+
+  <div class="think">
+    <p>💭 <span style="font-size:1.2rem">"무엇이 보존(같은 양)이야?"</span></p>
+  </div>
+
+  <div id="p7s1" class="prob-step">
+    <div class="ps-label tag tag-blue">① 미지수 설정</div>
+    <p>더 넣는 물의 양을 <b>x g</b>이라 하자.</p>
+  </div>
+  <div id="p7s2" class="prob-step">
+    <div class="ps-label tag tag-amber">② 관계 찾기 ⭐</div>
+    <p>처음 소금의 양: 300 × 0.08 = <b>24 g</b></p>
+    <p>물 x g 추가 후 소금물: <b>(300 + x) g</b></p>
+    <p>나중 소금의 양: (300 + x) × 0.05</p>
+    <p style="color:var(--red);font-weight:700">소금의 양이 같다! (보존)</p>
+  </div>
+  <div id="p7s3" class="prob-step">
+    <div class="ps-label tag tag-blue">③ 방정식 작성</div>
+    <div class="eq-box"><span class="eq-hi">24</span> = <span class="eq-ans">0.05(300 + x)</span></div>
+  </div>
+  <div id="p7s4" class="prob-step">
+    <div class="ps-label tag tag-blue">④ 계산</div>
+    <p>24 = 15 + 0.05x</p>
+    <p>0.05x = 9</p>
+    <div class="eq-box">x = <span class="eq-ans">180</span></div>
+  </div>
+  <div id="p7s5" class="prob-step">
+    <div class="ps-label tag tag-green">⑤ 해석</div>
+    <p>물 180 g 추가 → 소금물 480 g<br>검증: 24 ÷ 480 = 0.05 = 5% ✓</p>
+    <div class="card card-green" style="text-align:center;padding:.7rem"><b>정답: 물 180 g</b></div>
+  </div>
+
+  <button class="btn btn-reveal" id="p7btn" onclick="revealProb(7,5)">① 미지수 설정 보기</button>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(10)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(12)">예제 8 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 12: 예제 8 — 연못 걷기
+════════════════════════════ -->
+<div class="screen" id="s12">
+<div class="wrap">
+  <span class="tag tag-amber">예제 8 / 10 — 연못·마주보기</span>
+  <h2 style="margin-top:.3rem">둘레 1200 m 연못,<br>마주보며 걸으면 12분 후 만남</h2>
+  <p class="muted">철수가 영희보다 분당 10 m 빠를 때, 두 사람의 속력은?</p>
+
+  <div class="card card-blue">
+    <span class="tag tag-blue">걷기 문제 핵심 정리</span>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.5rem 0;font-size:.85rem">
+      <div style="background:#eff6ff;padding:.5rem;border-radius:.5rem;text-align:center">
+        <b>마주보며 걷기</b><br>두 거리 <b>합</b> = 1바퀴
+      </div>
+      <div style="background:#fef3c7;padding:.5rem;border-radius:.5rem;text-align:center">
+        <b>같은 방향 걷기</b><br>두 거리 <b>차</b> = 1바퀴
+      </div>
+    </div>
+  </div>
+
+  <div class="think">
+    <p>💭 <span style="font-size:1.2rem">"무엇과 무엇이 같아?"</span></p>
+  </div>
+
+  <div id="p8s1" class="prob-step">
+    <div class="ps-label tag tag-blue">① 미지수 설정</div>
+    <p>영희의 속력을 <b>x m/분</b>이라 하면<br>철수의 속력: <b>(x + 10) m/분</b></p>
+  </div>
+  <div id="p8s2" class="prob-step">
+    <div class="ps-label tag tag-amber">② 관계 찾기 ⭐</div>
+    <p>12분 동안 두 사람의 이동 거리 합</p>
+    <p>영희: <b>12x m</b> &nbsp;|&nbsp; 철수: <b>12(x+10) m</b></p>
+    <p>마주보며 만날 때: 합이 <b>1200 m</b>과 같다!</p>
+  </div>
+  <div id="p8s3" class="prob-step">
+    <div class="ps-label tag tag-blue">③ 방정식 작성</div>
+    <div class="eq-box"><span class="eq-hi">12x + 12(x+10)</span> = <span class="eq-ans">1200</span></div>
+  </div>
+  <div id="p8s4" class="prob-step">
+    <div class="ps-label tag tag-blue">④ 계산</div>
+    <p>12x + 12x + 120 = 1200</p>
+    <p>24x = 1080</p>
+    <div class="eq-box">x = <span class="eq-ans">45</span></div>
+  </div>
+  <div id="p8s5" class="prob-step">
+    <div class="ps-label tag tag-green">⑤ 해석</div>
+    <p>영희 45 m/분, 철수 55 m/분<br>검증: 12×45 + 12×55 = 540 + 660 = 1200 ✓</p>
+    <div class="card card-green" style="text-align:center;padding:.7rem"><b>정답: 영희 45 m/분, 철수 55 m/분</b></div>
+  </div>
+
+  <button class="btn btn-reveal" id="p8btn" onclick="revealProb(8,5)">① 미지수 설정 보기</button>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(11)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(13)">예제 9 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 13: 예제 9 — 원가·정가
+════════════════════════════ -->
+<div class="screen" id="s13">
+<div class="wrap">
+  <span class="tag tag-blue">예제 9 / 10 — 원가·정가 문제</span>
+  <h2 style="margin-top:.3rem">원가에 40% 이익 → 정가<br>정가−560원 판매 → 원가의 12% 이익</h2>
+  <p class="muted">원가는 얼마인가?</p>
+
+  <div class="card card-amber">
+    <span class="tag tag-amber">원가·정가 공식</span>
+    <p style="font-size:.88rem;margin:.3rem 0">정가 = 원가 × (1 + 이익률)</p>
+    <p style="font-size:.88rem">이익 = 판매가 − 원가</p>
+    <div class="eq-box" style="font-size:.9rem">두 "이익" 표현이 같다 ← 핵심!</div>
+  </div>
+
+  <div class="think">
+    <p>💭 <span style="font-size:1.2rem">"무엇과 무엇이 같아?"</span></p>
+  </div>
+
+  <div id="p9s1" class="prob-step">
+    <div class="ps-label tag tag-blue">① 미지수 설정</div>
+    <p>원가를 <b>x원</b>이라 하자.</p>
+  </div>
+  <div id="p9s2" class="prob-step">
+    <div class="ps-label tag tag-amber">② 관계 찾기 ⭐</div>
+    <p>정가: <b>1.4x원</b></p>
+    <p>판매가: <b>(1.4x − 560)원</b></p>
+    <p>실제 이익: (판매가 − 원가) = <b>0.4x − 560</b></p>
+    <p>조건 이익: 원가의 12% = <b>0.12x</b></p>
+    <p style="color:var(--red);font-weight:700">두 이익 표현이 같다!</p>
+  </div>
+  <div id="p9s3" class="prob-step">
+    <div class="ps-label tag tag-blue">③ 방정식 작성</div>
+    <div class="eq-box"><span class="eq-hi">0.4x − 560</span> = <span class="eq-ans">0.12x</span></div>
+  </div>
+  <div id="p9s4" class="prob-step">
+    <div class="ps-label tag tag-blue">④ 계산</div>
+    <p>0.4x − 0.12x = 560</p>
+    <p>0.28x = 560</p>
+    <div class="eq-box">x = <span class="eq-ans">2000</span></div>
+  </div>
+  <div id="p9s5" class="prob-step">
+    <div class="ps-label tag tag-green">⑤ 해석</div>
+    <p>원가 2000원, 정가 2800원, 판매가 2240원<br>이익: 2240−2000=240원 = 2000×0.12 ✓</p>
+    <div class="card card-green" style="text-align:center;padding:.7rem"><b>정답: 원가 2,000원</b></div>
+  </div>
+
+  <button class="btn btn-reveal" id="p9btn" onclick="revealProb(9,5)">① 미지수 설정 보기</button>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(12)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(14)">예제 10 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 14: 예제 10 — 비율
+════════════════════════════ -->
+<div class="screen" id="s14">
+<div class="wrap">
+  <span class="tag tag-amber">예제 10 / 10 — 비율 문제</span>
+  <h2 style="margin-top:.3rem">남학생 10% 증가, 여학생 5% 감소<br>전체는 14명 증가</h2>
+  <p class="muted">작년 전체 320명. 작년 남학생 수는?</p>
+
+  <div class="card card-blue">
+    <span class="tag tag-blue">비율 문제 핵심</span>
+    <p style="font-size:.88rem;margin:.3rem 0">변화량 = 원래 수 × 비율</p>
+    <p style="font-size:.88rem">전체 변화 = 남학생 변화 + 여학생 변화</p>
+  </div>
+
+  <div class="think">
+    <p>💭 <span style="font-size:1.2rem">"무엇과 무엇이 같아?"</span></p>
+  </div>
+
+  <div id="p10s1" class="prob-step">
+    <div class="ps-label tag tag-blue">① 미지수 설정</div>
+    <p>작년 남학생 수를 <b>x명</b>이라 하면<br>작년 여학생 수: <b>(320 − x)명</b></p>
+  </div>
+  <div id="p10s2" class="prob-step">
+    <div class="ps-label tag tag-amber">② 관계 찾기 ⭐</div>
+    <p>남학생 증가: <b>+0.1x명</b></p>
+    <p>여학생 감소: <b>−0.05(320−x)명</b></p>
+    <p>두 변화의 합 = 전체 증가 <b>14명</b>과 같다!</p>
+  </div>
+  <div id="p10s3" class="prob-step">
+    <div class="ps-label tag tag-blue">③ 방정식 작성</div>
+    <div class="eq-box"><span class="eq-hi">0.1x − 0.05(320−x)</span> = <span class="eq-ans">14</span></div>
+  </div>
+  <div id="p10s4" class="prob-step">
+    <div class="ps-label tag tag-blue">④ 계산</div>
+    <p>0.1x − 16 + 0.05x = 14</p>
+    <p>0.15x = 30</p>
+    <div class="eq-box">x = <span class="eq-ans">200</span></div>
+  </div>
+  <div id="p10s5" class="prob-step">
+    <div class="ps-label tag tag-green">⑤ 해석</div>
+    <p>남학생 200명, 여학생 120명<br>올해 남 220명, 여 114명 → 증가: 334−320=14 ✓</p>
+    <div class="card card-green" style="text-align:center;padding:.7rem"><b>정답: 작년 남학생 200명</b></div>
+  </div>
+
+  <button class="btn btn-reveal" id="p10btn" onclick="revealProb(10,5)">① 미지수 설정 보기</button>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(13)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(15)">핵심 정리 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 15: 핵심 정리
+════════════════════════════ -->
+<div class="screen" id="s15">
 <div class="wrap">
   <div class="card card-navy" style="text-align:center;padding:1.8rem">
     <div style="font-size:2.5rem;margin-bottom:.6rem">💡</div>
@@ -543,38 +881,28 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
   </div>
 
   <div class="card card-blue">
-    <h3>📝 예제 정리</h3>
-    <table style="width:100%;font-size:.88rem;border-collapse:collapse">
+    <h3>📝 예제 10문제 정리</h3>
+    <table style="width:100%;font-size:.83rem;border-collapse:collapse">
       <tr style="border-bottom:1px solid #bfdbfe">
-        <th style="text-align:left;padding:.4rem;color:#1e40af">문제 유형</th>
-        <th style="text-align:center;padding:.4rem;color:#1e40af">같아지는 두 양</th>
-        <th style="text-align:center;padding:.4rem;color:#1e40af">답</th>
+        <th style="text-align:left;padding:.35rem;color:#1e40af">유형</th>
+        <th style="text-align:center;padding:.35rem;color:#1e40af">같아지는 것</th>
+        <th style="text-align:center;padding:.35rem;color:#1e40af">답</th>
       </tr>
-      <tr style="border-bottom:1px solid #e0f2fe">
-        <td style="padding:.4rem">수 문제</td>
-        <td style="text-align:center">x+5 = 2x</td>
-        <td style="text-align:center"><b>5</b></td>
-      </tr>
-      <tr style="border-bottom:1px solid #e0f2fe">
-        <td style="padding:.4rem">속력 문제</td>
-        <td style="text-align:center">60t+40t = 200</td>
-        <td style="text-align:center"><b>2시간</b></td>
-      </tr>
-      <tr style="border-bottom:1px solid #e0f2fe">
-        <td style="padding:.4rem">나이 문제</td>
-        <td style="text-align:center">4x+5 = 3(x+5)−1</td>
-        <td style="text-align:center"><b>9살</b></td>
-      </tr>
-      <tr>
-        <td style="padding:.4rem">가격 문제</td>
-        <td style="text-align:center">3x+2(x+200) = 4600</td>
-        <td style="text-align:center"><b>840원</b></td>
-      </tr>
+      <tr style="border-bottom:1px solid #e0f2fe"><td style="padding:.35rem">수 문제</td><td style="text-align:center">x+5 = 2x</td><td style="text-align:center"><b>5</b></td></tr>
+      <tr style="border-bottom:1px solid #e0f2fe"><td style="padding:.35rem">반대방향 속력</td><td style="text-align:center">60t+40t = 200</td><td style="text-align:center"><b>2시간</b></td></tr>
+      <tr style="border-bottom:1px solid #e0f2fe"><td style="padding:.35rem">나이</td><td style="text-align:center">4x+5 = 3(x+5)−1</td><td style="text-align:center"><b>9살</b></td></tr>
+      <tr style="border-bottom:1px solid #e0f2fe"><td style="padding:.35rem">가격·개수</td><td style="text-align:center">3x+2(x+200) = 4600</td><td style="text-align:center"><b>840원</b></td></tr>
+      <tr style="border-bottom:1px solid #e0f2fe"><td style="padding:.35rem">터널·기차</td><td style="text-align:center">40x = 850+150</td><td style="text-align:center"><b>25 m/s</b></td></tr>
+      <tr style="border-bottom:1px solid #e0f2fe"><td style="padding:.35rem">일의 양</td><td style="text-align:center">x/12+x/8 = 1</td><td style="text-align:center"><b>4.8일</b></td></tr>
+      <tr style="border-bottom:1px solid #e0f2fe"><td style="padding:.35rem">농도</td><td style="text-align:center">24 = 0.05(300+x)</td><td style="text-align:center"><b>180 g</b></td></tr>
+      <tr style="border-bottom:1px solid #e0f2fe"><td style="padding:.35rem">연못(마주보기)</td><td style="text-align:center">12x+12(x+10) = 1200</td><td style="text-align:center"><b>45, 55 m/분</b></td></tr>
+      <tr style="border-bottom:1px solid #e0f2fe"><td style="padding:.35rem">원가·정가</td><td style="text-align:center">0.4x−560 = 0.12x</td><td style="text-align:center"><b>2,000원</b></td></tr>
+      <tr><td style="padding:.35rem">비율</td><td style="text-align:center">0.1x−0.05(320−x) = 14</td><td style="text-align:center"><b>200명</b></td></tr>
     </table>
   </div>
 
   <div class="card card-amber">
-    <h3>다음 문제를 볼 때 이 질문을 먼저!</h3>
+    <h3>어떤 문제든 이 질문 먼저!</h3>
     <div class="think" style="margin:.4rem 0">
       <p style="font-size:1.25rem">❓ "무엇과 무엇이 같아?"</p>
     </div>
@@ -582,14 +910,14 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
   </div>
 
   <div class="btn-row">
-    <button class="btn btn-prev" onclick="goTo(8)">← 이전</button>
+    <button class="btn btn-prev" onclick="goTo(14)">← 이전</button>
     <button class="btn btn-next" onclick="goTo(1)">처음부터 🔄</button>
   </div>
 </div>
 </div>
 
 <script>
-const TOTAL = 9;
+const TOTAL = 15;
 let stepIdx = 0;
 let probIdx = {};
 
