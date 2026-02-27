@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>방정식의 본질 | 수학여행학원-영통</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1e3a5f;--blue:#2563eb;--sky:#38bdf8;
+  --amber:#d97706;--green:#059669;--red:#dc2626;
+  --bg:#f5f0e8;--card:#fff;--text:#1e1e2e;--muted:#6b7280;
+}
+body{background:var(--bg);color:var(--text);font-family:'Malgun Gothic','맑은 고딕',sans-serif;min-height:100vh;overflow-x:hidden}
+
+/* ── TOP BAR ── */
+header{background:var(--navy);padding:.9rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--blue)}
+header h1{color:#fff;font-size:1.1rem;font-weight:700}
+.back-link{color:#bfdbfe;text-decoration:none;font-size:.82rem}
+
+/* ── PROGRESS ── */
+.prog-bar{display:flex;justify-content:center;gap:.45rem;padding:.65rem;background:#e8e0d0}
+.prog-dot{width:10px;height:10px;border-radius:50%;background:#d4c9b8;transition:background .3s,transform .3s;cursor:pointer}
+.prog-dot.on{background:var(--blue);transform:scale(1.3)}
+.prog-dot.done{background:var(--green)}
+
+/* ── SCREENS ── */
+.screen{display:none;animation:fadeIn .35s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* ── CONTENT WRAPPER ── */
+.wrap{max-width:700px;margin:0 auto;padding:1.2rem 1rem}
+
+/* ── CARDS ── */
+.card{background:var(--card);border-radius:1rem;padding:1.4rem;margin:.8rem 0;border:1px solid #d4c9b8;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.card-navy{background:var(--navy);color:#fff;border:none}
+.card-amber{background:#fffbeb;border-left:4px solid var(--amber)}
+.card-green{background:#f0fdf4;border-left:4px solid var(--green)}
+.card-red{background:#fef2f2;border-left:4px solid var(--red)}
+.card-blue{background:#eff6ff;border-left:4px solid var(--blue)}
+
+/* ── TYPOGRAPHY ── */
+h2{font-size:1.4rem;font-weight:800;margin-bottom:.6rem;line-height:1.35}
+h3{font-size:1.05rem;font-weight:700;margin-bottom:.5rem}
+p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
+.big{font-size:1.6rem;font-weight:900;color:var(--blue)}
+.muted{color:var(--muted);font-size:.88rem}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;padding:.18rem .55rem;border-radius:999px;margin-bottom:.4rem}
+.tag-blue{background:#dbeafe;color:#1e40af}
+.tag-amber{background:#fef3c7;color:#92400e}
+.tag-red{background:#fee2e2;color:#991b1b}
+.tag-green{background:#dcfce7;color:#14532d}
+
+/* ── BALANCE SVG ── */
+.balance-wrap{display:flex;justify-content:center;margin:1rem 0}
+.balance-wrap svg{max-width:340px;width:100%}
+
+/* ── STEPS ── */
+.steps{display:flex;flex-direction:column;gap:.55rem;margin:.8rem 0}
+.step-item{display:flex;align-items:flex-start;gap:.75rem;padding:.6rem .8rem;border-radius:.6rem;background:#f8fafc;border:1px solid #e2e8f0;opacity:.35;transition:opacity .4s,border-color .4s}
+.step-item.on{opacity:1;border-color:var(--blue);background:#eff6ff}
+.step-num{flex-shrink:0;width:1.8rem;height:1.8rem;border-radius:50%;background:var(--blue);color:#fff;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.step-body{flex:1}
+.step-title{font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:.18rem}
+.step-desc{font-size:.85rem;color:#374151;line-height:1.6}
+
+/* ── EQUATION BOX ── */
+.eq-box{text-align:center;font-size:1.3rem;font-weight:800;background:#eff6ff;border:2px solid var(--blue);border-radius:.75rem;padding:.8rem 1rem;margin:.6rem 0;letter-spacing:.03em;color:var(--navy);font-family:'Courier New',monospace}
+.eq-hi{color:var(--red)}
+.eq-ans{color:var(--green)}
+
+/* ── COMPARE ── */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:.8rem 0}
+@media(max-width:500px){.compare{grid-template-columns:1fr}}
+.cmp-wrong{border-left:4px solid var(--red);background:#fef2f2}
+.cmp-right{border-left:4px solid var(--green);background:#f0fdf4}
+
+/* ── PROBLEM STEPS (reveal) ── */
+.prob-step{background:#f8fafc;border-radius:.6rem;border:1px solid #e2e8f0;padding:.75rem 1rem;margin:.5rem 0;display:none}
+.prob-step.show{display:block;animation:fadeIn .3s ease}
+.ps-label{font-size:.72rem;font-weight:700;letter-spacing:.06em;margin-bottom:.3rem}
+
+/* ── THINK BOX ── */
+.think{background:#fff7ed;border:2px solid var(--amber);border-radius:.75rem;padding:.9rem 1rem;margin:.7rem 0;text-align:center}
+.think p{font-size:1rem;font-weight:700;color:#92400e}
+
+/* ── BUTTONS ── */
+.btn-row{display:flex;gap:.6rem;justify-content:space-between;margin-top:1.2rem;flex-wrap:wrap}
+.btn{padding:.65rem 1.4rem;border-radius:.55rem;border:none;cursor:pointer;font-size:.9rem;font-weight:700;font-family:'Malgun Gothic',sans-serif;transition:all .18s}
+.btn-prev{background:#e8e0d0;color:#374151}
+.btn-prev:hover{background:#d4c9b8}
+.btn-next{background:var(--navy);color:#fff;margin-left:auto}
+.btn-next:hover{background:var(--blue)}
+.btn-reveal{background:var(--amber);color:#fff;width:100%;margin:.3rem 0}
+.btn-reveal:hover{opacity:.88}
+.btn-reveal:disabled{background:#d4c9b8;cursor:default}
+
+/* ── FINAL CARD ── */
+.final-quote{font-size:1.15rem;font-weight:800;line-height:1.6;color:var(--navy);text-align:center;padding:1rem}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.checklist li::before{content:"✅ ";margin-right:.3rem}
+
+/* ── HIGHLIGHT LINE ── */
+.hl{background:#fef9c3;border-radius:.25rem;padding:.1rem .25rem;font-weight:700;color:#78350f}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📐 방정식의 본질</h1>
+  <a class="back-link" href="../index.html">← 홈</a>
+</header>
+
+<div class="prog-bar" id="prog"></div>
+
+<!-- ════════════════════════════
+     SCREEN 1: 도입
+════════════════════════════ -->
+<div class="screen active" id="s1">
+<div class="wrap">
+  <div class="card card-navy" style="text-align:center;padding:2rem 1.4rem">
+    <div style="font-size:3rem;margin-bottom:.6rem">⚖️</div>
+    <h2 style="color:#fff;font-size:1.7rem">방정식은<br>계산 문제가 아니다</h2>
+    <p style="color:#bfdbfe;margin-top:.8rem;font-size:1rem">많은 학생이 방정식을 보면<br>바로 "이항해서 계산"을 시작합니다.<br>그런데 왜 식을 세우는지 모릅니다.</p>
+  </div>
+
+  <div class="card card-amber">
+    <span class="tag tag-amber">진짜 정의</span>
+    <h3>방정식 = 관계를 표현하는 언어</h3>
+    <p>방정식은 <span class="hl">두 양이 같다</span>는 사실을 수학 기호로 쓴 것입니다.</p>
+    <div class="eq-box">A &nbsp;=&nbsp; B</div>
+    <p class="muted" style="text-align:center">이 등호(=)가 방정식의 핵심입니다</p>
+  </div>
+
+  <div class="card">
+    <span class="tag tag-blue">교사의 핵심 질문</span>
+    <div class="think">
+      <p style="font-size:1.3rem">❌ "식 세워봐"</p>
+    </div>
+    <div class="think" style="border-color:var(--green);background:#f0fdf4">
+      <p style="font-size:1.3rem;color:#065f46">✅ "<span style="font-size:1.5rem">무엇과 무엇이 같아?</span>"</p>
+    </div>
+    <p class="muted" style="text-align:center;margin-top:.5rem">이 질문 하나가 방정식 이해도를 결정합니다</p>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-next" onclick="goTo(2)">다음 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 2: 저울 — 방정식의 본질
+════════════════════════════ -->
+<div class="screen" id="s2">
+<div class="wrap">
+  <h2>⚖️ 방정식 = 저울</h2>
+  <p>방정식을 저울로 상상해 보세요.<br><span class="hl">등호(=)는 저울의 중심축</span>입니다.</p>
+
+  <!-- SVG BALANCE SCALE -->
+  <div class="balance-wrap">
+    <svg viewBox="0 0 340 200" id="balanceSvg">
+      <!-- Fulcrum -->
+      <polygon points="170,170 150,195 190,195" fill="#1e3a5f"/>
+      <rect x="155" y="165" width="30" height="8" rx="4" fill="#1e3a5f"/>
+      <!-- Beam -->
+      <rect id="beam" x="50" y="80" width="240" height="8" rx="4" fill="#374151" transform-origin="170 84" transform="rotate(0)"/>
+      <!-- Left chain -->
+      <line id="lchain" x1="80" y1="88" x2="80" y2="130" stroke="#6b7280" stroke-width="2.5"/>
+      <!-- Right chain -->
+      <line id="rchain" x1="260" y1="88" x2="260" y2="130" stroke="#6b7280" stroke-width="2.5"/>
+      <!-- Left pan -->
+      <rect id="lpan" x="50" y="130" width="60" height="30" rx="6" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+      <!-- Right pan -->
+      <rect id="rpan" x="230" y="130" width="60" height="30" rx="6" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+      <!-- Left label -->
+      <text id="ltxt" x="80" y="151" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e40af">x + 3</text>
+      <!-- Right label -->
+      <text id="rtxt" x="260" y="151" text-anchor="middle" font-size="13" font-weight="bold" fill="#166534">11</text>
+      <!-- Equal sign -->
+      <text x="170" y="76" text-anchor="middle" font-size="18" font-weight="900" fill="#dc2626">=</text>
+      <!-- State text -->
+      <text id="stateText" x="170" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#6b7280">아직 균형이 맞지 않아요</text>
+    </svg>
+  </div>
+
+  <div id="balanceMsg" class="card card-red" style="text-align:center">
+    <p style="font-size:.95rem;color:#991b1b">x의 값을 모르면 <b>균형을 맞출 수 없어요</b></p>
+    <p class="muted">방정식을 풀면 = 저울의 균형을 찾는 것</p>
+  </div>
+
+  <button class="btn btn-reveal" id="balanceBtn" onclick="animateBalance()">⚖️ x = 8일 때 균형 맞춰보기</button>
+
+  <div class="card card-blue" style="margin-top:.8rem">
+    <h3>예시: x + 3 = 11</h3>
+    <p>왼쪽 저울판: <b>x + 3</b><br>오른쪽 저울판: <b>11</b></p>
+    <p>→ x = <b>8</b>일 때 양쪽이 같아집니다.</p>
+    <div class="eq-box">8 + 3 = 11 &nbsp;✓</div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(1)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(3)">다음 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 3: 잘못된 vs 올바른 사고
+════════════════════════════ -->
+<div class="screen" id="s3">
+<div class="wrap">
+  <h2>🔀 두 가지 사고방식</h2>
+  <p>같은 문제를 보고 학생들의 사고 과정은 완전히 다릅니다.</p>
+
+  <div class="card card-amber" style="text-align:center;margin:.6rem 0">
+    <p style="font-size:1rem"><b>문제:</b> 어떤 수에 5를 더하면 그 수의 2배와 같다. 어떤 수는?</p>
+  </div>
+
+  <div class="compare">
+    <div class="card cmp-wrong">
+      <span class="tag tag-red">❌ 흔한 실수</span>
+      <p style="font-size:.88rem">1. 숫자 보임 → 5, 2<br>2. 그냥 계산<br>3. "x+5=2?" "2x+5?" 혼란</p>
+      <p style="color:var(--red);font-weight:700;margin-top:.5rem">왜 식 세우는지 모름</p>
+    </div>
+    <div class="card cmp-right">
+      <span class="tag tag-green">✅ 올바른 사고</span>
+      <p style="font-size:.88rem">1. <b>"무엇과 무엇이 같아?"</b><br>2. (어떤 수+5) = (어떤 수의 2배)<br>3. x+5 = 2x 완성!</p>
+      <p style="color:var(--green);font-weight:700;margin-top:.5rem">관계가 보이면 식이 써짐</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="tag tag-blue">논문이 밝힌 실패 원인</span>
+    <h3>학생들이 배우는 순서</h3>
+    <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin:.5rem 0">
+      <span style="background:#fee2e2;padding:.3rem .7rem;border-radius:999px;font-size:.88rem">이항</span>
+      <span style="color:#6b7280">→</span>
+      <span style="background:#fee2e2;padding:.3rem .7rem;border-radius:999px;font-size:.88rem">계산</span>
+      <span style="color:#6b7280">→</span>
+      <span style="background:#fee2e2;padding:.3rem .7rem;border-radius:999px;font-size:.88rem">답</span>
+    </div>
+    <p class="muted">→ <b>의미 이해 없이</b> 활용문제에서 막힘</p>
+
+    <h3 style="margin-top:.8rem">필요한 순서</h3>
+    <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin:.5rem 0">
+      <span style="background:#dcfce7;padding:.3rem .7rem;border-radius:999px;font-size:.88rem">상황 이해</span>
+      <span style="color:#6b7280">→</span>
+      <span style="background:#dcfce7;padding:.3rem .7rem;border-radius:999px;font-size:.88rem;font-weight:700">같은 양 찾기 ⭐</span>
+      <span style="color:#6b7280">→</span>
+      <span style="background:#dcfce7;padding:.3rem .7rem;border-radius:999px;font-size:.88rem">식 작성</span>
+      <span style="color:#6b7280">→</span>
+      <span style="background:#dcfce7;padding:.3rem .7rem;border-radius:999px;font-size:.88rem">계산</span>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(2)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(4)">다음 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 4: 5단계 프레임워크
+════════════════════════════ -->
+<div class="screen" id="s4">
+<div class="wrap">
+  <h2>📋 방정식 활용 — 5단계</h2>
+  <p>모든 활용문제에 적용할 수 있는 <span class="hl">공통 사고 틀</span>입니다.</p>
+
+  <div class="steps" id="steps5">
+    <div class="step-item" id="st1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">미지수 설정</div>
+        <div class="step-desc">모르는 것에 이름을 붙인다.<br><b>x = 구하려는 것</b></div>
+      </div>
+    </div>
+    <div class="step-item" id="st2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">⭐ 관계 찾기 (핵심)</div>
+        <div class="step-desc">"<b>무엇과 무엇이 같아?</b>"라고 스스로 묻는다.<br>전체, 합, 차, 속력×시간, 가격×개수… 중 <b>같아지는 두 표현</b> 찾기</div>
+      </div>
+    </div>
+    <div class="step-item" id="st3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">방정식 작성</div>
+        <div class="step-desc">발견한 두 표현을 등호로 연결한다.<br><b>왼쪽 표현 = 오른쪽 표현</b></div>
+      </div>
+    </div>
+    <div class="step-item" id="st4">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">계산 (풀기)</div>
+        <div class="step-desc">등식 성질을 이용해 x를 구한다.<br>양변에 더하기·빼기·곱하기·나누기</div>
+      </div>
+    </div>
+    <div class="step-item" id="st5">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">해석 (검증)</div>
+        <div class="step-desc">구한 답이 문제 상황에 맞는지 확인한다.<br>단위·조건·상식 검토</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-reveal" id="stepBtn" onclick="revealSteps()">▶ 단계 하나씩 보기</button>
+
+  <div class="btn-row" style="margin-top:1rem">
+    <button class="btn btn-prev" onclick="goTo(3)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(5)">예제 풀기 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 5: 예제 1 (수 문제)
+════════════════════════════ -->
+<div class="screen" id="s5">
+<div class="wrap">
+  <span class="tag tag-blue">예제 1 / 4 — 수 문제</span>
+  <h2 style="margin-top:.3rem">어떤 수에 5를 더하면<br>그 수의 2배와 같다</h2>
+  <p class="muted">어떤 수를 구하여라.</p>
+
+  <div class="think">
+    <p>💭 먼저 스스로 생각해보세요<br><span style="font-size:1.2rem">"무엇과 무엇이 같아?"</span></p>
+  </div>
+
+  <div id="p1s1" class="prob-step">
+    <div class="ps-label tag tag-blue">① 미지수 설정</div>
+    <p>구하는 수를 <b>x</b>라 하자.</p>
+  </div>
+  <div id="p1s2" class="prob-step">
+    <div class="ps-label tag tag-amber">② 관계 찾기 ⭐</div>
+    <p>왼쪽: <b>어떤 수에 5를 더한 것</b> → x + 5</p>
+    <p>오른쪽: <b>그 수의 2배</b> → 2x</p>
+    <p style="color:var(--red);font-weight:700">이 두 양이 같다!</p>
+  </div>
+  <div id="p1s3" class="prob-step">
+    <div class="ps-label tag tag-blue">③ 방정식 작성</div>
+    <div class="eq-box"><span class="eq-hi">x + 5</span> = <span class="eq-ans">2x</span></div>
+  </div>
+  <div id="p1s4" class="prob-step">
+    <div class="ps-label tag tag-blue">④ 계산</div>
+    <p>x + 5 = 2x</p>
+    <p>5 = 2x − x</p>
+    <div class="eq-box">x = <span class="eq-ans">5</span></div>
+  </div>
+  <div id="p1s5" class="prob-step">
+    <div class="ps-label tag tag-green">⑤ 해석</div>
+    <p>어떤 수 = 5<br>검증: 5 + 5 = 10 = 2×5 ✓</p>
+    <div class="card card-green" style="text-align:center;padding:.7rem"><b>정답: 5</b></div>
+  </div>
+
+  <button class="btn btn-reveal" id="p1btn" onclick="revealProb(1, 5)">① 미지수 설정 보기</button>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(4)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(6)">예제 2 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 6: 예제 2 (거리·속력)
+════════════════════════════ -->
+<div class="screen" id="s6">
+<div class="wrap">
+  <span class="tag tag-amber">예제 2 / 4 — 속력 문제</span>
+  <h2 style="margin-top:.3rem">두 차가 같은 곳에서<br>반대 방향으로 출발</h2>
+  <p class="muted">시속 60 km와 시속 40 km. 몇 시간 후 거리가 200 km?</p>
+
+  <div class="think">
+    <p>💭 <span style="font-size:1.2rem">"무엇과 무엇이 같아?"</span></p>
+  </div>
+
+  <div id="p2s1" class="prob-step">
+    <div class="ps-label tag tag-blue">① 미지수 설정</div>
+    <p>t시간 후에 200 km가 된다고 하면<br><b>t = 걸린 시간</b></p>
+  </div>
+  <div id="p2s2" class="prob-step">
+    <div class="ps-label tag tag-amber">② 관계 찾기 ⭐</div>
+    <p>t시간 동안 두 차가 이동한 거리의 합</p>
+    <p>차 A: <b>60t km</b> &nbsp;|&nbsp; 차 B: <b>40t km</b></p>
+    <p>합: <b>60t + 40t</b> &nbsp; 이것이 <b>200</b>과 같다!</p>
+  </div>
+  <div id="p2s3" class="prob-step">
+    <div class="ps-label tag tag-blue">③ 방정식 작성</div>
+    <div class="eq-box"><span class="eq-hi">60t + 40t</span> = <span class="eq-ans">200</span></div>
+  </div>
+  <div id="p2s4" class="prob-step">
+    <div class="ps-label tag tag-blue">④ 계산</div>
+    <p>100t = 200</p>
+    <div class="eq-box">t = <span class="eq-ans">2</span></div>
+  </div>
+  <div id="p2s5" class="prob-step">
+    <div class="ps-label tag tag-green">⑤ 해석</div>
+    <p>2시간 후<br>검증: 60×2 + 40×2 = 120 + 80 = 200 ✓</p>
+    <div class="card card-green" style="text-align:center;padding:.7rem"><b>정답: 2시간 후</b></div>
+  </div>
+
+  <button class="btn btn-reveal" id="p2btn" onclick="revealProb(2, 5)">① 미지수 설정 보기</button>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(5)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(7)">예제 3 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 7: 예제 3 (나이)
+════════════════════════════ -->
+<div class="screen" id="s7">
+<div class="wrap">
+  <span class="tag tag-blue">예제 3 / 4 — 나이 문제</span>
+  <h2 style="margin-top:.3rem">아버지 나이는 아들의 4배</h2>
+  <p class="muted">5년 후 아버지 나이 = 아들의 3배보다 1살 적다. 현재 아들의 나이는?</p>
+
+  <div class="think">
+    <p>💭 언제의 나이로 <span style="font-size:1.2rem">"무엇과 무엇이 같아?"</span></p>
+  </div>
+
+  <div id="p3s1" class="prob-step">
+    <div class="ps-label tag tag-blue">① 미지수 설정</div>
+    <p>현재 아들의 나이를 <b>x살</b>이라 하면<br>현재 아버지 나이: <b>4x살</b></p>
+  </div>
+  <div id="p3s2" class="prob-step">
+    <div class="ps-label tag tag-amber">② 관계 찾기 ⭐</div>
+    <p><b>5년 후</b>를 기준으로!</p>
+    <p>왼쪽: 5년 후 아버지 나이 → <b>4x + 5</b></p>
+    <p>오른쪽: 아들 3배보다 1살 적은 것 → <b>3(x+5) − 1</b></p>
+    <p style="color:var(--red);font-weight:700">이 두 양이 같다!</p>
+  </div>
+  <div id="p3s3" class="prob-step">
+    <div class="ps-label tag tag-blue">③ 방정식 작성</div>
+    <div class="eq-box"><span class="eq-hi">4x + 5</span> = <span class="eq-ans">3(x+5) − 1</span></div>
+  </div>
+  <div id="p3s4" class="prob-step">
+    <div class="ps-label tag tag-blue">④ 계산</div>
+    <p>4x + 5 = 3x + 15 − 1</p>
+    <p>4x + 5 = 3x + 14</p>
+    <p>4x − 3x = 14 − 5</p>
+    <div class="eq-box">x = <span class="eq-ans">9</span></div>
+  </div>
+  <div id="p3s5" class="prob-step">
+    <div class="ps-label tag tag-green">⑤ 해석</div>
+    <p>현재 아들 9살, 아버지 36살<br>5년 후: 아들 14살, 아버지 41살<br>검증: 3×14−1 = 41 ✓</p>
+    <div class="card card-green" style="text-align:center;padding:.7rem"><b>정답: 현재 아들 나이 = 9살</b></div>
+  </div>
+
+  <button class="btn btn-reveal" id="p3btn" onclick="revealProb(3, 5)">① 미지수 설정 보기</button>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(6)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(8)">예제 4 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 8: 예제 4 (가격)
+════════════════════════════ -->
+<div class="screen" id="s8">
+<div class="wrap">
+  <span class="tag tag-amber">예제 4 / 4 — 가격 문제</span>
+  <h2 style="margin-top:.3rem">사과 3개 + 배 2개 = 4,600원</h2>
+  <p class="muted">배 한 개는 사과 한 개보다 200원 비싸다. 사과 한 개의 값은?</p>
+
+  <div class="think">
+    <p>💭 <span style="font-size:1.2rem">"무엇과 무엇이 같아?"</span></p>
+  </div>
+
+  <div id="p4s1" class="prob-step">
+    <div class="ps-label tag tag-blue">① 미지수 설정</div>
+    <p>사과 한 개의 가격을 <b>x원</b>이라 하면<br>배 한 개의 가격: <b>(x + 200)원</b></p>
+  </div>
+  <div id="p4s2" class="prob-step">
+    <div class="ps-label tag tag-amber">② 관계 찾기 ⭐</div>
+    <p>왼쪽: 사과 3개 + 배 2개의 값 → <b>3x + 2(x+200)</b></p>
+    <p>오른쪽: 총 금액 → <b>4,600</b></p>
+    <p style="color:var(--red);font-weight:700">총 금액이 같다!</p>
+  </div>
+  <div id="p4s3" class="prob-step">
+    <div class="ps-label tag tag-blue">③ 방정식 작성</div>
+    <div class="eq-box"><span class="eq-hi">3x + 2(x+200)</span> = <span class="eq-ans">4600</span></div>
+  </div>
+  <div id="p4s4" class="prob-step">
+    <div class="ps-label tag tag-blue">④ 계산</div>
+    <p>3x + 2x + 400 = 4600</p>
+    <p>5x = 4600 − 400 = 4200</p>
+    <div class="eq-box">x = <span class="eq-ans">840</span></div>
+  </div>
+  <div id="p4s5" class="prob-step">
+    <div class="ps-label tag tag-green">⑤ 해석</div>
+    <p>사과 840원, 배 1,040원<br>검증: 3×840 + 2×1,040 = 2,520 + 2,080 = 4,600 ✓</p>
+    <div class="card card-green" style="text-align:center;padding:.7rem"><b>정답: 사과 한 개 = 840원</b></div>
+  </div>
+
+  <button class="btn btn-reveal" id="p4btn" onclick="revealProb(4, 5)">① 미지수 설정 보기</button>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(7)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(9)">핵심 정리 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 9: 핵심 정리
+════════════════════════════ -->
+<div class="screen" id="s9">
+<div class="wrap">
+  <div class="card card-navy" style="text-align:center;padding:1.8rem">
+    <div style="font-size:2.5rem;margin-bottom:.6rem">💡</div>
+    <div class="final-quote">
+      방정식은<br>
+      <span style="color:#38bdf8">숫자를 구하는 기술</span>이 아니라<br>
+      <span style="color:#34d399;font-size:1.3em">같은 관계를 발견하는 언어</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>오늘 배운 핵심</h3>
+    <ul class="checklist">
+      <li>방정식 = 두 양이 같다는 선언</li>
+      <li>"무엇과 무엇이 같아?" 가 핵심 질문</li>
+      <li>계산보다 관계 파악이 먼저</li>
+      <li>5단계: 설정 → 관계 → 식 → 계산 → 검증</li>
+    </ul>
+  </div>
+
+  <div class="card card-blue">
+    <h3>📝 예제 정리</h3>
+    <table style="width:100%;font-size:.88rem;border-collapse:collapse">
+      <tr style="border-bottom:1px solid #bfdbfe">
+        <th style="text-align:left;padding:.4rem;color:#1e40af">문제 유형</th>
+        <th style="text-align:center;padding:.4rem;color:#1e40af">같아지는 두 양</th>
+        <th style="text-align:center;padding:.4rem;color:#1e40af">답</th>
+      </tr>
+      <tr style="border-bottom:1px solid #e0f2fe">
+        <td style="padding:.4rem">수 문제</td>
+        <td style="text-align:center">x+5 = 2x</td>
+        <td style="text-align:center"><b>5</b></td>
+      </tr>
+      <tr style="border-bottom:1px solid #e0f2fe">
+        <td style="padding:.4rem">속력 문제</td>
+        <td style="text-align:center">60t+40t = 200</td>
+        <td style="text-align:center"><b>2시간</b></td>
+      </tr>
+      <tr style="border-bottom:1px solid #e0f2fe">
+        <td style="padding:.4rem">나이 문제</td>
+        <td style="text-align:center">4x+5 = 3(x+5)−1</td>
+        <td style="text-align:center"><b>9살</b></td>
+      </tr>
+      <tr>
+        <td style="padding:.4rem">가격 문제</td>
+        <td style="text-align:center">3x+2(x+200) = 4600</td>
+        <td style="text-align:center"><b>840원</b></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card card-amber">
+    <h3>다음 문제를 볼 때 이 질문을 먼저!</h3>
+    <div class="think" style="margin:.4rem 0">
+      <p style="font-size:1.25rem">❓ "무엇과 무엇이 같아?"</p>
+    </div>
+    <p class="muted" style="text-align:center">이 질문에 답할 수 있으면 방정식은 저절로 세워집니다</p>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(8)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(1)">처음부터 🔄</button>
+  </div>
+</div>
+</div>
+
+<script>
+const TOTAL = 9;
+let stepIdx = 0;
+let probIdx = {};
+
+// ── init progress dots ──
+(function(){
+  const bar = document.getElementById('prog');
+  for(let i=1;i<=TOTAL;i++){
+    const d = document.createElement('div');
+    d.className='prog-dot';
+    d.onclick=()=>goTo(i);
+    d.id='dot'+i;
+    bar.appendChild(d);
+  }
+  updateDots(1);
+})();
+
+function updateDots(n){
+  for(let i=1;i<=TOTAL;i++){
+    const d=document.getElementById('dot'+i);
+    d.className='prog-dot'+(i===n?' on':i<n?' done':'');
+  }
+}
+
+function goTo(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+n).classList.add('active');
+  updateDots(n);
+  window.scrollTo({top:0,behavior:'smooth'});
+  // reset step animations for s4
+  if(n===4){
+    stepIdx=0;
+    document.querySelectorAll('.step-item').forEach(s=>s.classList.remove('on'));
+    const btn=document.getElementById('stepBtn');
+    btn.textContent='▶ 단계 하나씩 보기';
+    btn.disabled=false;
+  }
+}
+
+// ── balance animation ──
+let balanced = false;
+function animateBalance(){
+  if(balanced) return;
+  balanced = true;
+  const btn = document.getElementById('balanceBtn');
+  btn.disabled = true;
+  btn.textContent = '⚖️ 균형이 맞았어요!';
+
+  const beam = document.getElementById('beam');
+  const lchain = document.getElementById('lchain');
+  const rchain = document.getElementById('rchain');
+  const lpan = document.getElementById('lpan');
+  const rpan = document.getElementById('rpan');
+  const ltxt = document.getElementById('ltxt');
+  const msg = document.getElementById('balanceMsg');
+  const state = document.getElementById('stateText');
+
+  // animate tilt then level
+  let angle = 8;
+  let frame = 0;
+  const anim = setInterval(()=>{
+    frame++;
+    if(frame < 20){
+      angle = 8 - frame * 0.4;
+    } else {
+      angle = 0;
+      clearInterval(anim);
+      // snap to balanced state
+      beam.setAttribute('transform','rotate(0)');
+      lpan.setAttribute('y','130');
+      rpan.setAttribute('y','130');
+      lpan.setAttribute('fill','#dbeafe');
+      rpan.setAttribute('fill','#dcfce7');
+      ltxt.textContent = '8 + 3 = 11';
+      ltxt.setAttribute('fill','#059669');
+      state.textContent = '균형이 맞았어요! x = 8 ✓';
+      state.setAttribute('fill','#059669');
+      msg.className='card card-green';
+      msg.innerHTML='<p style="color:#065f46;font-weight:700">x = 8일 때 양쪽이 같아져서 ⚖️ 균형!</p><p class="muted">방정식을 풀었다 = 저울의 균형을 찾았다</p>';
+    }
+  },30);
+}
+
+// ── 5-step reveal ──
+function revealSteps(){
+  stepIdx++;
+  const st = document.getElementById('st'+stepIdx);
+  if(st) st.classList.add('on');
+  const btn = document.getElementById('stepBtn');
+  if(stepIdx >= 5){
+    btn.textContent = '✅ 모든 단계 확인 완료!';
+    btn.disabled = true;
+  } else {
+    btn.textContent = `▶ ${stepIdx+1}단계 보기`;
+  }
+}
+
+// ── problem step reveal ──
+function revealProb(num, total){
+  if(!probIdx[num]) probIdx[num] = 0;
+  probIdx[num]++;
+  const step = document.getElementById('p'+num+'s'+probIdx[num]);
+  if(step) step.classList.add('show');
+  const btn = document.getElementById('p'+num+'btn');
+  const labels = ['① 미지수 설정','② 관계 찾기 ⭐','③ 방정식 작성','④ 계산','⑤ 해석(검증)'];
+  if(probIdx[num] >= total){
+    btn.textContent = '✅ 풀이 완료!';
+    btn.disabled = true;
+  } else {
+    btn.textContent = labels[probIdx[num]] + ' 보기';
+  }
+}
+</script>
+</body>
+</html>
