@@ -850,16 +850,291 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
 
   <div class="btn-row">
     <button class="btn btn-prev" onclick="goTo(13)">← 이전</button>
-    <button class="btn btn-next" onclick="goTo(15)">핵심 정리 →</button>
+    <button class="btn btn-next" onclick="goTo(15)">속력 심화 →</button>
   </div>
 </div>
 </div>
 
 
 <!-- ════════════════════════════
-     SCREEN 15: 핵심 정리
+     SCREEN 15: 속력 심화 ① — 터널 통과
 ════════════════════════════ -->
 <div class="screen" id="s15">
+<div class="wrap">
+  <span class="tag tag-blue">속력 심화 ① — 터널 통과</span>
+  <h2 style="margin-top:.3rem">기차가 터널을 "완전히" 통과한 거리</h2>
+
+  <div class="compare">
+    <div class="card cmp-wrong">
+      <span class="tag tag-red">❌ 학생 오류</span>
+      <div class="eq-box" style="font-size:.95rem;color:var(--red)">이동거리<br>= 터널 길이</div>
+    </div>
+    <div class="card cmp-right">
+      <span class="tag tag-green">⭐ 실제</span>
+      <div class="eq-box" style="font-size:.95rem;color:var(--green)">이동거리<br>= 터널 + 기차</div>
+    </div>
+  </div>
+
+  <div class="card card-amber" style="text-align:center">
+    <p style="font-size:.9rem">기차 <b>끝</b>이 터널을 빠져나와야 완전 통과!<br>→ <b>추가 거리 = 기차 길이</b></p>
+  </div>
+
+  <!-- 문제 1 -->
+  <div class="card card-blue" style="margin-top:1rem">
+    <span class="tag tag-blue">문제 1</span>
+    <p style="font-size:.93rem">길이 <b>180 m</b>인 기차가 길이 <b>420 m</b>인 터널을 완전히 통과하는 데 <b>30초</b>. 기차의 속력은 몇 m/s?</p>
+  </div>
+
+  <div id="p11s1" class="prob-step">
+    <div class="ps-label tag tag-blue">① 미지수 설정</div>
+    <p>속력을 <b>x m/s</b>라 하자.</p>
+  </div>
+  <div id="p11s2" class="prob-step">
+    <div class="ps-label tag tag-amber">② 관계 찾기 ⭐</div>
+    <p>이동 거리 = 터널 + 기차 = <b>420 + 180 = 600 m</b></p>
+    <p>이동 거리 = 속력 × 시간 = <b>30x</b></p>
+    <p style="color:var(--red);font-weight:700">이동 거리가 같다!</p>
+  </div>
+  <div id="p11s3" class="prob-step">
+    <div class="ps-label tag tag-blue">③ 방정식 작성</div>
+    <div class="eq-box"><span class="eq-hi">30x</span> = <span class="eq-ans">600</span></div>
+  </div>
+  <div id="p11s4" class="prob-step">
+    <div class="ps-label tag tag-blue">④ 계산</div>
+    <div class="eq-box">x = <span class="eq-ans">20</span></div>
+  </div>
+  <div id="p11s5" class="prob-step">
+    <div class="ps-label tag tag-green">⑤ 해석</div>
+    <p>검증: 20 × 30 = 600 = 420 + 180 ✓</p>
+    <div class="card card-green" style="text-align:center;padding:.7rem"><b>정답: 20 m/s</b></div>
+  </div>
+  <button class="btn btn-reveal" id="p11btn" onclick="revealProb(11,5)">① 미지수 설정 보기</button>
+
+  <!-- 문제 2 -->
+  <div class="card card-amber" style="margin-top:1.2rem">
+    <span class="tag tag-amber">문제 2 — 단위 변환 함정!</span>
+    <p style="font-size:.93rem">길이 <b>150 m</b>인 기차가 길이 <b>350 m</b>인 터널을 완전히 통과하는 데 <b>25초</b>. 기차의 시속은 몇 km/h?</p>
+  </div>
+
+  <div id="p12s1" class="prob-step">
+    <div class="ps-label tag tag-blue">① 미지수 설정</div>
+    <p>속력을 <b>x m/s</b>라 하자.</p>
+  </div>
+  <div id="p12s2" class="prob-step">
+    <div class="ps-label tag tag-amber">② 관계 찾기 ⭐</div>
+    <p>이동 거리 = 150 + 350 = <b>500 m</b></p>
+    <p>이동 거리 = 속력 × 시간 = <b>25x</b></p>
+    <p style="color:var(--red);font-weight:700">이동 거리가 같다!</p>
+  </div>
+  <div id="p12s3" class="prob-step">
+    <div class="ps-label tag tag-blue">③ 방정식 작성</div>
+    <div class="eq-box"><span class="eq-hi">25x</span> = <span class="eq-ans">500</span></div>
+  </div>
+  <div id="p12s4" class="prob-step">
+    <div class="ps-label tag tag-blue">④ 계산 + 단위 변환</div>
+    <p>x = 20 m/s &nbsp;→&nbsp; 1 m/s = 3.6 km/h</p>
+    <div class="eq-box">20 × 3.6 = <span class="eq-ans">72 km/h</span></div>
+  </div>
+  <div id="p12s5" class="prob-step">
+    <div class="ps-label tag tag-green">⑤ 해석</div>
+    <p>검증: 20 × 25 = 500 = 150 + 350 ✓</p>
+    <div class="card card-green" style="text-align:center;padding:.7rem"><b>정답: 72 km/h</b></div>
+  </div>
+  <button class="btn btn-reveal" id="p12btn" onclick="revealProb(12,5)">① 미지수 설정 보기</button>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(14)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(16)">속력 심화 ② →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 16: 속력 심화 ② — 사람·기둥 통과
+════════════════════════════ -->
+<div class="screen" id="s16">
+<div class="wrap">
+  <span class="tag tag-amber">속력 심화 ② — 사람·기둥 통과</span>
+  <h2 style="margin-top:.3rem">기차가 사람(기둥)을 통과할 때</h2>
+
+  <div class="card card-blue">
+    <span class="tag tag-blue">터널 vs 사람/기둥 비교</span>
+    <table style="width:100%;font-size:.85rem;border-collapse:collapse;margin-top:.5rem">
+      <tr style="border-bottom:1px solid #bfdbfe">
+        <th style="padding:.35rem;text-align:left;color:#1e40af">상황</th>
+        <th style="padding:.35rem;text-align:center;color:#1e40af">이동 거리</th>
+      </tr>
+      <tr style="border-bottom:1px solid #e0f2fe">
+        <td style="padding:.35rem">터널 통과</td>
+        <td style="text-align:center"><b>기차 + 터널 길이</b></td>
+      </tr>
+      <tr>
+        <td style="padding:.35rem">사람·기둥 통과</td>
+        <td style="text-align:center"><b>기차 길이만</b></td>
+      </tr>
+    </table>
+    <p class="muted" style="margin-top:.4rem;font-size:.83rem">사람·기둥은 길이가 0 → 더할 것이 없다!</p>
+  </div>
+
+  <!-- 문제 1 -->
+  <div class="card card-blue" style="margin-top:1rem">
+    <span class="tag tag-blue">문제 1</span>
+    <p style="font-size:.93rem">길이 <b>120 m</b>인 기차가 선로 옆에 서 있는 사람을 완전히 지나가는 데 <b>8초</b>. 기차의 속력은?</p>
+  </div>
+
+  <div id="p13s1" class="prob-step">
+    <div class="ps-label tag tag-blue">① 미지수 설정</div>
+    <p>속력을 <b>x m/s</b>라 하자.</p>
+  </div>
+  <div id="p13s2" class="prob-step">
+    <div class="ps-label tag tag-amber">② 관계 찾기 ⭐</div>
+    <p>사람은 길이가 없다 → 이동 거리 = <b>기차 길이 = 120 m</b></p>
+    <p>이동 거리 = 속력 × 시간 = <b>8x</b></p>
+    <p style="color:var(--red);font-weight:700">이동 거리가 같다!</p>
+  </div>
+  <div id="p13s3" class="prob-step">
+    <div class="ps-label tag tag-blue">③ 방정식 작성</div>
+    <div class="eq-box"><span class="eq-hi">8x</span> = <span class="eq-ans">120</span></div>
+  </div>
+  <div id="p13s4" class="prob-step">
+    <div class="ps-label tag tag-blue">④ 계산</div>
+    <div class="eq-box">x = <span class="eq-ans">15</span></div>
+  </div>
+  <div id="p13s5" class="prob-step">
+    <div class="ps-label tag tag-green">⑤ 해석</div>
+    <p>검증: 15 × 8 = 120 ✓</p>
+    <div class="card card-green" style="text-align:center;padding:.7rem"><b>정답: 15 m/s</b></div>
+  </div>
+  <button class="btn btn-reveal" id="p13btn" onclick="revealProb(13,5)">① 미지수 설정 보기</button>
+
+  <!-- 문제 2 -->
+  <div class="card card-amber" style="margin-top:1.2rem">
+    <span class="tag tag-amber">문제 2 — 미지수가 시간!</span>
+    <p style="font-size:.93rem">길이 <b>180 m</b>인 기차가 시속 <b>54 km/h</b>로 달릴 때, 신호 기둥 하나를 완전히 지나가는 데 몇 초?</p>
+  </div>
+
+  <div id="p14s1" class="prob-step">
+    <div class="ps-label tag tag-blue">① 미지수 설정</div>
+    <p>시간을 <b>x초</b>라 하자.</p>
+  </div>
+  <div id="p14s2" class="prob-step">
+    <div class="ps-label tag tag-amber">② 관계 찾기 ⭐</div>
+    <p>속력 변환: 54 km/h = <b>15 m/s</b></p>
+    <p>기둥 길이 = 0 → 이동 거리 = <b>기차 길이 = 180 m</b></p>
+    <p style="color:var(--red);font-weight:700">이동 거리가 같다!</p>
+  </div>
+  <div id="p14s3" class="prob-step">
+    <div class="ps-label tag tag-blue">③ 방정식 작성</div>
+    <div class="eq-box"><span class="eq-hi">15x</span> = <span class="eq-ans">180</span></div>
+  </div>
+  <div id="p14s4" class="prob-step">
+    <div class="ps-label tag tag-blue">④ 계산</div>
+    <div class="eq-box">x = <span class="eq-ans">12</span></div>
+  </div>
+  <div id="p14s5" class="prob-step">
+    <div class="ps-label tag tag-green">⑤ 해석</div>
+    <p>검증: 15 × 12 = 180 ✓</p>
+    <div class="card card-green" style="text-align:center;padding:.7rem"><b>정답: 12초</b></div>
+  </div>
+  <button class="btn btn-reveal" id="p14btn" onclick="revealProb(14,5)">① 미지수 설정 보기</button>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(15)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(17)">🔥 최종 보스 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 17: 속력 심화 ③ — 기차 두 대 최종 보스
+════════════════════════════ -->
+<div class="screen" id="s17">
+<div class="wrap">
+  <span class="tag tag-red">속력 심화 ③ — 최종 보스</span>
+  <h2 style="margin-top:.3rem">기차 두 대가 서로 지나가기</h2>
+  <p class="muted">속력 활용 유형의 완결판 — 상대 속력 등장!</p>
+
+  <div class="card card-amber">
+    <span class="tag tag-amber">⭐ 핵심: 상대 속력</span>
+    <table style="width:100%;font-size:.85rem;border-collapse:collapse;margin-top:.5rem">
+      <tr style="border-bottom:1px solid #fcd34d">
+        <th style="padding:.35rem;text-align:left">방향</th>
+        <th style="padding:.35rem;text-align:center">이동 거리</th>
+        <th style="padding:.35rem;text-align:center">상대 속력</th>
+      </tr>
+      <tr style="border-bottom:1px solid #fef3c7">
+        <td style="padding:.35rem">반대 방향</td>
+        <td style="text-align:center">두 기차 길이 합</td>
+        <td style="text-align:center"><b>속력의 합</b></td>
+      </tr>
+      <tr>
+        <td style="padding:.35rem">같은 방향</td>
+        <td style="text-align:center">두 기차 길이 합</td>
+        <td style="text-align:center"><b>속력의 차</b></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card card-blue">
+    <span class="tag tag-blue">최종 문제</span>
+    <p style="font-size:.93rem">길이 <b>200 m</b>인 기차 A가 시속 <b>90 km/h</b>로 달리고,<br>길이 <b>100 m</b>인 기차 B가 <b>반대 방향</b>으로 시속 <b>54 km/h</b>로 달린다.</p>
+    <p style="font-size:.93rem;margin-top:.4rem">두 기차가 완전히 지나치는 데 몇 초가 걸리는가?</p>
+  </div>
+
+  <div id="p15s1" class="prob-step">
+    <div class="ps-label tag tag-blue">① 미지수 설정</div>
+    <p>두 기차가 지나치는 시간을 <b>x초</b>라 하자.</p>
+  </div>
+  <div id="p15s2" class="prob-step">
+    <div class="ps-label tag tag-amber">② 관계 찾기 ⭐</div>
+    <p>이동 거리 = 두 기차 길이 합: <b>200 + 100 = 300 m</b></p>
+    <p>상대 속력(반대방향) = 속력의 합:</p>
+    <p>90 + 54 = 144 km/h = <b>40 m/s</b></p>
+    <p style="color:var(--red);font-weight:700">거리 = 상대속력 × 시간 → 같다!</p>
+  </div>
+  <div id="p15s3" class="prob-step">
+    <div class="ps-label tag tag-blue">③ 방정식 작성</div>
+    <div class="eq-box"><span class="eq-hi">40x</span> = <span class="eq-ans">300</span></div>
+  </div>
+  <div id="p15s4" class="prob-step">
+    <div class="ps-label tag tag-blue">④ 계산</div>
+    <div class="eq-box">x = <span class="eq-ans">7.5</span></div>
+  </div>
+  <div id="p15s5" class="prob-step">
+    <div class="ps-label tag tag-green">⑤ 해석</div>
+    <p>7.5초 동안 두 기차가 완전히 지나침<br>검증: 40 × 7.5 = 300 = 200 + 100 ✓</p>
+    <div class="card card-green" style="text-align:center;padding:.7rem"><b>정답: 7.5초</b></div>
+  </div>
+  <button class="btn btn-reveal" id="p15btn" onclick="revealProb(15,5)">① 미지수 설정 보기</button>
+
+  <div class="card" style="margin-top:1.2rem">
+    <h3>🏆 속력 활용 완전 정복표</h3>
+    <table style="width:100%;font-size:.83rem;border-collapse:collapse;margin-top:.4rem">
+      <tr style="border-bottom:1px solid #e2e8f0;background:#f8fafc">
+        <th style="padding:.35rem;text-align:left">유형</th>
+        <th style="padding:.35rem;text-align:center">이동 거리</th>
+      </tr>
+      <tr style="border-bottom:1px solid #e2e8f0"><td style="padding:.35rem">마주보며 출발</td><td style="text-align:center">두 거리 합 = 총 거리</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0"><td style="padding:.35rem">터널 통과</td><td style="text-align:center">기차 + 터널 길이</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0"><td style="padding:.35rem">사람·기둥 통과</td><td style="text-align:center">기차 길이만</td></tr>
+      <tr><td style="padding:.35rem">기차 두 대 교행</td><td style="text-align:center">두 기차 합, 상대속력 = 속력 합</td></tr>
+    </table>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(16)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(18)">핵심 정리 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SCREEN 18: 핵심 정리
+════════════════════════════ -->
+<div class="screen" id="s18">
 <div class="wrap">
   <div class="card card-navy" style="text-align:center;padding:1.8rem">
     <div style="font-size:2.5rem;margin-bottom:.6rem">💡</div>
@@ -910,14 +1185,14 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
   </div>
 
   <div class="btn-row">
-    <button class="btn btn-prev" onclick="goTo(14)">← 이전</button>
+    <button class="btn btn-prev" onclick="goTo(17)">← 이전</button>
     <button class="btn btn-next" onclick="goTo(1)">처음부터 🔄</button>
   </div>
 </div>
 </div>
 
 <script>
-const TOTAL = 15;
+const TOTAL = 18;
 let stepIdx = 0;
 let probIdx = {};
 
