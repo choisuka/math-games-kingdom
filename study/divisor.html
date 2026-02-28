@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>약수와 배수 | 수학여행학원-영통</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1e3a5f;--blue:#2563eb;--sky:#38bdf8;
+  --amber:#d97706;--green:#059669;--red:#dc2626;
+  --purple:#7c3aed;
+  --bg:#f0f7ff;--card:#fff;--text:#1e1e2e;--muted:#6b7280;
+}
+body{background:var(--bg);color:var(--text);font-family:'Malgun Gothic','맑은 고딕',sans-serif;min-height:100vh;overflow-x:hidden}
+
+header{background:var(--navy);padding:.9rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--blue)}
+header h1{color:#fff;font-size:1.1rem;font-weight:700}
+.back-link{color:#bfdbfe;text-decoration:none;font-size:.82rem}
+
+.prog-bar{display:flex;justify-content:center;gap:.45rem;padding:.65rem;background:#d0e8ff}
+.prog-dot{width:10px;height:10px;border-radius:50%;background:#aac4e0;transition:background .3s,transform .3s;cursor:pointer}
+.prog-dot.on{background:var(--blue);transform:scale(1.3)}
+.prog-dot.done{background:var(--green)}
+
+.screen{display:none;animation:fadeIn .35s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.wrap{max-width:700px;margin:0 auto;padding:1.2rem 1rem}
+
+.card{background:var(--card);border-radius:1rem;padding:1.4rem;margin:.8rem 0;border:1px solid #c3d9f5;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.card-navy{background:var(--navy);color:#fff;border:none}
+.card-amber{background:#fffbeb;border-left:4px solid var(--amber)}
+.card-green{background:#f0fdf4;border-left:4px solid var(--green)}
+.card-red{background:#fef2f2;border-left:4px solid var(--red)}
+.card-blue{background:#eff6ff;border-left:4px solid var(--blue)}
+.card-purple{background:#f5f3ff;border-left:4px solid var(--purple)}
+
+h2{font-size:1.4rem;font-weight:800;margin-bottom:.6rem;line-height:1.35}
+h3{font-size:1.05rem;font-weight:700;margin-bottom:.5rem}
+p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
+.muted{color:var(--muted);font-size:.88rem}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;padding:.18rem .55rem;border-radius:999px;margin-bottom:.4rem}
+.tag-blue{background:#dbeafe;color:#1e40af}
+.tag-amber{background:#fef3c7;color:#92400e}
+.tag-red{background:#fee2e2;color:#991b1b}
+.tag-green{background:#dcfce7;color:#14532d}
+.tag-purple{background:#ede9fe;color:#5b21b6}
+.tag-navy{background:#1e3a5f;color:#bfdbfe}
+
+.eq-box{text-align:center;font-size:1.2rem;font-weight:800;background:#eff6ff;border:2px solid var(--blue);border-radius:.75rem;padding:.8rem 1rem;margin:.6rem 0;color:var(--navy);font-family:'Courier New',monospace}
+.eq-hi{color:var(--red)}
+.eq-ans{color:var(--green)}
+.def-box{text-align:center;font-size:1.1rem;font-weight:800;background:#f5f3ff;border:2px solid var(--purple);border-radius:.75rem;padding:.8rem 1rem;margin:.6rem 0;color:var(--purple)}
+
+.think{background:#fff7ed;border:2px solid var(--amber);border-radius:.75rem;padding:.9rem 1rem;margin:.7rem 0;text-align:center}
+.think p{font-size:1rem;font-weight:700;color:#92400e}
+
+.div-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin:.8rem 0}
+.div-cell{background:#eff6ff;border:2px solid #bfdbfe;border-radius:.6rem;padding:.55rem;text-align:center;font-weight:700;font-size:.9rem;color:var(--navy);transition:all .4s}
+.div-cell.ok{background:#dcfce7;border-color:#22c55e;color:#14532d}
+.div-cell.ng{background:#fef2f2;border-color:#fca5a5;color:#991b1b;opacity:.6}
+
+.pairs{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin:.8rem 0}
+.pair{background:#f5f3ff;border:2px solid var(--purple);border-radius:.6rem;padding:.45rem .8rem;font-weight:700;font-size:.92rem;color:var(--purple)}
+
+.multiples{display:flex;flex-wrap:wrap;gap:.4rem;margin:.8rem 0}
+.mult-chip{background:#eff6ff;border:2px solid var(--blue);border-radius:999px;padding:.3rem .75rem;font-weight:700;font-size:.88rem;color:var(--navy)}
+.mult-chip.hi{background:#fef3c7;border-color:var(--amber);color:#92400e}
+
+/* Ladder (staircase method) */
+.ladder{background:#1e1e2e;color:#e2e8f0;border-radius:.75rem;padding:.9rem 1.2rem;font-family:'Courier New',monospace;font-size:1rem;line-height:2;margin:.6rem 0;overflow-x:auto}
+.lad-div{color:#f9a8d4;font-weight:700}
+.lad-ans{color:#86efac;font-weight:700}
+.lad-note{color:#fde68a}
+
+/* Steps */
+.steps{display:flex;flex-direction:column;gap:.55rem;margin:.8rem 0}
+.step-item{display:flex;align-items:flex-start;gap:.75rem;padding:.6rem .8rem;border-radius:.6rem;background:#f8fafc;border:1px solid #e2e8f0;opacity:.35;transition:opacity .4s,border-color .4s}
+.step-item.on{opacity:1;border-color:var(--blue);background:#eff6ff}
+.step-num{flex-shrink:0;width:1.8rem;height:1.8rem;border-radius:50%;background:var(--blue);color:#fff;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.step-body{flex:1}
+.step-title{font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:.18rem}
+.step-desc{font-size:.85rem;color:#374151;line-height:1.6}
+
+/* Prob steps (reveal) */
+.prob-step{background:#f8fafc;border-radius:.6rem;border:1px solid #e2e8f0;padding:.75rem 1rem;margin:.5rem 0;display:none}
+.prob-step.show{display:block;animation:fadeIn .3s ease}
+.ps-label{font-size:.72rem;font-weight:700;letter-spacing:.06em;margin-bottom:.3rem}
+
+/* Difficulty tabs */
+.diff-tabs{display:flex;gap:.5rem;margin:.7rem 0}
+.diff-btn{flex:1;padding:.55rem;border-radius:.55rem;border:2px solid #e2e8f0;background:#fff;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s}
+.diff-btn.lv1.active{background:#dcfce7;border-color:#22c55e;color:#14532d}
+.diff-btn.lv2.active{background:#fef3c7;border-color:var(--amber);color:#92400e}
+.diff-btn.lv3.active{background:#fee2e2;border-color:var(--red);color:#991b1b}
+.diff-prob{display:none}
+.diff-prob.active{display:block}
+
+/* Venn-style visual for common */
+.venn-row{display:flex;gap:0;margin:.8rem 0;align-items:stretch}
+.venn-a{background:#dbeafe;border:2px solid var(--blue);border-radius:1rem 0 0 1rem;padding:.7rem .9rem;flex:1;font-size:.85rem}
+.venn-mid{background:#f0fdf4;border:2px solid var(--green);padding:.7rem .9rem;font-size:.85rem;text-align:center;font-weight:700}
+.venn-b{background:#ede9fe;border:2px solid var(--purple);border-radius:0 1rem 1rem 0;padding:.7rem .9rem;flex:1;font-size:.85rem;text-align:right}
+
+/* Buttons */
+.btn-row{display:flex;gap:.6rem;justify-content:space-between;margin-top:1.2rem;flex-wrap:wrap}
+.btn{padding:.65rem 1.4rem;border-radius:.55rem;border:none;cursor:pointer;font-size:.9rem;font-weight:700;font-family:'Malgun Gothic',sans-serif;transition:all .18s}
+.btn-prev{background:#d0e8ff;color:#374151}
+.btn-prev:hover{background:#bfdbfe}
+.btn-next{background:var(--navy);color:#fff;margin-left:auto}
+.btn-next:hover{background:var(--blue)}
+.btn-reveal{background:var(--amber);color:#fff;width:100%;margin:.3rem 0}
+.btn-reveal:hover{opacity:.88}
+.btn-reveal:disabled{background:#aab8c9;cursor:default}
+
+.hl{background:#fef9c3;border-radius:.25rem;padding:.1rem .25rem;font-weight:700;color:#78350f}
+
+.vs-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:.5rem}
+.vs-table th{padding:.4rem;text-align:center;background:#eff6ff;color:#1e40af;border-bottom:2px solid #bfdbfe}
+.vs-table td{padding:.4rem;text-align:center;border-bottom:1px solid #e0f2fe}
+
+.final-table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:.5rem}
+.final-table th{padding:.4rem .5rem;background:var(--navy);color:#fff;text-align:center}
+.final-table td{padding:.4rem .5rem;border-bottom:1px solid #e2e8f0;text-align:center}
+.final-table tr:nth-child(even) td{background:#f8fafc}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🔢 약수와 배수</h1>
+  <a class="back-link" href="../index.html">← 홈</a>
+</header>
+
+<div class="prog-bar" id="prog"></div>
+
+
+<!-- ════ SCREEN 1: 도입 ════ -->
+<div class="screen active" id="s1">
+<div class="wrap">
+  <div class="card card-navy" style="text-align:center;padding:2rem 1.4rem">
+    <div style="font-size:3rem;margin-bottom:.6rem">🍎</div>
+    <h2 style="color:#fff;font-size:1.6rem">사과 12개를<br>똑같이 나눌 수 있을까요?</h2>
+    <p style="color:#bfdbfe;margin-top:.8rem">나눌 수 있는 경우와 남는 경우가 있어요.</p>
+  </div>
+
+  <div class="card card-blue">
+    <span class="tag tag-blue">실험</span>
+    <p>사과 12개를 몇 명이 <span class="hl">나머지 없이</span> 나눌 수 있을까요?</p>
+    <div class="div-grid">
+      <div class="div-cell" id="cell1">1명<br><span style="font-size:.78rem">12개씩</span></div>
+      <div class="div-cell" id="cell2">2명<br><span style="font-size:.78rem">6개씩</span></div>
+      <div class="div-cell" id="cell3">3명<br><span style="font-size:.78rem">4개씩</span></div>
+      <div class="div-cell" id="cell4">4명<br><span style="font-size:.78rem">3개씩</span></div>
+      <div class="div-cell" id="cell5">5명<br><span style="font-size:.78rem">2개+남음</span></div>
+      <div class="div-cell" id="cell6">6명<br><span style="font-size:.78rem">2개씩</span></div>
+      <div class="div-cell" id="cell7">7명<br><span style="font-size:.78rem">나머지 생김</span></div>
+      <div class="div-cell" id="cell8">8명<br><span style="font-size:.78rem">나머지 생김</span></div>
+    </div>
+    <button class="btn btn-reveal" id="appleBtn" onclick="revealApple()">▶ 가능 / 불가능 확인하기</button>
+  </div>
+
+  <div id="appleResult" style="display:none">
+    <div class="card card-green">
+      <span class="tag tag-green">발견!</span>
+      <p>12를 <b>나머지 없이 나눌 수 있는 수</b>: 1, 2, 3, 4, 6, 12</p>
+      <p>이런 수를 <span class="hl">12의 약수</span>라고 합니다!</p>
+    </div>
+    <div class="think">
+      <p>💭 "나누어 떨어지게 하는 수" = <span style="color:var(--purple);font-size:1.1rem">약수 (約數)</span></p>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-next" onclick="goTo(2)">약수 자세히 보기 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════ SCREEN 2: 약수 — 곱셈 짝 방법 ════ -->
+<div class="screen" id="s2">
+<div class="wrap">
+  <span class="tag tag-purple">개념 1</span>
+  <h2 style="margin-top:.3rem">약수 — 곱셈 짝으로 찾기</h2>
+
+  <div class="def-box">약수 = 어떤 수를 <span style="color:var(--green)">나누어 떨어지게</span> 하는 수</div>
+
+  <div class="card card-blue">
+    <span class="tag tag-blue">⭐ 핵심: 곱셈 짝 방법</span>
+    <p>12의 약수를 찾으려면? → <span class="hl">곱해서 12가 되는 짝</span>을 모두 찾는다!</p>
+    <div class="pairs">
+      <div class="pair">1 × 12</div>
+      <div class="pair">2 × 6</div>
+      <div class="pair">3 × 4</div>
+    </div>
+    <p class="muted" style="text-align:center">짝에서 숫자를 꺼내면: <b>1, 2, 3, 4, 6, 12</b> — 총 6개</p>
+  </div>
+
+  <div class="card card-amber">
+    <span class="tag tag-amber">언제 멈추나? — √ 규칙</span>
+    <p>짝을 찾다가 두 수가 <b>같아지거나 역전될 때</b> 멈춥니다.</p>
+    <div class="eq-box" style="font-size:1rem">√12 ≈ 3.46 → <span class="eq-ans">3 이하</span>까지만 확인하면 OK!</div>
+    <p class="muted">4 이상은 이미 짝으로 나왔으니 중복이에요</p>
+  </div>
+
+  <div class="card">
+    <span class="tag tag-navy">예) 18의 약수</span>
+    <div class="pairs">
+      <div class="pair">1 × 18</div>
+      <div class="pair">2 × 9</div>
+      <div class="pair">3 × 6</div>
+    </div>
+    <div class="eq-box" style="font-size:1rem">18의 약수: <span class="eq-ans">1, 2, 3, 6, 9, 18</span> (6개)</div>
+    <p class="muted">√18 ≈ 4.2 → 4까지 확인. 4×?=18이면 4.5 → 정수 아님 → 없음</p>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(1)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(3)">단계별 연습 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════ SCREEN 3: 약수 5단계 ════ -->
+<div class="screen" id="s3">
+<div class="wrap">
+  <span class="tag tag-purple">개념 1 심화</span>
+  <h2 style="margin-top:.3rem">24의 약수 — 5단계로 구하기</h2>
+
+  <div class="steps">
+    <div class="step-item" id="st1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">1부터 짝 찾기</div>
+        <div class="step-desc">1 × 24 = 24 ✓ → 약수에 <b>1, 24</b> 추가</div>
+      </div>
+    </div>
+    <div class="step-item" id="st2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">2로 나누어지나?</div>
+        <div class="step-desc">2 × 12 = 24 ✓ → <b>2, 12</b> 추가</div>
+      </div>
+    </div>
+    <div class="step-item" id="st3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">3으로 나누어지나?</div>
+        <div class="step-desc">3 × 8 = 24 ✓ → <b>3, 8</b> 추가</div>
+      </div>
+    </div>
+    <div class="step-item" id="st4">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">4로 나누어지나?</div>
+        <div class="step-desc">4 × 6 = 24 ✓ → <b>4, 6</b> 추가 &nbsp;(√24 ≈ 4.9 → 4에서 끝!)</div>
+      </div>
+    </div>
+    <div class="step-item" id="st5">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">정리 — 작은 순서로</div>
+        <div class="step-desc" style="color:var(--green);font-weight:700">
+          1, 2, 3, 4, 6, 8, 12, 24 → 총 8개<br>
+          <span style="color:#374151;font-weight:400">검증: 짝 4쌍 × 2 = 8개 ✓</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-reveal" id="stepBtn3" onclick="revealStep3()">▶ 1단계 보기</button>
+
+  <div class="card card-amber" style="margin-top:.8rem">
+    <span class="tag tag-amber">5는 약수가 아닌 이유</span>
+    <p>5 × ? = 24 → 4.8 — 정수가 아님 → <span class="hl">5는 24의 약수 아님</span></p>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(2)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(4)">배수 배우기 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════ SCREEN 4: 배수 ════ -->
+<div class="screen" id="s4">
+<div class="wrap">
+  <span class="tag tag-blue">개념 2</span>
+  <h2 style="margin-top:.3rem">배수 — 몇 배씩 커지는 수</h2>
+
+  <div class="def-box">배수 = 어떤 수에 <span style="color:var(--green)">1, 2, 3, 4…</span>를 곱한 수</div>
+
+  <div class="card card-blue">
+    <span class="tag tag-blue">4의 배수</span>
+    <p>4×1=4 &nbsp; 4×2=8 &nbsp; 4×3=12 &nbsp; 4×4=16 …</p>
+    <div class="multiples">
+      <span class="mult-chip hi">4</span><span class="mult-chip hi">8</span>
+      <span class="mult-chip hi">12</span><span class="mult-chip hi">16</span>
+      <span class="mult-chip hi">20</span><span class="mult-chip">24</span>
+      <span class="mult-chip">28</span><span class="mult-chip">…∞</span>
+    </div>
+    <p class="muted">배수는 <b>무한히</b> 많습니다! (약수와 다른 점)</p>
+  </div>
+
+  <div class="card card-amber">
+    <span class="tag tag-amber">판단 방법</span>
+    <p>24는 4의 배수인가?</p>
+    <div class="eq-box" style="font-size:1rem">24 ÷ 4 = <span class="eq-ans">6</span> → 나누어 떨어짐 → <span class="eq-ans">배수 ✓</span></div>
+    <p>26은 4의 배수인가?</p>
+    <div class="eq-box" style="font-size:1rem">26 ÷ 4 = 6 … 나머지 <span class="eq-hi">2</span> → 배수 아님 ✗</div>
+  </div>
+
+  <div class="card">
+    <span class="tag tag-navy">약수 vs 배수 비교</span>
+    <table class="vs-table">
+      <tr><th></th><th>약수</th><th>배수</th></tr>
+      <tr><td><b>뜻</b></td><td>나누어 떨어지게 하는 수</td><td>몇 배 한 수</td></tr>
+      <tr><td><b>개수</b></td><td>유한 (끝 있음)</td><td>무한 (끝 없음)</td></tr>
+      <tr><td><b>예</b></td><td>12의 약수: 1,2,3,4,6,12</td><td>4의 배수: 4,8,12…</td></tr>
+      <tr><td colspan="3" style="text-align:center;color:var(--purple);font-weight:700;padding:.5rem">3은 12의 <span style="color:var(--blue)">약수</span> ↔ 12는 3의 <span style="color:var(--red)">배수</span></td></tr>
+    </table>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(3)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(5)">공약수·최대공약수 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════ SCREEN 5: 공약수 & 최대공약수 개념 ════ -->
+<div class="screen" id="s5">
+<div class="wrap">
+  <span class="tag tag-blue">개념 3</span>
+  <h2 style="margin-top:.3rem">공약수와 최대공약수</h2>
+
+  <div class="card card-blue">
+    <span class="tag tag-blue">12와 18의 약수 비교</span>
+    <div class="venn-row">
+      <div class="venn-a">
+        <b>12의 약수만</b><br>4
+      </div>
+      <div class="venn-mid">
+        <b style="color:var(--green)">공약수</b><br>1, 2, 3, 6
+      </div>
+      <div class="venn-b">
+        <b>18의 약수만</b><br>9, 18
+      </div>
+    </div>
+    <p class="muted" style="text-align:center">두 수 모두의 약수인 것 = <b>공약수</b></p>
+  </div>
+
+  <div class="def-box">최대공약수 = 공약수 중 <span style="color:var(--green)">가장 큰 수</span></div>
+
+  <div class="card card-green">
+    <span class="tag tag-green">12와 18의 최대공약수</span>
+    <p>공약수: 1, 2, 3, <b style="font-size:1.2rem;color:var(--green)">6</b></p>
+    <div class="eq-box" style="font-size:1.1rem">최대공약수 = <span class="eq-ans">6</span></div>
+  </div>
+
+  <div class="card card-amber">
+    <span class="tag tag-amber">⭐ 중요 성질</span>
+    <p><b>공약수는 최대공약수의 약수</b>입니다!</p>
+    <p>6의 약수: 1, 2, 3, 6</p>
+    <p>공약수: 1, 2, 3, 6 — 완전히 같다!</p>
+    <p class="muted">→ 최대공약수만 구하면 공약수를 모두 알 수 있다</p>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(4)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(6)">최대공약수 구하기 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════ SCREEN 6: 최대공약수 구하기 ════ -->
+<div class="screen" id="s6">
+<div class="wrap">
+  <span class="tag tag-blue">개념 3 심화</span>
+  <h2 style="margin-top:.3rem">최대공약수 — 공통 나누기법</h2>
+
+  <div class="card card-blue">
+    <span class="tag tag-blue">방법: 공통으로 나눌 수 있는 수로 나누기</span>
+    <p>GCF(24, 36) 구하기</p>
+    <div class="ladder">
+<span class="lad-div">2</span> ) 24 &nbsp; 36
+<span class="lad-div">2</span> ) 12 &nbsp; 18
+<span class="lad-div">3</span> )  6 &nbsp;&nbsp;  9
+  &nbsp; &nbsp; 2 &nbsp;&nbsp;  3  &larr; 더 이상 공통으로 못 나눔
+<span class="lad-ans">최대공약수 = 2 × 2 × 3 = 12</span></div>
+    <p class="muted">나눈 수(왼쪽)들을 모두 곱하면 최대공약수!</p>
+  </div>
+
+  <div class="card card-amber">
+    <span class="tag tag-amber">순서 정리</span>
+    <p>① 두 수를 <b>공통으로 나눌 수 있는 수</b>로 나눈다 (소수부터)</p>
+    <p>② 나눈 결과를 다시 공통으로 나눌 수 없을 때까지 반복</p>
+    <p>③ 왼쪽에 썼던 수를 <b>모두 곱하면</b> 최대공약수</p>
+  </div>
+
+  <div class="card">
+    <span class="tag tag-navy">또 다른 예) GCF(18, 30)</span>
+    <div class="ladder">
+<span class="lad-div">2</span> ) 18 &nbsp; 30
+<span class="lad-div">3</span> )  9 &nbsp; 15
+  &nbsp; &nbsp;  3 &nbsp;&nbsp;  5  &larr; 공통 약수 없음
+<span class="lad-ans">최대공약수 = 2 × 3 = 6</span></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(5)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(7)">공배수·최소공배수 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════ SCREEN 7: 공배수 & 최소공배수 개념 ════ -->
+<div class="screen" id="s7">
+<div class="wrap">
+  <span class="tag tag-red">개념 4</span>
+  <h2 style="margin-top:.3rem">공배수와 최소공배수</h2>
+
+  <div class="card card-blue">
+    <span class="tag tag-blue">4와 6의 배수 비교</span>
+    <p><b>4의 배수:</b></p>
+    <div class="multiples">
+      <span class="mult-chip">4</span><span class="mult-chip">8</span>
+      <span class="mult-chip hi">12</span><span class="mult-chip">16</span>
+      <span class="mult-chip">20</span><span class="mult-chip hi">24</span>
+      <span class="mult-chip">28</span><span class="mult-chip hi">36</span><span class="mult-chip">…</span>
+    </div>
+    <p><b>6의 배수:</b></p>
+    <div class="multiples">
+      <span class="mult-chip">6</span><span class="mult-chip hi">12</span>
+      <span class="mult-chip">18</span><span class="mult-chip hi">24</span>
+      <span class="mult-chip">30</span><span class="mult-chip hi">36</span><span class="mult-chip">…</span>
+    </div>
+    <p class="muted">주황색 = 두 수에 모두 나오는 수 = <b>공배수</b></p>
+  </div>
+
+  <div class="def-box">최소공배수 = 공배수 중 <span style="color:var(--green)">가장 작은 수</span></div>
+
+  <div class="card card-green">
+    <span class="tag tag-green">4와 6의 최소공배수</span>
+    <p>공배수: 12, 24, 36, 48…</p>
+    <div class="eq-box" style="font-size:1.1rem">최소공배수 = <span class="eq-ans">12</span></div>
+  </div>
+
+  <div class="card card-amber">
+    <span class="tag tag-amber">⭐ 중요 성질</span>
+    <p><b>공배수는 최소공배수의 배수</b>입니다!</p>
+    <p>12의 배수: 12, 24, 36, 48…</p>
+    <p>공배수: 12, 24, 36, 48… — 완전히 같다!</p>
+    <p class="muted">→ 최소공배수만 구하면 공배수를 모두 알 수 있다</p>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(6)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(8)">최소공배수 구하기 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════ SCREEN 8: 최소공배수 구하기 ════ -->
+<div class="screen" id="s8">
+<div class="wrap">
+  <span class="tag tag-red">개념 4 심화</span>
+  <h2 style="margin-top:.3rem">최소공배수 — 공통 나누기법</h2>
+
+  <div class="card card-blue">
+    <span class="tag tag-blue">LCM(8, 12) 구하기</span>
+    <div class="ladder">
+<span class="lad-div">2</span> ) 8 &nbsp;&nbsp; 12
+<span class="lad-div">2</span> ) 4 &nbsp;&nbsp;  6
+  &nbsp; &nbsp;  2 &nbsp;&nbsp;  3  &larr; 더 이상 공통으로 못 나눔
+<span class="lad-ans">최소공배수 = 2 × 2 × 2 × 3 = 24</span>
+<span class="lad-note">(나눈 수) × (남은 수 전부)</span></div>
+    <p class="muted">최대공약수와 달리 <b>남은 수(2, 3)도 곱해야</b> 합니다!</p>
+  </div>
+
+  <div class="card card-amber">
+    <span class="tag tag-amber">⚡ GCF vs LCM 차이점</span>
+    <table class="vs-table">
+      <tr><th></th><th>최대공약수 (GCF)</th><th>최소공배수 (LCM)</th></tr>
+      <tr><td><b>곱할 것</b></td><td>나눈 수만</td><td>나눈 수 + 남은 수 전부</td></tr>
+      <tr><td><b>예</b></td><td>2×2×3 = 12</td><td>2×2×2×3 = 24</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <span class="tag tag-navy">예) LCM(6, 10)</span>
+    <div class="ladder">
+<span class="lad-div">2</span> ) 6 &nbsp;&nbsp; 10
+  &nbsp; &nbsp;  3 &nbsp;&nbsp;  5
+<span class="lad-ans">최소공배수 = 2 × 3 × 5 = 30</span></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(7)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(9)">예제 풀기 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════ SCREEN 9: 예제 — 약수 구하기 ════ -->
+<div class="screen" id="s9">
+<div class="wrap">
+  <span class="tag tag-purple">예제 1 — 약수 구하기</span>
+  <h2 style="margin-top:.3rem">난이도를 선택하세요</h2>
+
+  <div class="diff-tabs">
+    <button class="diff-btn lv1 active" onclick="switchDiff(9,1)">🟢 하</button>
+    <button class="diff-btn lv2" onclick="switchDiff(9,2)">🟡 중</button>
+    <button class="diff-btn lv3" onclick="switchDiff(9,3)">🔴 상</button>
+  </div>
+
+  <!-- 하 -->
+  <div class="diff-prob active" id="prob9-1">
+    <div class="card card-blue">
+      <span class="tag tag-blue">문제 (하)</span>
+      <p style="font-size:1rem"><b>20</b>의 약수를 모두 구하시오.</p>
+    </div>
+    <div id="p9Ls1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 짝 찾기</div>
+      <p>1 × 20 = 20 ✓ &nbsp;→ <b>1, 20</b></p>
+      <p>2 × 10 = 20 ✓ &nbsp;→ <b>2, 10</b></p>
+      <p>(√20 ≈ 4.47 → 4까지 확인)</p>
+      <p>4 × 5 = 20 ✓ &nbsp;→ <b>4, 5</b></p>
+    </div>
+    <div id="p9Ls2" class="prob-step">
+      <div class="ps-label tag tag-amber">② 목록 정리</div>
+      <div class="eq-box">1, 2, 4, 5, 10, 20</div>
+    </div>
+    <div id="p9Ls3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 개수 확인</div>
+      <p>짝 3쌍 × 2 = <b>6개</b></p>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 1, 2, 4, 5, 10, 20 (6개)</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p9Lbtn" onclick="revealProbD('p9L',3)">▶ 풀이 보기</button>
+  </div>
+
+  <!-- 중 -->
+  <div class="diff-prob" id="prob9-2">
+    <div class="card card-amber">
+      <span class="tag tag-amber">문제 (중)</span>
+      <p style="font-size:1rem"><b>48</b>의 약수의 개수를 구하시오.</p>
+    </div>
+    <div id="p9Ms1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 짝 찾기 시작</div>
+      <p>1 × 48, 2 × 24 → <b>1, 2, 24, 48</b></p>
+      <p>3 × 16, 4 × 12 → <b>3, 4, 12, 16</b></p>
+    </div>
+    <div id="p9Ms2" class="prob-step">
+      <div class="ps-label tag tag-amber">② 계속</div>
+      <p>(√48 ≈ 6.9 → 6까지)</p>
+      <p>6 × 8 = 48 ✓ → <b>6, 8</b> 추가</p>
+      <p>5 × ? = 48 → 9.6 — 정수 아님, 없음</p>
+    </div>
+    <div id="p9Ms3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 정리</div>
+      <div class="eq-box" style="font-size:.95rem">1, 2, 3, 4, 6, 8, 12, 16, 24, 48</div>
+    </div>
+    <div id="p9Ms4" class="prob-step">
+      <div class="ps-label tag tag-green">④ 개수</div>
+      <p>짝 5쌍 × 2 = <b>10개</b></p>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 10개</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p9Mbtn" onclick="revealProbD('p9M',4)">▶ 풀이 보기</button>
+  </div>
+
+  <!-- 상 -->
+  <div class="diff-prob" id="prob9-3">
+    <div class="card card-red">
+      <span class="tag tag-red">문제 (상)</span>
+      <p style="font-size:1rem"><b>36</b>의 약수 중에서 <b>4의 배수</b>인 것을 모두 구하시오.</p>
+    </div>
+    <div id="p9Hs1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 36의 약수 구하기</div>
+      <p>1×36, 2×18, 3×12, 4×9, 6×6 (√36=6 → 6까지)</p>
+      <div class="eq-box" style="font-size:.9rem">1, 2, 3, 4, 6, 9, 12, 18, 36</div>
+    </div>
+    <div id="p9Hs2" class="prob-step">
+      <div class="ps-label tag tag-amber">② 4의 배수 필터링</div>
+      <p>4 ÷ 4 = 1 ✓ &nbsp; 12 ÷ 4 = 3 ✓ &nbsp; 36 ÷ 4 = 9 ✓</p>
+      <p>2 ÷ 4 = 0.5 ✗ &nbsp; 6 ÷ 4 = 1.5 ✗ &nbsp; 9 ÷ 4 = 2.25 ✗</p>
+    </div>
+    <div id="p9Hs3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 정리</div>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 4, 12, 36</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p9Hbtn" onclick="revealProbD('p9H',3)">▶ 풀이 보기</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(8)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(10)">예제 2 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════ SCREEN 10: 예제 — 최대공약수 ════ -->
+<div class="screen" id="s10">
+<div class="wrap">
+  <span class="tag tag-blue">예제 2 — 최대공약수</span>
+  <h2 style="margin-top:.3rem">난이도를 선택하세요</h2>
+
+  <div class="diff-tabs">
+    <button class="diff-btn lv1 active" onclick="switchDiff(10,1)">🟢 하</button>
+    <button class="diff-btn lv2" onclick="switchDiff(10,2)">🟡 중</button>
+    <button class="diff-btn lv3" onclick="switchDiff(10,3)">🔴 상</button>
+  </div>
+
+  <!-- 하 -->
+  <div class="diff-prob active" id="prob10-1">
+    <div class="card card-blue">
+      <span class="tag tag-blue">문제 (하)</span>
+      <p style="font-size:1rem"><b>12</b>와 <b>18</b>의 최대공약수를 구하시오.</p>
+    </div>
+    <div id="p10Ls1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 각각의 약수 나열</div>
+      <p>12의 약수: 1, 2, 3, 4, 6, 12</p>
+      <p>18의 약수: 1, 2, 3, 6, 9, 18</p>
+    </div>
+    <div id="p10Ls2" class="prob-step">
+      <div class="ps-label tag tag-amber">② 공약수 찾기</div>
+      <p>공통으로 들어있는 수: <b>1, 2, 3, 6</b></p>
+    </div>
+    <div id="p10Ls3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 최대공약수</div>
+      <div class="eq-box">최대공약수 = <span class="eq-ans">6</span></div>
+    </div>
+    <div id="p10Ls4" class="prob-step">
+      <div class="ps-label tag tag-green">④ 검증</div>
+      <p>12 ÷ 6 = 2 ✓ &nbsp; 18 ÷ 6 = 3 ✓</p>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 6</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p10Lbtn" onclick="revealProbD('p10L',4)">▶ 풀이 보기</button>
+  </div>
+
+  <!-- 중 -->
+  <div class="diff-prob" id="prob10-2">
+    <div class="card card-amber">
+      <span class="tag tag-amber">문제 (중)</span>
+      <p style="font-size:1rem"><b>36</b>과 <b>48</b>의 최대공약수를 공통 나누기법으로 구하시오.</p>
+    </div>
+    <div id="p10Ms1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 공통으로 나누기 시작</div>
+      <div class="ladder" style="font-size:.9rem"><span class="lad-div">2</span> ) 36 &nbsp; 48</div>
+      <p>36과 48 모두 2로 나누어 떨어짐</p>
+    </div>
+    <div id="p10Ms2" class="prob-step">
+      <div class="ps-label tag tag-amber">② 계속 나누기</div>
+      <div class="ladder" style="font-size:.9rem"><span class="lad-div">2</span> ) 36 &nbsp; 48
+<span class="lad-div">2</span> ) 18 &nbsp; 24
+<span class="lad-div">3</span> )  9 &nbsp; 12</div>
+    </div>
+    <div id="p10Ms3" class="prob-step">
+      <div class="ps-label tag tag-amber">③ 더 이상 공통으로 못 나눔</div>
+      <div class="ladder" style="font-size:.9rem"><span class="lad-div">2</span> ) 36 &nbsp; 48
+<span class="lad-div">2</span> ) 18 &nbsp; 24
+<span class="lad-div">3</span> )  9 &nbsp; 12
+  &nbsp; &nbsp;  3 &nbsp;&nbsp;  4  ← GCD(3,4)=1 → 끝</div>
+    </div>
+    <div id="p10Ms4" class="prob-step">
+      <div class="ps-label tag tag-green">④ 결과</div>
+      <div class="eq-box">2 × 2 × 3 = <span class="eq-ans">12</span></div>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 12</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p10Mbtn" onclick="revealProbD('p10M',4)">▶ 풀이 보기</button>
+  </div>
+
+  <!-- 상 -->
+  <div class="diff-prob" id="prob10-3">
+    <div class="card card-red">
+      <span class="tag tag-red">문제 (상)</span>
+      <p style="font-size:1rem">세 수 <b>30, 42, 54</b>의 최대공약수를 구하시오.</p>
+    </div>
+    <div id="p10Hs1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 세 수 동시에 나누기</div>
+      <div class="ladder" style="font-size:.9rem"><span class="lad-div">2</span> ) 30 &nbsp; 42 &nbsp; 54
+  &nbsp; &nbsp; 15 &nbsp; 21 &nbsp; 27</div>
+      <p>30÷2=15, 42÷2=21, 54÷2=27</p>
+    </div>
+    <div id="p10Hs2" class="prob-step">
+      <div class="ps-label tag tag-amber">② 계속</div>
+      <div class="ladder" style="font-size:.9rem"><span class="lad-div">2</span> ) 30 &nbsp; 42 &nbsp; 54
+<span class="lad-div">3</span> ) 15 &nbsp; 21 &nbsp; 27
+  &nbsp; &nbsp;  5 &nbsp;&nbsp;  7 &nbsp;&nbsp;  9  ← 공통 약수 없음</div>
+      <p>5, 7, 9는 공통으로 나눌 수 있는 수가 없음</p>
+    </div>
+    <div id="p10Hs3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 결과 + 검증</div>
+      <div class="eq-box">2 × 3 = <span class="eq-ans">6</span></div>
+      <p>30÷6=5 ✓ &nbsp; 42÷6=7 ✓ &nbsp; 54÷6=9 ✓</p>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 6</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p10Hbtn" onclick="revealProbD('p10H',3)">▶ 풀이 보기</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(9)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(11)">예제 3 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════ SCREEN 11: 예제 — 최소공배수 ════ -->
+<div class="screen" id="s11">
+<div class="wrap">
+  <span class="tag tag-red">예제 3 — 최소공배수</span>
+  <h2 style="margin-top:.3rem">난이도를 선택하세요</h2>
+
+  <div class="diff-tabs">
+    <button class="diff-btn lv1 active" onclick="switchDiff(11,1)">🟢 하</button>
+    <button class="diff-btn lv2" onclick="switchDiff(11,2)">🟡 중</button>
+    <button class="diff-btn lv3" onclick="switchDiff(11,3)">🔴 상</button>
+  </div>
+
+  <!-- 하 -->
+  <div class="diff-prob active" id="prob11-1">
+    <div class="card card-blue">
+      <span class="tag tag-blue">문제 (하)</span>
+      <p style="font-size:1rem"><b>4</b>와 <b>6</b>의 최소공배수를 구하시오.</p>
+    </div>
+    <div id="p11Ls1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 배수 나열</div>
+      <p>4의 배수: 4, 8, <b style="color:var(--amber)">12</b>, 16, 20, <b style="color:var(--amber)">24</b>…</p>
+      <p>6의 배수: 6, <b style="color:var(--amber)">12</b>, 18, <b style="color:var(--amber)">24</b>…</p>
+    </div>
+    <div id="p11Ls2" class="prob-step">
+      <div class="ps-label tag tag-amber">② 공배수 확인</div>
+      <p>공배수: 12, 24, 36…</p>
+      <p>이 중 가장 작은 수 = 최소공배수</p>
+    </div>
+    <div id="p11Ls3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 결과</div>
+      <div class="eq-box">최소공배수 = <span class="eq-ans">12</span></div>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 12</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p11Lbtn" onclick="revealProbD('p11L',3)">▶ 풀이 보기</button>
+  </div>
+
+  <!-- 중 -->
+  <div class="diff-prob" id="prob11-2">
+    <div class="card card-amber">
+      <span class="tag tag-amber">문제 (중)</span>
+      <p style="font-size:1rem"><b>9</b>와 <b>12</b>의 최소공배수를 공통 나누기법으로 구하시오.</p>
+    </div>
+    <div id="p11Ms1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 공통 나누기</div>
+      <div class="ladder" style="font-size:.9rem"><span class="lad-div">3</span> ) 9 &nbsp;&nbsp; 12
+  &nbsp; &nbsp;  3 &nbsp;&nbsp;  4  ← GCD(3,4)=1 → 끝</div>
+    </div>
+    <div id="p11Ms2" class="prob-step">
+      <div class="ps-label tag tag-amber">② LCM 계산</div>
+      <p>나눈 수: <b>3</b> &nbsp;|&nbsp; 남은 수: <b>3, 4</b></p>
+      <div class="eq-box">3 × 3 × 4 = <span class="eq-ans">36</span></div>
+    </div>
+    <div id="p11Ms3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 검증</div>
+      <p>36 ÷ 9 = 4 ✓ &nbsp; 36 ÷ 12 = 3 ✓</p>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 36</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p11Mbtn" onclick="revealProbD('p11M',3)">▶ 풀이 보기</button>
+  </div>
+
+  <!-- 상 -->
+  <div class="diff-prob" id="prob11-3">
+    <div class="card card-red">
+      <span class="tag tag-red">문제 (상)</span>
+      <p style="font-size:1rem">세 수 <b>4, 6, 10</b>의 최소공배수를 구하시오.</p>
+    </div>
+    <div id="p11Hs1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 세 수 나누기</div>
+      <div class="ladder" style="font-size:.9rem"><span class="lad-div">2</span> ) 4 &nbsp;&nbsp; 6 &nbsp;&nbsp; 10
+  &nbsp; &nbsp;  2 &nbsp;&nbsp;  3 &nbsp;&nbsp;  5  ← 공통 약수 없음 → 끝</div>
+    </div>
+    <div id="p11Hs2" class="prob-step">
+      <div class="ps-label tag tag-amber">② LCM 계산</div>
+      <p>나눈 수: <b>2</b> &nbsp;|&nbsp; 남은 수: <b>2, 3, 5</b></p>
+      <div class="eq-box">2 × 2 × 3 × 5 = <span class="eq-ans">60</span></div>
+    </div>
+    <div id="p11Hs3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 검증</div>
+      <p>60 ÷ 4 = 15 ✓ &nbsp; 60 ÷ 6 = 10 ✓ &nbsp; 60 ÷ 10 = 6 ✓</p>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 60</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p11Hbtn" onclick="revealProbD('p11H',3)">▶ 풀이 보기</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(10)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(12)">실생활 문제 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════ SCREEN 12: 실생활 — 최대공약수 ════ -->
+<div class="screen" id="s12">
+<div class="wrap">
+  <span class="tag tag-blue">예제 4 — 최대공약수 실생활</span>
+  <h2 style="margin-top:.3rem">"최대한 많이 / 가장 크게"</h2>
+  <p class="muted" style="margin-bottom:.5rem">최대공약수 → 최대한 많은 사람, 가장 큰 크기</p>
+
+  <div class="diff-tabs">
+    <button class="diff-btn lv1 active" onclick="switchDiff(12,1)">🟢 하</button>
+    <button class="diff-btn lv2" onclick="switchDiff(12,2)">🟡 중</button>
+    <button class="diff-btn lv3" onclick="switchDiff(12,3)">🔴 상</button>
+  </div>
+
+  <!-- 하 -->
+  <div class="diff-prob active" id="prob12-1">
+    <div class="card card-blue">
+      <span class="tag tag-blue">문제 (하)</span>
+      <p style="font-size:1rem">사탕 <b>24</b>개, 과자 <b>36</b>개를 최대한 많은 학생에게 똑같이 나눠줄 때, 몇 명에게 줄 수 있나요?</p>
+    </div>
+    <div id="p12Ls1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 핵심 파악</div>
+      <p>"최대한 많은 학생" → <span class="hl">최대공약수(GCF)</span> 구하기</p>
+      <p>학생 수 = GCF(24, 36)</p>
+    </div>
+    <div id="p12Ls2" class="prob-step">
+      <div class="ps-label tag tag-amber">② GCF 계산</div>
+      <div class="ladder" style="font-size:.9rem"><span class="lad-div">2</span> ) 24 &nbsp; 36
+<span class="lad-div">2</span> ) 12 &nbsp; 18
+<span class="lad-div">3</span> )  6 &nbsp;&nbsp;  9
+  &nbsp; &nbsp;  2 &nbsp;&nbsp;  3
+<span class="lad-ans">GCF = 2×2×3 = 12</span></div>
+    </div>
+    <div id="p12Ls3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 답 + 검증</div>
+      <p><b>12명</b>에게 나눠줄 수 있음</p>
+      <p>사탕: 24 ÷ 12 = 2개씩 &nbsp; 과자: 36 ÷ 12 = 3개씩</p>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 12명</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p12Lbtn" onclick="revealProbD('p12L',3)">▶ 풀이 보기</button>
+  </div>
+
+  <!-- 중 -->
+  <div class="diff-prob" id="prob12-2">
+    <div class="card card-amber">
+      <span class="tag tag-amber">문제 (중)</span>
+      <p style="font-size:1rem">가로 <b>48 cm</b>, 세로 <b>36 cm</b>인 직사각형 바닥을 정사각형 타일로 빈틈없이 채울 때, 타일의 최대 크기를 구하고 필요한 타일 수도 구하시오.</p>
+    </div>
+    <div id="p12Ms1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 핵심 파악</div>
+      <p>"가장 큰 타일" → 타일 한 변 = <span class="hl">GCF(48, 36)</span></p>
+    </div>
+    <div id="p12Ms2" class="prob-step">
+      <div class="ps-label tag tag-amber">② GCF 계산</div>
+      <div class="ladder" style="font-size:.9rem"><span class="lad-div">2</span> ) 48 &nbsp; 36
+<span class="lad-div">2</span> ) 24 &nbsp; 18
+<span class="lad-div">3</span> ) 12 &nbsp;&nbsp;  9
+  &nbsp; &nbsp;  4 &nbsp;&nbsp;  3
+<span class="lad-ans">GCF = 2×2×3 = 12 cm</span></div>
+    </div>
+    <div id="p12Ms3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 타일 수</div>
+      <p>가로: 48 ÷ 12 = 4장 &nbsp; 세로: 36 ÷ 12 = 3장</p>
+      <p>총 타일 수: 4 × 3 = <b>12개</b></p>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>타일 크기: 12 cm, 타일 수: 12개</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p12Mbtn" onclick="revealProbD('p12M',3)">▶ 풀이 보기</button>
+  </div>
+
+  <!-- 상 -->
+  <div class="diff-prob" id="prob12-3">
+    <div class="card card-red">
+      <span class="tag tag-red">문제 (상)</span>
+      <p style="font-size:1rem">리본 <b>60 cm, 84 cm, 120 cm</b>을 모두 같은 길이로 자를 때, 가장 긴 길이와 총 조각 수를 구하시오.</p>
+    </div>
+    <div id="p12Hs1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 핵심 파악</div>
+      <p>"세 리본 모두 같은 길이 + 가장 길게" → <span class="hl">GCF(60, 84, 120)</span></p>
+    </div>
+    <div id="p12Hs2" class="prob-step">
+      <div class="ps-label tag tag-amber">② GCF 계산</div>
+      <div class="ladder" style="font-size:.9rem"><span class="lad-div">2</span> ) 60 &nbsp; 84 &nbsp; 120
+<span class="lad-div">2</span> ) 30 &nbsp; 42 &nbsp;&nbsp; 60
+<span class="lad-div">3</span> ) 15 &nbsp; 21 &nbsp;&nbsp; 30
+  &nbsp; &nbsp;  5 &nbsp;&nbsp;  7 &nbsp;&nbsp; 10
+<span class="lad-ans">GCF = 2×2×3 = 12 cm</span></div>
+    </div>
+    <div id="p12Hs3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 조각 수</div>
+      <p>60 ÷ 12 = 5조각 &nbsp; 84 ÷ 12 = 7조각 &nbsp; 120 ÷ 12 = 10조각</p>
+      <p>총 조각 수: 5 + 7 + 10 = <b>22조각</b></p>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>최대 길이: 12 cm, 총 조각: 22개</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p12Hbtn" onclick="revealProbD('p12H',3)">▶ 풀이 보기</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(11)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(13)">최소공배수 실생활 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════ SCREEN 13: 실생활 — 최소공배수 ════ -->
+<div class="screen" id="s13">
+<div class="wrap">
+  <span class="tag tag-red">예제 5 — 최소공배수 실생활</span>
+  <h2 style="margin-top:.3rem">"다시 만나는 / 동시에 일어나는"</h2>
+  <p class="muted" style="margin-bottom:.5rem">최소공배수 → 주기가 다시 겹치는 시간</p>
+
+  <div class="diff-tabs">
+    <button class="diff-btn lv1 active" onclick="switchDiff(13,1)">🟢 하</button>
+    <button class="diff-btn lv2" onclick="switchDiff(13,2)">🟡 중</button>
+    <button class="diff-btn lv3" onclick="switchDiff(13,3)">🔴 상</button>
+  </div>
+
+  <!-- 하 -->
+  <div class="diff-prob active" id="prob13-1">
+    <div class="card card-blue">
+      <span class="tag tag-blue">문제 (하)</span>
+      <p style="font-size:1rem">빨간 등은 <b>4분</b>마다, 파란 등은 <b>6분</b>마다 켜집니다. 동시에 켜진 후 다음에 동시에 켜지는 것은 몇 분 후인가요?</p>
+    </div>
+    <div id="p13Ls1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 핵심 파악</div>
+      <p>"다시 동시에 켜짐" → <span class="hl">LCM(4, 6)</span></p>
+    </div>
+    <div id="p13Ls2" class="prob-step">
+      <div class="ps-label tag tag-amber">② LCM 계산</div>
+      <div class="ladder" style="font-size:.9rem"><span class="lad-div">2</span> ) 4 &nbsp;&nbsp;  6
+  &nbsp; &nbsp;  2 &nbsp;&nbsp;  3
+<span class="lad-ans">LCM = 2 × 2 × 3 = 12분</span></div>
+    </div>
+    <div id="p13Ls3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 검증</div>
+      <p>12분 후: 빨간 12÷4=3번째 ✓ &nbsp; 파란 12÷6=2번째 ✓</p>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 12분 후</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p13Lbtn" onclick="revealProbD('p13L',3)">▶ 풀이 보기</button>
+  </div>
+
+  <!-- 중 -->
+  <div class="diff-prob" id="prob13-2">
+    <div class="card card-amber">
+      <span class="tag tag-amber">문제 (중)</span>
+      <p style="font-size:1rem">A 버스는 <b>6분</b>마다, B 버스는 <b>10분</b>마다 출발합니다. 오전 <b>8시 정각</b>에 두 버스가 동시에 출발했다면, 다음에 동시 출발하는 시각은?</p>
+    </div>
+    <div id="p13Ms1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 핵심 파악</div>
+      <p>"다시 동시 출발" → <span class="hl">LCM(6, 10)</span></p>
+    </div>
+    <div id="p13Ms2" class="prob-step">
+      <div class="ps-label tag tag-amber">② LCM 계산</div>
+      <div class="ladder" style="font-size:.9rem"><span class="lad-div">2</span> ) 6 &nbsp;&nbsp; 10
+  &nbsp; &nbsp;  3 &nbsp;&nbsp;  5
+<span class="lad-ans">LCM = 2 × 3 × 5 = 30분</span></div>
+    </div>
+    <div id="p13Ms3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 시각 계산</div>
+      <p>8시 + 30분 = <b>8시 30분</b></p>
+    </div>
+    <div id="p13Ms4" class="prob-step">
+      <div class="ps-label tag tag-green">④ 검증</div>
+      <p>30 ÷ 6 = 5 (A 5번째) ✓ &nbsp; 30 ÷ 10 = 3 (B 3번째) ✓</p>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 오전 8시 30분</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p13Mbtn" onclick="revealProbD('p13M',4)">▶ 풀이 보기</button>
+  </div>
+
+  <!-- 상 -->
+  <div class="diff-prob" id="prob13-3">
+    <div class="card card-red">
+      <span class="tag tag-red">문제 (상)</span>
+      <p style="font-size:1rem">두 수도관 A는 <b>3분</b>마다, B는 <b>7분</b>마다 물을 가득 채웁니다. 동시에 시작할 때 <b>10번째</b>로 동시에 채우는 것은 몇 분 후인가요?</p>
+    </div>
+    <div id="p13Hs1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 1번째 동시 시간</div>
+      <p>3과 7은 서로소 → LCM = 3 × 7 = <b>21분</b></p>
+    </div>
+    <div id="p13Hs2" class="prob-step">
+      <div class="ps-label tag tag-amber">② 패턴 파악</div>
+      <p>공배수 = 최소공배수의 배수</p>
+      <p>21분, 42분, 63분… → <b>매 21분마다</b> 동시</p>
+    </div>
+    <div id="p13Hs3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 10번째 계산</div>
+      <div class="eq-box">21 × 10 = <span class="eq-ans">210분</span></div>
+    </div>
+    <div id="p13Hs4" class="prob-step">
+      <div class="ps-label tag tag-green">④ 단위 변환</div>
+      <p>210분 = 3시간 30분</p>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 210분 (3시간 30분) 후</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p13Hbtn" onclick="revealProbD('p13H',4)">▶ 풀이 보기</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(12)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(14)">🔥 심화 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════ SCREEN 14: 심화 — GCF×LCM 관계 ════ -->
+<div class="screen" id="s14">
+<div class="wrap">
+  <span class="tag tag-red">예제 6 — 심화</span>
+  <h2 style="margin-top:.3rem">최대공약수 × 최소공배수 관계</h2>
+
+  <div class="card card-amber">
+    <span class="tag tag-amber">⭐ 핵심 공식</span>
+    <div class="eq-box">두 수의 곱 = GCF × LCM</div>
+    <p>예) 8과 12: GCF=4, LCM=24</p>
+    <p>8 × 12 = 96 &nbsp;&nbsp; 4 × 24 = 96 → <b>같다!</b></p>
+  </div>
+
+  <div class="diff-tabs">
+    <button class="diff-btn lv1 active" onclick="switchDiff(14,1)">🟢 하</button>
+    <button class="diff-btn lv2" onclick="switchDiff(14,2)">🟡 중</button>
+    <button class="diff-btn lv3" onclick="switchDiff(14,3)">🔴 상</button>
+  </div>
+
+  <!-- 하 -->
+  <div class="diff-prob active" id="prob14-1">
+    <div class="card card-blue">
+      <span class="tag tag-blue">문제 (하)</span>
+      <p style="font-size:1rem">두 수의 최대공약수가 <b>3</b>, 최소공배수가 <b>45</b>일 때, 두 수의 곱을 구하시오.</p>
+    </div>
+    <div id="p14Ls1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 공식 적용</div>
+      <div class="eq-box">두 수의 곱 = GCF × LCM = 3 × 45</div>
+    </div>
+    <div id="p14Ls2" class="prob-step">
+      <div class="ps-label tag tag-green">② 계산</div>
+      <div class="eq-box">3 × 45 = <span class="eq-ans">135</span></div>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 135</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p14Lbtn" onclick="revealProbD('p14L',2)">▶ 풀이 보기</button>
+  </div>
+
+  <!-- 중 -->
+  <div class="diff-prob" id="prob14-2">
+    <div class="card card-amber">
+      <span class="tag tag-amber">문제 (중)</span>
+      <p style="font-size:1rem">두 수의 최대공약수가 <b>4</b>, 최소공배수가 <b>24</b>일 때, 두 수를 모두 구하시오. (단, 두 수는 모두 4보다 크다)</p>
+    </div>
+    <div id="p14Ms1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 두 수 표현</div>
+      <p>GCF=4이므로 두 수를 <b>4a</b>, <b>4b</b>로 놓자 (a, b는 서로소, a&gt;b&gt;1)</p>
+    </div>
+    <div id="p14Ms2" class="prob-step">
+      <div class="ps-label tag tag-amber">② LCM 관계</div>
+      <p>LCM = 4 × a × b = 24 → <b>a × b = 6</b></p>
+      <p>서로소이고 곱이 6인 쌍: (2, 3)</p>
+    </div>
+    <div id="p14Ms3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 두 수 계산</div>
+      <p>a=2, b=3 → 두 수: 4×2=<b>8</b>, 4×3=<b>12</b></p>
+    </div>
+    <div id="p14Ms4" class="prob-step">
+      <div class="ps-label tag tag-green">④ 검증</div>
+      <p>GCF(8, 12) = 4 ✓ &nbsp; LCM(8, 12) = 24 ✓</p>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 8과 12</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p14Mbtn" onclick="revealProbD('p14M',4)">▶ 풀이 보기</button>
+  </div>
+
+  <!-- 상 -->
+  <div class="diff-prob" id="prob14-3">
+    <div class="card card-red">
+      <span class="tag tag-red">문제 (상)</span>
+      <p style="font-size:1rem">두 수의 최대공약수가 <b>6</b>, 최소공배수가 <b>72</b>이고, 한 수가 <b>18</b>일 때 다른 수를 구하시오.</p>
+    </div>
+    <div id="p14Hs1" class="prob-step">
+      <div class="ps-label tag tag-blue">① 공식 적용</div>
+      <p>다른 수를 x라 하면:</p>
+      <div class="eq-box">18 × x = 6 × 72</div>
+    </div>
+    <div id="p14Hs2" class="prob-step">
+      <div class="ps-label tag tag-amber">② 계산</div>
+      <p>18x = 432</p>
+      <div class="eq-box">x = 432 ÷ 18 = <span class="eq-ans">24</span></div>
+    </div>
+    <div id="p14Hs3" class="prob-step">
+      <div class="ps-label tag tag-green">③ 검증</div>
+      <p>GCF(18, 24) = 6 ✓ &nbsp; LCM(18, 24) = 72 ✓</p>
+      <div class="card card-green" style="text-align:center;padding:.6rem"><b>정답: 24</b></div>
+    </div>
+    <button class="btn btn-reveal" id="p14Hbtn" onclick="revealProbD('p14H',3)">▶ 풀이 보기</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(13)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(15)">핵심 정리 →</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ════ SCREEN 15: 핵심 정리 ════ -->
+<div class="screen" id="s15">
+<div class="wrap">
+  <div class="card card-navy" style="text-align:center;padding:1.8rem">
+    <div style="font-size:2.5rem;margin-bottom:.6rem">🏆</div>
+    <div style="font-size:1.3rem;font-weight:800;color:#fff;line-height:1.6">
+      약수와 배수의 핵심은<br>
+      <span style="color:#86efac">"나누어 떨어지는 관계"</span>를<br>
+      <span style="color:#fde68a">실생활에 적용하는 것!</span>
+    </div>
+  </div>
+
+  <div class="card card-blue">
+    <h3>📋 개념 정리</h3>
+    <table class="final-table">
+      <tr><th>개념</th><th>정의</th><th>특징</th></tr>
+      <tr><td><b>약수</b></td><td>나누어 떨어지게 하는 수</td><td>개수 유한, 곱셈 짝으로 찾기</td></tr>
+      <tr><td><b>배수</b></td><td>몇 배 한 수</td><td>개수 무한, 나누어 떨어지면 배수</td></tr>
+      <tr><td><b>공약수</b></td><td>두 수 공통 약수</td><td>= 최대공약수의 약수</td></tr>
+      <tr><td><b>GCF</b></td><td>공약수 중 최대</td><td>공통 나누기법: 나눈 수 곱</td></tr>
+      <tr><td><b>공배수</b></td><td>두 수 공통 배수</td><td>= 최소공배수의 배수</td></tr>
+      <tr><td><b>LCM</b></td><td>공배수 중 최소</td><td>공통 나누기법: 나눈 수 × 남은 수</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-amber">
+    <h3>🎯 실생활 판단 공식</h3>
+    <table class="final-table">
+      <tr><th>문제 키워드</th><th>사용할 것</th></tr>
+      <tr><td>최대한 많이 나누기, 가장 큰 크기</td><td><b>최대공약수</b></td></tr>
+      <tr><td>다시 만남, 동시에 일어남, 주기</td><td><b>최소공배수</b></td></tr>
+    </table>
+  </div>
+
+  <div class="card card-green">
+    <h3>💡 심화 공식</h3>
+    <div class="eq-box">두 수의 곱 = GCF × LCM</div>
+    <p class="muted" style="text-align:center">한 수를 알 때 다른 수를 구할 수 있다!</p>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-prev" onclick="goTo(14)">← 이전</button>
+    <button class="btn btn-next" onclick="goTo(1)">처음부터 🔄</button>
+  </div>
+</div>
+</div>
+
+
+<script>
+const TOTAL = 15;
+let stepIdx3 = 0;
+const probIdx = {};
+
+// ── init dots ──
+(function(){
+  const bar = document.getElementById('prog');
+  for(let i = 1; i <= TOTAL; i++){
+    const d = document.createElement('div');
+    d.className = 'prog-dot';
+    d.onclick = () => goTo(i);
+    d.id = 'dot' + i;
+    bar.appendChild(d);
+  }
+  updateDots(1);
+})();
+
+function updateDots(n){
+  for(let i = 1; i <= TOTAL; i++){
+    const d = document.getElementById('dot' + i);
+    d.className = 'prog-dot' + (i === n ? ' on' : i < n ? ' done' : '');
+  }
+}
+
+function goTo(n){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById('s' + n);
+  if(!target) return;
+  target.classList.add('active');
+  updateDots(n);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  // Reset diff tabs to 하 when entering problem screens
+  if(n >= 9 && n <= 14) switchDiff(n, 1);
+}
+
+// ── s1: apple reveal ──
+function revealApple(){
+  [1,2,3,4,6].forEach(n => {
+    const c = document.getElementById('cell' + n);
+    if(c) c.classList.add('ok');
+  });
+  [5,7,8].forEach(n => {
+    const c = document.getElementById('cell' + n);
+    if(c) c.classList.add('ng');
+  });
+  document.getElementById('appleResult').style.display = 'block';
+  const btn = document.getElementById('appleBtn');
+  btn.textContent = '✅ 확인 완료!';
+  btn.disabled = true;
+}
+
+// ── s3: step reveal ──
+function revealStep3(){
+  stepIdx3++;
+  const st = document.getElementById('st' + stepIdx3);
+  if(st) st.classList.add('on');
+  const btn = document.getElementById('stepBtn3');
+  if(stepIdx3 >= 5){
+    btn.textContent = '✅ 24의 약수 완성!';
+    btn.disabled = true;
+  } else {
+    btn.textContent = '▶ ' + (stepIdx3 + 1) + '단계 보기';
+  }
+}
+
+// ── difficulty tabs ──
+function switchDiff(screenNum, level){
+  const screen = document.getElementById('s' + screenNum);
+  screen.querySelectorAll('.diff-prob').forEach(p => {
+    p.style.display = 'none';
+    p.classList.remove('active');
+  });
+  screen.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+  const prob = document.getElementById('prob' + screenNum + '-' + level);
+  if(prob){ prob.style.display = 'block'; prob.classList.add('active'); }
+  const btns = screen.querySelectorAll('.diff-btn');
+  if(btns[level - 1]) btns[level - 1].classList.add('active');
+}
+
+// ── problem step reveal ──
+function revealProbD(id, total){
+  if(!probIdx[id]) probIdx[id] = 0;
+  probIdx[id]++;
+  const step = document.getElementById(id + 's' + probIdx[id]);
+  if(step) step.classList.add('show');
+  const btn = document.getElementById(id + 'btn');
+  if(!btn) return;
+  if(probIdx[id] >= total){
+    btn.textContent = '✅ 풀이 완료!';
+    btn.disabled = true;
+  } else {
+    btn.textContent = '▶ ' + (probIdx[id] + 1) + '단계 보기';
+  }
+}
+</script>
+</body>
+</html>
