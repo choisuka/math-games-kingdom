@@ -200,10 +200,15 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
   </div>
 
   <div class="card card-amber">
-    <span class="tag tag-amber">언제 멈추나? — √ 규칙</span>
-    <p>짝을 찾다가 두 수가 <b>같아지거나 역전될 때</b> 멈춥니다.</p>
-    <div class="eq-box" style="font-size:1rem">√12 ≈ 3.46 → <span class="eq-ans">3 이하</span>까지만 확인하면 OK!</div>
-    <p class="muted">4 이상은 이미 짝으로 나왔으니 중복이에요</p>
+    <span class="tag tag-amber">언제 멈추나? — 역전 신호 규칙</span>
+    <p>짝을 찾다가 <b>앞 숫자가 뒤 숫자보다 커지면</b> 이미 나온 짝이 반복되기 시작해요 → <b>멈춤!</b></p>
+    <div style="margin:.5rem 0;font-size:.9rem">
+      <div style="padding:.3rem .6rem;margin:.2rem 0;background:#dbeafe;border-radius:.4rem">1 × 12 &nbsp;→&nbsp; 1 &lt; 12 &nbsp;✅ 계속</div>
+      <div style="padding:.3rem .6rem;margin:.2rem 0;background:#dbeafe;border-radius:.4rem">2 × &nbsp;6 &nbsp;→&nbsp; 2 &lt; &nbsp;6 &nbsp;✅ 계속</div>
+      <div style="padding:.3rem .6rem;margin:.2rem 0;background:#dbeafe;border-radius:.4rem">3 × &nbsp;4 &nbsp;→&nbsp; 3 &lt; &nbsp;4 &nbsp;✅ 계속</div>
+      <div style="padding:.3rem .6rem;margin:.2rem 0;background:#fee2e2;border-radius:.4rem;color:#991b1b;font-weight:700">4 × &nbsp;3 &nbsp;→&nbsp; 4 &gt; &nbsp;3 &nbsp;🛑 역전! 멈춤</div>
+    </div>
+    <p class="muted">4와 3은 이미 "3×4"에서 나온 짝 — 중복이에요</p>
   </div>
 
   <div class="card">
@@ -214,7 +219,7 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
       <div class="pair">3 × 6</div>
     </div>
     <div class="eq-box" style="font-size:1rem">18의 약수: <span class="eq-ans">1, 2, 3, 6, 9, 18</span> (6개)</div>
-    <p class="muted">√18 ≈ 4.2 → 4까지 확인. 4×?=18이면 4.5 → 정수 아님 → 없음</p>
+    <p class="muted">4 확인 → 4×?=18, ?=4.5 (정수 아님, 약수 아님). 5×4=20&gt;18 → 역전! → 여기서 끝!</p>
   </div>
 
   <div class="btn-row">
@@ -257,7 +262,7 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
       <div class="step-num">4</div>
       <div class="step-body">
         <div class="step-title">4로 나누어지나?</div>
-        <div class="step-desc">4 × 6 = 24 ✓ → <b>4, 6</b> 추가 &nbsp;(√24 ≈ 4.9 → 4에서 끝!)</div>
+        <div class="step-desc">4 × 6 = 24 ✓ → <b>4, 6</b> 추가 &nbsp;(5×5=25 &gt; 24 → 역전 신호! → 4에서 끝!)</div>
       </div>
     </div>
     <div class="step-item" id="st5">
@@ -397,6 +402,19 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
     <p class="muted">나눈 수(왼쪽)들을 모두 곱하면 최대공약수!</p>
   </div>
 
+  <div class="card card-purple">
+    <span class="tag tag-purple">💡 왜 나눈 수를 곱하면 최대공약수가 될까?</span>
+    <p style="font-size:.92rem">공통으로 나누는 수는 <b>두 수 모두가 가진 공통 인수</b>예요.</p>
+    <div style="background:#faf5ff;border-radius:.6rem;padding:.7rem;margin:.5rem 0;font-size:.88rem;text-align:center">
+      <div>24 = <b style="color:var(--red)">2</b> × <b style="color:var(--red)">2</b> × <b style="color:var(--red)">3</b> × <b style="color:var(--blue)">2</b></div>
+      <div>36 = <b style="color:var(--red)">2</b> × <b style="color:var(--red)">2</b> × <b style="color:var(--red)">3</b> × <b style="color:var(--green)">3</b></div>
+      <div style="margin-top:.4rem;padding-top:.4rem;border-top:2px dashed var(--purple)">
+        공통 인수: <b style="color:var(--red)">2 × 2 × 3</b> = <b style="font-size:1.1rem">12</b> ✓
+      </div>
+    </div>
+    <p class="muted">빨간색 = 두 수 모두 가진 부분 → 이것을 곱한 게 최대공약수!</p>
+  </div>
+
   <div class="card card-amber">
     <span class="tag tag-amber">순서 정리</span>
     <p>① 두 수를 <b>공통으로 나눌 수 있는 수</b>로 나눈다 (소수부터)</p>
@@ -486,6 +504,19 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
     <p class="muted">최대공약수와 달리 <b>남은 수(2, 3)도 곱해야</b> 합니다!</p>
   </div>
 
+  <div class="card card-purple">
+    <span class="tag tag-purple">💡 왜 남은 수(2와 3)도 곱해야 할까?</span>
+    <p style="font-size:.92rem">최소공배수는 <b>8의 배수이면서 동시에 12의 배수</b>여야 해요.</p>
+    <div style="background:#faf5ff;border-radius:.6rem;padding:.7rem;margin:.5rem 0;font-size:.88rem;text-align:center">
+      <div>&nbsp;8 = <b style="color:var(--red)">2 × 2</b> × <b style="color:var(--blue)">2</b></div>
+      <div>12 = <b style="color:var(--red)">2 × 2</b> × <b style="color:var(--green)">3</b></div>
+      <div style="margin-top:.4rem;padding-top:.4rem;border-top:2px dashed var(--purple)">
+        LCM = <b style="color:var(--red)">2×2</b>(공통) × <b style="color:var(--blue)">2</b>(8만의 것) × <b style="color:var(--green)">3</b>(12만의 것) = 24
+      </div>
+    </div>
+    <p class="muted">공통 부분 + 각자의 고유 부분 → 모두 있어야 두 수의 배수가 돼요!</p>
+  </div>
+
   <div class="card card-amber">
     <span class="tag tag-amber">⚡ GCF vs LCM 차이점</span>
     <table class="vs-table">
@@ -516,6 +547,7 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
 <div class="wrap">
   <span class="tag tag-purple">예제 1 — 약수 구하기</span>
   <h2 style="margin-top:.3rem">난이도를 선택하세요</h2>
+  <p class="muted" style="margin-bottom:.5rem">💡 곱해서 목표값이 되는 <b>짝</b>을 1부터 찾아요. 앞 숫자 &gt; 뒤 숫자(역전!)가 되면 멈춰요.</p>
 
   <div class="diff-tabs">
     <button class="diff-btn lv1 active" onclick="switchDiff(9,1)">🟢 하</button>
@@ -533,7 +565,7 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
       <div class="ps-label tag tag-blue">① 짝 찾기</div>
       <p>1 × 20 = 20 ✓ &nbsp;→ <b>1, 20</b></p>
       <p>2 × 10 = 20 ✓ &nbsp;→ <b>2, 10</b></p>
-      <p>(√20 ≈ 4.47 → 4까지 확인)</p>
+      <p>(5×5=25 &gt; 20 → 역전! → 4까지만 확인하면 끝)</p>
       <p>4 × 5 = 20 ✓ &nbsp;→ <b>4, 5</b></p>
     </div>
     <div id="p9Ls2" class="prob-step">
@@ -561,7 +593,7 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
     </div>
     <div id="p9Ms2" class="prob-step">
       <div class="ps-label tag tag-amber">② 계속</div>
-      <p>(√48 ≈ 6.9 → 6까지)</p>
+      <p>(7×7=49 &gt; 48 → 역전! → 6까지 확인)</p>
       <p>6 × 8 = 48 ✓ → <b>6, 8</b> 추가</p>
       <p>5 × ? = 48 → 9.6 — 정수 아님, 없음</p>
     </div>
@@ -585,7 +617,7 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
     </div>
     <div id="p9Hs1" class="prob-step">
       <div class="ps-label tag tag-blue">① 36의 약수 구하기</div>
-      <p>1×36, 2×18, 3×12, 4×9, 6×6 (√36=6 → 6까지)</p>
+      <p>1×36, 2×18, 3×12, 4×9, 6×6 (6×6=36 → 같아짐! → 6에서 끝)</p>
       <div class="eq-box" style="font-size:.9rem">1, 2, 3, 4, 6, 9, 12, 18, 36</div>
     </div>
     <div id="p9Hs2" class="prob-step">
@@ -613,6 +645,7 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
 <div class="wrap">
   <span class="tag tag-blue">예제 2 — 최대공약수</span>
   <h2 style="margin-top:.3rem">난이도를 선택하세요</h2>
+  <p class="muted" style="margin-bottom:.5rem">💡 공통 나누기법: 두 수를 공통으로 나눌 수 있을 때까지 나눠요. 나눈 수들만 곱하면 최대공약수!</p>
 
   <div class="diff-tabs">
     <button class="diff-btn lv1 active" onclick="switchDiff(10,1)">🟢 하</button>
@@ -720,6 +753,7 @@ p{font-size:.95rem;line-height:1.8;margin:.35rem 0}
 <div class="wrap">
   <span class="tag tag-red">예제 3 — 최소공배수</span>
   <h2 style="margin-top:.3rem">난이도를 선택하세요</h2>
+  <p class="muted" style="margin-bottom:.5rem">💡 공통 나누기법: GCF와 달리 나눈 수 × <b>남은 수 전부</b>를 곱해요. 남은 수를 빠뜨리면 안 돼요!</p>
 
   <div class="diff-tabs">
     <button class="diff-btn lv1 active" onclick="switchDiff(11,1)">🟢 하</button>
