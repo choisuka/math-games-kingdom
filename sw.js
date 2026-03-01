@@ -1,5 +1,5 @@
 // Service Worker for 수학 게임 왕국
-const CACHE_NAME = 'math-games-v19';
+const CACHE_NAME = 'math-games-v20';
 
 const PRECACHE_URLS = [
   './',
