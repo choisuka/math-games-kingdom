@@ -281,18 +281,18 @@ tr:nth-child(even) td{background:#f8fafc}
 
   <div class="card-amber">
     <span class="tag tag-real">🛒 핀란드 마트 세일 계산</span>
-    <p>원가 80€짜리 스키 장갑이 25% 할인 중. 판매가는?</p>
+    <p>정가 80,000원짜리 스키 장갑이 25% 할인 중. 판매가는?</p>
     <div class="steps">
       <div class="step-item">
         <div class="step-num">방법1</div>
         <div class="step-body">
-          <div class="eq-box">할인액 = 80 × 0.25 = 20€ → 판매가 = 80 - 20 = <strong>60€</strong></div>
+          <div class="eq-box">할인액 = 80,000 × 0.25 = 20,000원 → 판매가 = 80,000 - 20,000 = <strong>60,000원</strong></div>
         </div>
       </div>
       <div class="step-item">
         <div class="step-num">방법2</div>
         <div class="step-body">
-          <div class="eq-box">판매가 = 80 × (1 - 0.25) = 80 × 0.75 = <strong>60€</strong></div>
+          <div class="eq-box">판매가 = 80,000 × (1 - 0.25) = 80,000 × 0.75 = <strong>60,000원</strong></div>
           <div class="step-why">100%에서 25%를 빼면 75%가 남으므로 0.75를 바로 곱합니다.</div>
         </div>
       </div>
@@ -301,16 +301,16 @@ tr:nth-child(even) td{background:#f8fafc}
 
   <div class="card-blue">
     <span class="tag tag-disc">🔍 탐구 — 바 다이어그램으로 비율 시각화</span>
-    <p>80€를 100%라 할 때:</p>
+    <p>80,000원을 100%라 할 때:</p>
     <div class="bar-model">
       <div class="bar-row">
         <span class="bar-label">전체</span>
-        <div class="bar-fill" style="width:100%;background:#1e40af">80€ (100%)</div>
+        <div class="bar-fill" style="width:100%;background:#1e40af">80,000원 (100%)</div>
       </div>
       <div class="bar-row">
         <span class="bar-label">할인</span>
-        <div class="bar-fill" style="width:25%;background:#991b1b">20€</div>
-        <div class="bar-fill" style="width:75%;background:#059669">60€</div>
+        <div class="bar-fill" style="width:25%;background:#991b1b">20,000원</div>
+        <div class="bar-fill" style="width:75%;background:#059669">60,000원</div>
       </div>
     </div>
     <p style="font-size:.82rem;color:var(--muted);margin-top:6px">바 다이어그램은 비율 관계를 눈으로 확인하는 핀란드식 도구입니다.</p>
@@ -332,8 +332,8 @@ tr:nth-child(even) td{background:#f8fafc}
     </div>
     <div class="card-amber">
       <h3>역계산 — 원가 구하기</h3>
-      <p>VAT(부가세) 포함 가격이 120€이고 VAT가 20%라면 순수 가격은?</p>
-      <div class="eq-box">120 = x × 1.20<br>x = 120 ÷ 1.20 = <strong>100€</strong></div>
+      <p>부가세(10%) 포함 가격이 132,000원이라면 순수 가격은?</p>
+      <div class="eq-box">132,000 = x × 1.10<br>x = 132,000 ÷ 1.10 = <strong>120,000원</strong></div>
       <p style="font-size:.83rem;margin-top:6px">핀란드 교과서는 "역계산"을 특히 강조합니다 — 결과에서 출발해 원인을 찾는 사고.</p>
     </div>
   </div>
@@ -610,17 +610,17 @@ tr:nth-child(even) td{background:#f8fafc}
   </div>
 
   <div class="card-amber">
-    <span class="tag tag-real">🌡 실생활 함수 — 섭씨↔화씨 변환</span>
+    <span class="tag tag-real">💱 실생활 함수 — 달러↔원 환율 계산</span>
     <div class="fn-machine">
-      <div class="fn-input">섭씨 C</div>
+      <div class="fn-input">달러 x</div>
       <div class="fn-arrow">→</div>
-      <div class="fn-box">F = 1.8C + 32</div>
+      <div class="fn-box">y = 1,300x</div>
       <div class="fn-arrow">→</div>
-      <div class="fn-output">화씨 F</div>
+      <div class="fn-output">원화 y</div>
     </div>
-    <p style="margin-top:8px">C = 100 (끓는점) → F = 180 + 32 = <strong>212°F</strong></p>
-    <p>C = 0 (어는점) → F = 0 + 32 = <strong>32°F</strong></p>
-    <div class="step-real">미국 기상 예보를 핀란드에서 이해할 때 이 함수를 사용합니다!</div>
+    <p style="margin-top:8px">x = 100달러 → y = 130,000원</p>
+    <p>x = 50달러 → y = 65,000원</p>
+    <div class="step-real">해외직구·여행 환전할 때 이 함수를 사용합니다! (환율은 매일 바뀌므로 k가 변수)</div>
   </div>
 
   <div class="card-green">
@@ -646,17 +646,17 @@ tr:nth-child(even) td{background:#f8fafc}
   </div>
 
   <div class="card-amber">
-    <span class="tag tag-real">🚗 핀란드 택시 요금</span>
-    <p>기본요금 4€, km당 1.5€. 총 요금 y(€)와 거리 x(km)의 관계:</p>
-    <div class="eq-box">y = 1.5x + 4</div>
+    <span class="tag tag-real">🚗 한국 택시 요금</span>
+    <p>기본요금 4,800원, km당 1,500원. 총 요금 y(원)와 거리 x(km)의 관계:</p>
+    <div class="eq-box">y = 1,500x + 4,800</div>
     <div class="grid2" style="margin-top:10px">
       <div>
-        <p style="font-size:.85rem">a = 1.5 → 1km마다 1.5€ 증가</p>
-        <p style="font-size:.85rem">b = 4 → 타자마자 4€</p>
+        <p style="font-size:.85rem">a = 1,500 → 1km마다 1,500원 증가</p>
+        <p style="font-size:.85rem">b = 4,800 → 타자마자 4,800원</p>
       </div>
       <div>
-        <p style="font-size:.85rem">10km → y = 15 + 4 = <strong>19€</strong></p>
-        <p style="font-size:.85rem">y=25일 때 → x = (25-4)/1.5 = 14km</p>
+        <p style="font-size:.85rem">10km → y = 15,000 + 4,800 = <strong>19,800원</strong></p>
+        <p style="font-size:.85rem">y=25,000일 때 → x = (25,000-4,800)/1,500 ≈ 13.5km</p>
       </div>
     </div>
   </div>
@@ -1105,10 +1105,10 @@ tr:nth-child(even) td{background:#f8fafc}
 
   <div class="card-blue">
     <span class="tag tag-real">💰 핀란드 저축 — 복리 계산</span>
-    <p>연 5% 이자, 1000€를 10년간 복리 저축하면?</p>
-    <div class="eq-box">A = 1000 × (1.05)¹⁰ ≈ 1000 × 1.629 = <strong>1629€</strong></div>
+    <p>연 5% 이자, 100만 원을 10년간 복리 저축하면?</p>
+    <div class="eq-box">A = 1,000,000 × (1.05)¹⁰ ≈ 1,000,000 × 1.629 = <strong>1,629,000원</strong></div>
     <p style="margin-top:8px">지수가 없으면 이 계산을 10번 해야 합니다! 지수 표기법의 실용적 가치.</p>
-    <div class="step-real">20년이면 (1.05)²⁰ ≈ 2.653 → 2653€. 돈이 2.6배 이상 불어납니다!</div>
+    <div class="step-real">20년이면 (1.05)²⁰ ≈ 2.653 → 약 265만 원. 돈이 2.6배 이상 불어납니다!</div>
   </div>
 
   <div class="card-green">
