@@ -32,3 +32,7 @@ https://choisuka.github.io/
 | 아르모니아 수학왕국 | https://choisuka.github.io/toro_math/ | 개념카드 (중등) |
 | 수학왕국 드릴형 | https://choisuka.github.io/math_game/ | 초등·중등 드릴 |
 | 분수·비율 탐험 | https://choisuka.github.io/toro_frac/ | 분수 스토리형 |
+
+## 개발 정보
+- 로컬 폴더: `C:/Users/USER/math-games-kingdom`
+- GitHub 레포: `choisuka/math-games-kingdom`
