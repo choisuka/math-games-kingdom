@@ -94,6 +94,11 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
 .frac-seg:last-child{border-right:none}
 .frac-seg.filled{background:linear-gradient(135deg,#7c3aed,#a78bfa)}
 .frac-seg.empty{background:#f5f3ff}
+/* 인라인 분수 가로막대 */
+.math-frac{display:inline-flex;flex-direction:column;align-items:center;line-height:1.1;margin:0 2px;vertical-align:middle}
+.mf-num{font-size:.9em;padding-bottom:1px}
+.mf-bar{width:100%;min-width:12px;border-top:1.5px solid currentColor;display:block}
+.mf-den{font-size:.9em;padding-top:1px}
 .nline-wrap{padding:10px 0;overflow-x:auto}
 .nline{position:relative;height:52px;min-width:280px}
 .nline-bar{position:absolute;top:20px;left:16px;right:16px;height:4px;background:#d1d5db;border-radius:2px}
@@ -426,8 +431,8 @@ function renderQ(){
   document.getElementById('g-prog').style.width=(st.cur/st.total*100)+'%';
   document.getElementById('g-qnum').textContent=(st.cur+1)+'/'+st.total;
   document.getElementById('g-mascot').textContent='🦊';
-  document.getElementById('q-ctx').textContent=q.ctx||'';
-  document.getElementById('q-txt').textContent=q.q;
+  document.getElementById('q-ctx').innerHTML=fmtFrac(q.ctx||'');
+  document.getElementById('q-txt').innerHTML=fmtFrac(q.q);
   document.getElementById('q-vis').innerHTML=q.vis||'';
   document.getElementById('q-fb').className='feedback';
   document.getElementById('next-btn').className='next-btn';
@@ -436,7 +441,7 @@ function renderQ(){
   const inputEl=document.getElementById('q-input');
   if(q.choices){
     choicesEl.style.display='grid';inputEl.style.display='none';
-    choicesEl.innerHTML=q.choices.map(c=>`<button class="choice-btn" data-c="${String(c).replace(/"/g,'&quot;')}" onclick="checkC(this)">${c}</button>`).join('');
+    choicesEl.innerHTML=q.choices.map(c=>`<button class="choice-btn" data-c="${String(c).replace(/"/g,'&quot;')}" onclick="checkC(this)">${fmtFrac(c)}</button>`).join('');
   } else {
     choicesEl.style.display='none';inputEl.style.display='flex';
     const inp=document.getElementById('ans-input');
@@ -477,7 +482,7 @@ function finalize(ok){
   const fb=document.getElementById('q-fb');
   const msgs=['잘 했어요! 🎉','훌륭해요! ⭐','맞아요! 🌟','완벽해요! 🦊','대단해요! ✨'];
   if(ok){fb.textContent=pick(msgs);fb.className='feedback show ok';document.getElementById('g-mascot').textContent='🦊✨';}
-  else{fb.innerHTML='아쉬워요! 정답은 <b>'+q.ans+'</b>이에요.'+(q.explain?' — '+q.explain:'');fb.className='feedback show no';}
+  else{fb.innerHTML='아쉬워요! 정답은 <b>'+fmtFrac(q.ans)+'</b>이에요.'+(q.explain?' — '+q.explain:'');fb.className='feedback show no';}
   document.getElementById('next-btn').className='next-btn show';
   document.getElementById('skip-btn').style.display='none';
 }
@@ -524,6 +529,11 @@ function numLine(lo,hi,mark){
 function barChart(data){
   const mx=Math.max(...data);
   return'<div style="display:flex;gap:6px;justify-content:center;padding:8px;align-items:flex-end;height:80px">'+data.map(v=>'<div style="display:flex;flex-direction:column;align-items:center;gap:3px"><span style="font-size:.7rem;color:#6b7280">'+v+'</span><div style="width:26px;height:'+(v/mx*55)+'px;background:linear-gradient(180deg,#7c3aed,#a78bfa);border-radius:4px 4px 0 0"></div></div>').join('')+'</div>';
+}
+
+function fmtFrac(str){
+  return String(str).replace(/(\d+)\/(\d+)/g,
+    '<span class="math-frac"><span class="mf-num">$1</span><span class="mf-bar"></span><span class="mf-den">$2</span></span>');
 }
 
 // ══════════════════════════════════════════
