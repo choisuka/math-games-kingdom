@@ -676,7 +676,7 @@ function _frcFmtMixed(n,d){
   if(sn<sd)return sn+'/'+sd;
   const w=Math.floor(sn/sd),rem=sn%sd;
   if(rem===0)return String(w);
-  return w+'와 '+rem+'/'+sd;
+  return w+' '+rem+'/'+sd;
 }
 function _frcMc(ans,...ws){const s=new Set([ans]);const r=[ans];for(const w of ws)if(!s.has(w)&&r.length<4){s.add(w);r.push(w);}return shuf(r);}
 
@@ -727,7 +727,7 @@ function G5frcMulHard(){
     const d=pick([2,3,4]),w=rnd(1,4),n=rnd(1,d-1),whole=rnd(2,5);
     const total=(w*d+n)*whole;
     const a=_frcFmtMixed(total,d);
-    return{ctx:'',q:w+'와 '+n+'/'+d+' × '+whole+' = ?',vis:'',
+    return{ctx:'',q:w+' '+n+'/'+d+' × '+whole+' = ?',vis:'',
       choices:_frcMc(a,_frcFmtMixed(total+d,d),_frcFmtMixed(Math.max(1,total-d),d),_frcFmtMixed(w*whole*d+n,d)),
       ans:a,explain:'대분수→가분수: '+(w*d+n)+'/'+d+' → ×'+whole+'='+(w*d+n)*whole+'/'+d};
   }
@@ -745,7 +745,7 @@ function G5frcDivHard(){
     const d=pick([2,3,4]),w=rnd(1,3),n=rnd(1,d-1),whole=pick([2,3,4]);
     const total=w*d+n;
     const a=_frcFmtMixed(total,d*whole);
-    return{ctx:'🎂 케이크를 잘라요.',q:w+'와 '+n+'/'+d+' ÷ '+whole+' = ?',vis:'',
+    return{ctx:'🎂 케이크를 잘라요.',q:w+' '+n+'/'+d+' ÷ '+whole+' = ?',vis:'',
       choices:_frcMc(a,_frcFmtMixed(total+1,d*whole),_frcFmtMixed(total,d),_frcFmtMixed(total*whole,d)),
       ans:a,explain:'대분수→가분수: '+total+'/'+d+' → ÷'+whole+'='+total+'/'+(d*whole)};
   }
