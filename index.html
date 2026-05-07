@@ -124,6 +124,44 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
 @keyframes gmPop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
 .gm-close{position:absolute;top:.8rem;right:.8rem;background:rgba(255,255,255,.1);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:1rem}
 .gm-title{font-family:'Jua',sans-serif;font-size:1.2rem;color:#fff;margin-bottom:1rem;text-align:center}
+/* ── 모드 선택 ── */
+.mode-grid{display:flex;flex-direction:column;gap:12px;padding-bottom:24px}
+.mode-card{background:var(--card);border-radius:var(--radius);padding:20px;cursor:pointer;transition:all .22s;display:flex;align-items:center;gap:16px;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.mode-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.25)}
+.mode-card:active{transform:scale(.97)}
+.mode-ico{font-size:2.8rem;min-width:54px;text-align:center}
+.mode-title{font-family:'Jua',sans-serif;font-size:1.15rem;color:var(--text)}
+.mode-desc{font-size:.76rem;color:var(--muted);margin-top:3px;line-height:1.5}
+/* ── 배틀 ── */
+.battle-card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:0 24px 64px rgba(0,0,0,.45);margin-bottom:16px}
+.hp-hearts{font-size:1.3rem;letter-spacing:2px}
+.monster-area{text-align:center;padding:8px 0 4px}
+.monster-emoji{font-size:3.8rem;display:inline-block;transition:transform .3s}
+.monster-hp-bar{height:10px;background:#fecaca;border-radius:20px;margin:6px 0 10px;overflow:hidden}
+.monster-hp-fill{height:100%;background:linear-gradient(90deg,#f87171,#ef4444);border-radius:20px;transition:width .4s ease}
+.combo-display{text-align:center;font-family:'Jua',sans-serif;font-size:1.1rem;min-height:28px;margin:4px 0}
+@keyframes comboAnim{0%{transform:scale(1.6)}100%{transform:scale(1)}}
+.combo-pop{animation:comboAnim .3s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.shake{animation:shake .3s ease}
+/* ── 타이머 ── */
+.timer-card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:0 24px 64px rgba(0,0,0,.45);margin-bottom:16px}
+.timer-display{font-family:'Jua',sans-serif;font-size:2rem;color:var(--purple)}
+.timer-display.urgent{color:#ef4444;animation:timerPulse .5s ease-in-out infinite}
+@keyframes timerPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.timer-bar{height:8px;background:#e5e7eb;border-radius:20px;margin-bottom:12px;overflow:hidden}
+.timer-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#f59e0b);border-radius:20px;transition:width .9s linear}
+/* ── XP ── */
+.xp-bar-wrap{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.07);border-radius:14px;padding:10px 14px;margin-bottom:16px}
+.xp-char{font-size:1.8rem}
+.xp-info{flex:1}
+.xp-level-txt{font-family:'Jua',sans-serif;font-size:.82rem;color:#fde68a}
+.xp-bar{height:6px;background:rgba(255,255,255,.15);border-radius:20px;margin-top:4px;overflow:hidden}
+.xp-fill{height:100%;background:linear-gradient(90deg,#f59e0b,#fde68a);border-radius:20px;transition:width .6s ease}
+/* ── 폭죽 ── */
+.firework-container{position:fixed;inset:0;pointer-events:none;z-index:999}
+.firework{position:absolute;width:10px;height:10px;border-radius:50%;animation:fwAnim 1s ease-out forwards}
+@keyframes fwAnim{0%{transform:translate(0,0);opacity:1}100%{transform:translate(var(--tx),var(--ty));opacity:0}}
 </style>
 <script src="toro_ai.js"></script>
 </head>
@@ -183,6 +221,7 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
     <h1 class="home-title">수학왕국</h1>
     <p class="home-sub">핀란드 초등수학 · 1~6학년 · 즐겁게 배워요!</p>
   </div>
+  <div class="xp-bar-wrap" id="xp-bar-home"></div>
   <div class="grade-grid" id="grade-grid"></div>
 
   <!-- 수학 앱 모음 -->
@@ -254,6 +293,133 @@ h1,h2,h3,.jua{font-family:'Jua',sans-serif}
     </div>
   </div>
 </div>
+
+<!-- ── 모드 선택 ── -->
+<div class="screen" id="mode-select">
+  <div class="page-header">
+    <button class="back-btn" onclick="showScreen('topics')">←</button>
+    <div class="grade-badge" id="mode-topic-badge">단원</div>
+    <span style="font-size:.78rem;color:rgba(255,255,255,.5)">모드를 선택하세요</span>
+  </div>
+  <div class="mode-grid">
+    <div class="mode-card" onclick="startGame(st.grade,st.topicId,st.gen)">
+      <div class="mode-ico">📚</div>
+      <div>
+        <div class="mode-title">일반 퀴즈</div>
+        <div class="mode-desc">10문제 · 차분하게 집중 · 진도 기록</div>
+      </div>
+    </div>
+    <div class="mode-card" onclick="startBattle(st.grade,st.topicId,st.gen)">
+      <div class="mode-ico">⚔️</div>
+      <div>
+        <div class="mode-title">몬스터 배틀</div>
+        <div class="mode-desc">맞히면 몬스터 공격! 틀리면 체력 감소 · 콤보 보너스</div>
+      </div>
+    </div>
+    <div class="mode-card" onclick="startTimer(st.grade,st.topicId,st.gen)">
+      <div class="mode-ico">⏱️</div>
+      <div>
+        <div class="mode-title">타이머 챌린지</div>
+        <div class="mode-desc">30초 안에 최대한! · 신기록 도전 · 콤보 배율</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 배틀 모드 ── -->
+<div class="screen" id="battle">
+  <div class="battle-card">
+    <div class="game-top">
+      <button class="g-back" onclick="endBattle()">← 나가기</button>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-family:'Jua',sans-serif;font-size:.8rem;color:var(--muted)">파도</span>
+        <span style="font-family:'Jua',sans-serif;font-size:1.1rem;color:var(--purple)" id="b-wave">1</span>
+        <div class="score-chip">⚔️ <span id="b-score">0</span></div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+      <span style="font-family:'Jua',sans-serif;font-size:.78rem;color:var(--muted)">내 체력</span>
+      <div class="hp-hearts" id="b-player-hp">❤️❤️❤️</div>
+    </div>
+    <div class="monster-area">
+      <div class="monster-emoji" id="b-monster-emoji">👹</div>
+      <div style="font-family:'Jua',sans-serif;font-size:.85rem;color:var(--text);margin:2px 0" id="b-monster-name">수학 몬스터</div>
+      <div class="monster-hp-bar"><div class="monster-hp-fill" id="b-monster-hp-fill" style="width:100%"></div></div>
+    </div>
+    <div class="combo-display" id="b-combo"></div>
+    <div class="q-box">
+      <div class="q-context" id="b-ctx"></div>
+      <div class="q-visual" id="b-vis"></div>
+      <div class="q-text" id="b-txt"></div>
+    </div>
+    <div class="choices-grid" id="b-choices"></div>
+    <div class="feedback" id="b-fb"></div>
+    <button class="next-btn" id="b-next-btn" onclick="nextBattleQ()">계속 싸우기! ⚔️</button>
+  </div>
+</div>
+
+<!-- ── 타이머 챌린지 ── -->
+<div class="screen" id="timer">
+  <div class="timer-card">
+    <div class="game-top">
+      <button class="g-back" onclick="endTimer()">← 나가기</button>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="timer-display" id="t-display">30</span>
+        <div class="score-chip">🔥 <span id="t-score">0</span></div>
+      </div>
+    </div>
+    <div class="timer-bar"><div class="timer-fill" id="t-bar" style="width:100%"></div></div>
+    <div class="combo-display" id="t-combo"></div>
+    <div class="q-box">
+      <div class="q-context" id="t-ctx"></div>
+      <div class="q-visual" id="t-vis"></div>
+      <div class="q-text" id="t-txt"></div>
+    </div>
+    <div class="choices-grid" id="t-choices"></div>
+    <div class="feedback" id="t-fb"></div>
+  </div>
+</div>
+
+<!-- ── 배틀 결과 ── -->
+<div class="screen" id="battle-over">
+  <div class="result-card">
+    <span class="result-mascot" id="bo-mascot">⚔️</span>
+    <h2 class="result-title" id="bo-title">배틀 종료!</h2>
+    <p class="result-desc" id="bo-desc">3파도 돌파!</p>
+    <div class="stars-display" id="bo-stars"></div>
+    <div style="background:#f5f3ff;border-radius:12px;padding:14px;margin:12px 0;text-align:center">
+      <div style="font-family:'Jua',sans-serif;font-size:1.4rem;color:var(--purple)" id="bo-score-big">0점</div>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:4px" id="bo-best-txt"></div>
+    </div>
+    <div class="result-btns">
+      <button class="btn-main" onclick="startBattle(st.grade,st.topicId,st.gen)">⚔️ 다시 배틀</button>
+      <button class="btn-sub" onclick="showScreen('mode-select')">🎮 모드 선택</button>
+      <button class="btn-sub" onclick="showScreen('home')">🏠 홈</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── 타이머 결과 ── -->
+<div class="screen" id="timer-over">
+  <div class="result-card">
+    <span class="result-mascot" id="to-mascot">⏱️</span>
+    <h2 class="result-title" id="to-title">시간 종료!</h2>
+    <p class="result-desc" id="to-desc">30초 챌린지 완료!</p>
+    <div class="stars-display" id="to-stars"></div>
+    <div style="background:#f5f3ff;border-radius:12px;padding:14px;margin:12px 0;text-align:center">
+      <div style="font-family:'Jua',sans-serif;font-size:1.4rem;color:var(--purple)" id="to-score-big">0점</div>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:4px" id="to-best-txt"></div>
+    </div>
+    <div class="result-btns">
+      <button class="btn-main" onclick="startTimer(st.grade,st.topicId,st.gen)">⏱️ 다시 도전</button>
+      <button class="btn-sub" onclick="showScreen('mode-select')">🎮 모드 선택</button>
+      <button class="btn-sub" onclick="showScreen('home')">🏠 홈</button>
+    </div>
+  </div>
+</div>
+
+<!-- 폭죽 -->
+<div class="firework-container" id="firework-container"></div>
 
 <script>
 // ══════════════════════════════════════════
@@ -352,9 +518,11 @@ function saveWrong(gen,q){
 //  화면 전환
 // ══════════════════════════════════════════
 function showScreen(name){
+  if(typeof tim!=='undefined'&&tim.interval&&name!=='timer'){clearInterval(tim.interval);tim.interval=null;}
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(name).classList.add('active');
   window.scrollTo(0,0);
+  if(name==='home')renderXPBar();
 }
 
 // ══════════════════════════════════════════
@@ -380,13 +548,13 @@ function pickGrade(g){
           <div class="topic-desc">${t.desc}</div>
           <span class="topic-tag">${t.tag}</span>
           <div style="display:flex;gap:6px;margin-top:8px">
-            <button onclick="event.stopPropagation();startGame(${g},'${t.id}','${t.gen}')" style="flex:1;background:#ede9fe;border:1.5px solid #a78bfa;color:#6d28d9;border-radius:10px;padding:7px 0;font-family:'Jua',sans-serif;font-size:.82rem;cursor:pointer">🌱 기초 10제</button>
-            <button onclick="event.stopPropagation();startGame(${g},'${t.id}_h','${t.genHard}')" style="flex:1;background:#fef3c7;border:1.5px solid #fbbf24;color:#92400e;border-radius:10px;padding:7px 0;font-family:'Jua',sans-serif;font-size:.82rem;cursor:pointer">🔥 심화 10제</button>
+            <button onclick="event.stopPropagation();pickMode(${g},'${t.id}','${t.gen}')" style="flex:1;background:#ede9fe;border:1.5px solid #a78bfa;color:#6d28d9;border-radius:10px;padding:7px 0;font-family:'Jua',sans-serif;font-size:.82rem;cursor:pointer">🌱 기초</button>
+            <button onclick="event.stopPropagation();pickMode(${g},'${t.id}_h','${t.genHard}')" style="flex:1;background:#fef3c7;border:1.5px solid #fbbf24;color:#92400e;border-radius:10px;padding:7px 0;font-family:'Jua',sans-serif;font-size:.82rem;cursor:pointer">🔥 심화</button>
           </div>
         </div>
       </div>`;
     }
-    return `<div class="topic-card" onclick="startGame(${g},'${t.id}','${t.gen}')">
+    return `<div class="topic-card" onclick="pickMode(${g},'${t.id}','${t.gen}')">
       <div class="topic-ico">${t.emoji}</div>
       <div>
         <div class="topic-title">${t.name}</div>
@@ -487,6 +655,7 @@ function finalize(ok){
   const q=st.qs[st.cur];
   if(ok){
     st.score++;
+    gainXP(10);
     if(typeof toroSay==='function') toroSay('math','correct');
     const prog=loadProg(st.gen);
     const k=qKey(q);
@@ -525,6 +694,7 @@ function showResult(){
   document.getElementById('r-desc').textContent=st.total+'개 중 '+st.score+'개 맞혔어요 🎯';
   document.getElementById('r-stars').textContent=stars;
   showScreen('result');
+  if(p>=.9) launchFireworks();
   // 유물 수여
   addLog('game','drill','드릴 완료: '+st.score+'/'+st.total+' 정답');
   if(p>=.5) awardArtifact('drill_basic');
@@ -990,10 +1160,269 @@ function closeCompassModal(){
 }
 
 // ══════════════════════════════════════════
+//  모드 선택
+// ══════════════════════════════════════════
+function pickMode(g,tid,gen){
+  st.grade=g;st.topicId=tid;st.gen=gen;
+  const base=tid.replace(/_h$/,'');
+  const t=(TOPICS[g]||[]).find(x=>x.id===base||x.id===tid);
+  document.getElementById('mode-topic-badge').textContent=t?t.name:tid;
+  showScreen('mode-select');
+}
+
+// ══════════════════════════════════════════
+//  XP 시스템
+// ══════════════════════════════════════════
+const XP_THRESH=[0,50,120,220,350,500,700,950,1250,1600,2000];
+const XP_CHARS=['🦊','🐯','🦁','🐉','👑'];
+function loadXP(){try{return JSON.parse(localStorage.getItem('mkXP')||'{"xp":0,"level":1}');}catch(e){return{xp:0,level:1};}}
+function saveXP(d){localStorage.setItem('mkXP',JSON.stringify(d));}
+function gainXP(amt){
+  if(!amt)return;
+  const d=loadXP();
+  d.xp+=amt;
+  while(d.level<XP_THRESH.length-1&&d.xp>=XP_THRESH[d.level])d.level++;
+  saveXP(d);
+  renderXPBar();
+}
+function renderXPBar(){
+  const el=document.getElementById('xp-bar-home');
+  if(!el)return;
+  const d=loadXP();
+  const lv=d.level;
+  const cur=XP_THRESH[lv-1]||0;
+  const nxt=XP_THRESH[lv]||XP_THRESH[XP_THRESH.length-1];
+  const pct=Math.min(100,Math.max(0,(d.xp-cur)/(nxt-cur)*100));
+  const ci=Math.min(Math.floor((lv-1)/3),XP_CHARS.length-1);
+  el.innerHTML='<div class="xp-char">'+XP_CHARS[ci]+'</div>'
+    +'<div class="xp-info">'
+    +'<div class="xp-level-txt">Lv.'+lv+' · '+d.xp+' XP</div>'
+    +'<div class="xp-bar"><div class="xp-fill" style="width:'+pct+'%"></div></div>'
+    +'</div>';
+}
+
+// ══════════════════════════════════════════
+//  폭죽
+// ══════════════════════════════════════════
+function launchFireworks(){
+  const c=document.getElementById('firework-container');
+  if(!c)return;
+  const cols=['#fbbf24','#f87171','#a78bfa','#6ee7b7','#60a5fa','#f472b6'];
+  for(let i=0;i<40;i++){
+    const fw=document.createElement('div');
+    fw.className='firework';
+    const x=Math.random()*window.innerWidth;
+    const y=Math.random()*window.innerHeight*0.6;
+    const tx=(Math.random()-.5)*200;
+    const ty=(Math.random()-.5)*200;
+    const dl=Math.random()*.5;
+    fw.style.cssText='left:'+x+'px;top:'+y+'px;background:'+cols[Math.floor(Math.random()*cols.length)]
+      +';--tx:'+tx+'px;--ty:'+ty+'px;animation-delay:'+dl+'s;animation-duration:'+(0.8+Math.random()*.5)+'s';
+    c.appendChild(fw);
+  }
+  setTimeout(()=>{c.innerHTML='';},2000);
+}
+
+// ══════════════════════════════════════════
+//  몬스터 배틀 모드
+// ══════════════════════════════════════════
+const MONSTERS=[
+  {name:'수학 도깨비',emoji:'👹'},
+  {name:'계산 마법사',emoji:'🧙'},
+  {name:'분수 거인',emoji:'🧌'},
+  {name:'구구단 드래곤',emoji:'🐲'},
+  {name:'최종 보스',emoji:'👿'}
+];
+const bat={grade:1,topicId:null,gen:null,monsterHP:100,playerHP:3,wave:1,score:0,combo:0,q:null,answered:false};
+
+function startBattle(g,tid,gen){
+  bat.grade=g;bat.topicId=tid;bat.gen=gen;
+  bat.monsterHP=100;bat.playerHP=3;bat.wave=1;bat.score=0;bat.combo=0;bat.answered=false;
+  updateBattleUI();
+  renderBattleQ();
+  showScreen('battle');
+}
+function updateBattleUI(){
+  document.getElementById('b-wave').textContent=bat.wave;
+  document.getElementById('b-score').textContent=bat.score;
+  document.getElementById('b-player-hp').textContent='❤️'.repeat(bat.playerHP)+'🖤'.repeat(Math.max(0,3-bat.playerHP));
+  document.getElementById('b-monster-hp-fill').style.width=bat.monsterHP+'%';
+  const mi=Math.min(Math.floor((bat.wave-1)/2),MONSTERS.length-1);
+  const mon=MONSTERS[mi];
+  document.getElementById('b-monster-emoji').textContent=mon.emoji;
+  document.getElementById('b-monster-name').textContent=mon.name+' (파도 '+bat.wave+')';
+}
+function renderBattleQ(){
+  bat.answered=false;
+  const q=bat.q=window[bat.gen]();
+  document.getElementById('b-ctx').innerHTML=fmtFrac(q.ctx||'');
+  document.getElementById('b-vis').innerHTML=q.vis||'';
+  document.getElementById('b-txt').innerHTML=fmtFrac(q.q);
+  document.getElementById('b-fb').className='feedback';
+  document.getElementById('b-next-btn').className='next-btn';
+  document.getElementById('b-choices').innerHTML=(q.choices||[]).map(c=>
+    '<button class="choice-btn" data-c="'+String(c).replace(/"/g,'&quot;')+'" onclick="checkBattleC(this)">'+fmtFrac(c)+'</button>'
+  ).join('');
+}
+function checkBattleC(btn){
+  if(bat.answered)return;bat.answered=true;
+  const correct=btn.dataset.c===String(bat.q.ans);
+  document.querySelectorAll('#b-choices .choice-btn').forEach(b=>{
+    b.disabled=true;
+    if(b.dataset.c===String(bat.q.ans))b.classList.add('reveal');
+  });
+  btn.classList.add(correct?'correct':'wrong');
+  const fb=document.getElementById('b-fb');
+  const comboEl=document.getElementById('b-combo');
+  if(correct){
+    bat.combo++;
+    const bonus=bat.combo>=5?3:bat.combo>=3?2:1;
+    bat.score+=10*bonus;
+    bat.monsterHP=Math.max(0,bat.monsterHP-25);
+    gainXP(bat.combo>=3?15:10);
+    if(bat.combo>=2){
+      comboEl.innerHTML='🔥 '+bat.combo+'콤보! ×'+bonus;
+      comboEl.className='combo-display combo-pop';
+      setTimeout(()=>comboEl.className='combo-display',400);
+    }else{comboEl.textContent='';}
+    const monEl=document.getElementById('b-monster-emoji');
+    monEl.classList.add('shake');
+    setTimeout(()=>monEl.classList.remove('shake'),400);
+    if(bat.monsterHP<=0){
+      bat.wave++;bat.monsterHP=100;
+      bat.score+=50;gainXP(50);
+      fb.innerHTML='🎉 <b>몬스터 처치!</b> +50점 · 파도 '+bat.wave+' 시작!';
+    }else{
+      fb.textContent='⚔️ 공격! 몬스터 체력 -25%';
+    }
+    fb.className='feedback show ok';
+    document.getElementById('b-next-btn').className='next-btn show';
+  }else{
+    bat.combo=0;bat.playerHP--;
+    comboEl.textContent='';
+    fb.innerHTML='💔 체력 -1! 정답: <b>'+fmtFrac(bat.q.ans)+'</b>';
+    fb.className='feedback show no';
+    updateBattleUI();
+    if(bat.playerHP<=0){setTimeout(()=>showBattleOver(),1200);return;}
+    document.getElementById('b-next-btn').className='next-btn show';
+  }
+  updateBattleUI();
+}
+function nextBattleQ(){
+  if(bat.playerHP<=0){showBattleOver();return;}
+  renderBattleQ();updateBattleUI();
+}
+function endBattle(){showBattleOver();}
+function showBattleOver(){
+  const key='mkBattle_'+bat.gen;
+  let best=0;try{best=parseInt(localStorage.getItem(key)||'0');}catch(e){}
+  const isNew=bat.score>0&&bat.score>best;
+  if(isNew)localStorage.setItem(key,bat.score);
+  document.getElementById('bo-mascot').textContent=bat.wave>5?'🏆':bat.playerHP<=0?'💀':'⚔️';
+  document.getElementById('bo-title').textContent=bat.playerHP<=0?'쓰러졌어요...':'배틀 종료!';
+  document.getElementById('bo-desc').textContent=(bat.wave-1)+'파도 돌파! · 총 '+bat.score+'점';
+  document.getElementById('bo-score-big').textContent=bat.score+'점';
+  document.getElementById('bo-best-txt').textContent=isNew?'🎊 신기록!':best>0?'최고기록: '+best+'점':'첫 번째 배틀!';
+  document.getElementById('bo-stars').textContent=bat.wave>=5?'⭐⭐⭐':bat.wave>=3?'⭐⭐':bat.wave>=2?'⭐':'';
+  if(isNew)launchFireworks();
+  addLog('game','battle','배틀: '+bat.score+'점 · '+(bat.wave-1)+'파도');
+  showScreen('battle-over');
+}
+
+// ══════════════════════════════════════════
+//  타이머 챌린지 모드
+// ══════════════════════════════════════════
+const tim={grade:1,topicId:null,gen:null,timeLeft:30,score:0,combo:0,totalCorrect:0,interval:null,q:null,answered:false};
+
+function startTimer(g,tid,gen){
+  if(tim.interval)clearInterval(tim.interval);
+  tim.grade=g;tim.topicId=tid;tim.gen=gen;
+  tim.timeLeft=30;tim.score=0;tim.combo=0;tim.totalCorrect=0;tim.answered=false;
+  const dispEl=document.getElementById('t-display');
+  const barEl=document.getElementById('t-bar');
+  if(dispEl){dispEl.textContent=30;dispEl.className='timer-display';}
+  if(barEl)barEl.style.width='100%';
+  document.getElementById('t-score').textContent=0;
+  document.getElementById('t-combo').textContent='';
+  renderTimerQ();
+  showScreen('timer');
+  tim.interval=setInterval(()=>{
+    tim.timeLeft--;
+    if(dispEl)dispEl.textContent=tim.timeLeft;
+    if(barEl)barEl.style.width=(tim.timeLeft/30*100)+'%';
+    if(dispEl)dispEl.className='timer-display'+(tim.timeLeft<=10?' urgent':'');
+    if(tim.timeLeft<=0){clearInterval(tim.interval);tim.interval=null;showTimerOver();}
+  },1000);
+}
+function renderTimerQ(){
+  if(!tim.gen)return;
+  tim.answered=false;
+  const q=tim.q=window[tim.gen]();
+  document.getElementById('t-ctx').innerHTML=fmtFrac(q.ctx||'');
+  document.getElementById('t-vis').innerHTML=q.vis||'';
+  document.getElementById('t-txt').innerHTML=fmtFrac(q.q);
+  document.getElementById('t-fb').className='feedback';
+  document.getElementById('t-choices').innerHTML=(q.choices||[]).map(c=>
+    '<button class="choice-btn" data-c="'+String(c).replace(/"/g,'&quot;')+'" onclick="checkTimerC(this)">'+fmtFrac(c)+'</button>'
+  ).join('');
+}
+function checkTimerC(btn){
+  if(tim.answered||tim.timeLeft<=0)return;
+  tim.answered=true;
+  const correct=btn.dataset.c===String(tim.q.ans);
+  document.querySelectorAll('#t-choices .choice-btn').forEach(b=>{
+    b.disabled=true;
+    if(b.dataset.c===String(tim.q.ans))b.classList.add('reveal');
+  });
+  btn.classList.add(correct?'correct':'wrong');
+  const fb=document.getElementById('t-fb');
+  const comboEl=document.getElementById('t-combo');
+  if(correct){
+    tim.combo++;tim.totalCorrect++;
+    const bonus=tim.combo>=5?3:tim.combo>=3?2:1;
+    tim.score+=bonus;gainXP(8);
+    document.getElementById('t-score').textContent=tim.score;
+    if(tim.combo>=3){
+      comboEl.innerHTML='🔥 '+tim.combo+'콤보! +'+bonus;
+      comboEl.className='combo-display combo-pop';
+      setTimeout(()=>comboEl.className='combo-display',400);
+    }else{comboEl.textContent='';}
+    fb.textContent='✅ +'+(bonus>1?bonus+' (콤보!)':bonus);
+    fb.className='feedback show ok';
+  }else{
+    tim.combo=0;comboEl.textContent='';
+    fb.innerHTML='❌ 정답: <b>'+fmtFrac(tim.q.ans)+'</b>';
+    fb.className='feedback show no';
+  }
+  setTimeout(()=>{if(tim.timeLeft>0)renderTimerQ();},600);
+}
+function endTimer(){
+  if(tim.interval){clearInterval(tim.interval);tim.interval=null;}
+  showTimerOver();
+}
+function showTimerOver(){
+  if(tim.interval){clearInterval(tim.interval);tim.interval=null;}
+  const key='mkTimer_'+tim.gen;
+  let best=0;try{best=parseInt(localStorage.getItem(key)||'0');}catch(e){}
+  const isNew=tim.score>0&&tim.score>best;
+  if(isNew)localStorage.setItem(key,tim.score);
+  document.getElementById('to-mascot').textContent=tim.score>=10?'🏆':tim.score>=5?'🎯':'⏱️';
+  document.getElementById('to-title').textContent=isNew?'🎊 신기록!':'시간 종료!';
+  document.getElementById('to-desc').textContent='30초 · '+tim.totalCorrect+'문제 정답';
+  document.getElementById('to-score-big').textContent=tim.score+'점';
+  document.getElementById('to-best-txt').textContent=isNew?'🎊 새 최고기록!':best>0?'최고기록: '+best+'점':'첫 번째 챌린지!';
+  document.getElementById('to-stars').textContent=tim.score>=10?'⭐⭐⭐':tim.score>=6?'⭐⭐':tim.score>=3?'⭐':'';
+  if(isNew)launchFireworks();
+  addLog('game','timer','타이머: '+tim.score+'점 · '+tim.totalCorrect+'개 정답');
+  showScreen('timer-over');
+}
+
+// ══════════════════════════════════════════
 //  초기화
 // ══════════════════════════════════════════
 renderHome();
 updateArtifactBadge();
+renderXPBar();
 </script>
 </body>
 </html>
