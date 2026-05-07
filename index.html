@@ -294,7 +294,9 @@ const TOPICS={
     {id:'are4',emoji:'📏',name:'넓이 구하기',desc:'직사각형·삼각형 넓이',tag:'도형',gen:'G4are'}
   ],
   5:[
-    {id:'frc5',emoji:'🥧',name:'분수 × ÷',desc:'분수의 곱셈과 나눗셈',tag:'분수',gen:'G5frc'},
+    {id:'frc5mul',emoji:'✖️',name:'분수 곱셈',desc:'진분수×자연수, 진분수×진분수',tag:'분수',gen:'G5frcMul'},
+    {id:'frc5div',emoji:'➗',name:'분수 나눗셈',desc:'진분수÷자연수, 자연수÷진분수',tag:'분수',gen:'G5frcDiv'},
+    {id:'frc5',emoji:'🥧',name:'분수 곱셈+나눗셈',desc:'곱셈과 나눗셈 함께 도전!',tag:'분수',gen:'G5frc'},
     {id:'pct5',emoji:'💯',name:'퍼센트',desc:'50%, 25%, 10% 실생활 활용',tag:'퍼센트',gen:'G5pct'},
     {id:'neg5',emoji:'❄️',name:'음수와 수직선',desc:'영하 기온, 음수 개념',tag:'음수',gen:'G5neg'},
     {id:'wrd5',emoji:'🧩',name:'혼합 계산',desc:'핀란드 실생활 응용 문제',tag:'응용',gen:'G5wrd'}
@@ -650,9 +652,49 @@ function G4are(){
 // ══════════════════════════════════════════
 //  5학년 문제 생성기
 // ══════════════════════════════════════════
+function _frcSf(n,d){const g=gcd7(n,d);return[n/g,d/g];}
+function _frcFmt(n,d){if(n<=0||d<=0)return'0';const[sn,sd]=_frcSf(n,d);return sd===1?String(sn):sn+'/'+sd;}
+function _frcMc(ans,...ws){const s=new Set([ans]);const r=[ans];for(const w of ws)if(!s.has(w)&&r.length<4){s.add(w);r.push(w);}return shuf(r);}
+
+function G5frcMul(){
+  const type=pick(['whole','frac']);
+  if(type==='whole'){
+    const d=pick([2,3,4,5]),n=rnd(1,d-1),w=rnd(2,8);
+    const a=_frcFmt(n*w,d);
+    return{ctx:'🫐 블루베리 '+w+'바구니를 샀어요.',
+      q:n+'/'+d+' × '+w+' = ?',vis:'',
+      choices:_frcMc(a,_frcFmt(n*w+1,d),_frcFmt(Math.max(1,n*w-1),d),_frcFmt(n+w,d)),
+      ans:a,explain:'분자 '+n+'×'+w+'='+n*w+(_frcSf(n*w,d)[1]<d?'→ 약분':'')};
+  }
+  const d1=pick([2,3,5]),n1=rnd(1,d1-1),d2=pick([3,4,5]),n2=rnd(1,d2-1);
+  const rn=n1*n2,rd=d1*d2;
+  const a=_frcFmt(rn,rd);
+  return{ctx:'🍰 케이크를 나눠요.',
+    q:n1+'/'+d1+' × '+n2+'/'+d2+' = ?',vis:'',
+    choices:_frcMc(a,_frcFmt(rn+1,rd),_frcFmt(n1+n2,d1+d2),_frcFmt(n1*n2,d1+d2)),
+    ans:a,explain:'분자×분자 '+n1+'×'+n2+'='+rn+', 분모×분모 '+d1+'×'+d2+'='+rd+(_frcSf(rn,rd)[1]<rd?'→ 약분':'')};
+}
+
+function G5frcDiv(){
+  const type=pick(['frac_whole','whole_frac']);
+  if(type==='frac_whole'){
+    const d=pick([2,3,4,6]),n=rnd(1,d-1),w=pick([2,3,4]);
+    const a=_frcFmt(n,d*w);
+    return{ctx:'🍕 피자를 나눠 먹어요.',
+      q:n+'/'+d+' ÷ '+w+' = ?',vis:'',
+      choices:_frcMc(a,_frcFmt(n*w,d),_frcFmt(n,d),_frcFmt(n+1,d*w)),
+      ans:a,explain:'÷'+w+' = ×(1/'+w+'): 분모 '+d+'×'+w+'='+d*w+(_frcSf(n,d*w)[1]<d*w?'→ 약분':'')};
+  }
+  const d=pick([2,3,4,5]),n=rnd(1,d-1),w=rnd(1,6);
+  const a=_frcFmt(w*d,n);
+  return{ctx:'🎂 케이크를 잘라요.',
+    q:w+' ÷ '+n+'/'+d+' = ?',vis:'',
+    choices:_frcMc(a,_frcFmt(w*n,d),String(Math.max(1,w-1)),_frcFmt(w*d+1,n)),
+    ans:a,explain:'역수 곱하기: '+w+' × '+d+'/'+n+' = '+w*d+'/'+n+(_frcSf(w*d,n)[1]<n?'→ 약분':'')};
+}
+
 function G5frc(){
-  const d=pick([2,3,4,5]),n=rnd(1,d),whole=rnd(2,8),ans=n*whole;
-  return{ctx:'🫐 블루베리 '+whole+'바구니를 샀어요.',q:n+'/'+d+' × '+whole+' = ?',vis:'',choices:shuf([ans+'/'+d,(ans+1)+'/'+d,Math.max(1,ans-1)+'/'+d,(n+whole)+'/'+d]),ans:ans+'/'+d,explain:'분자 '+n+'×'+whole+'='+ans};
+  return Math.random()<.5?G5frcMul():G5frcDiv();
 }
 function G5pct(){
   const pcs=[{p:50,div:2},{p:25,div:4},{p:10,div:10},{p:20,div:5}],pc=pick(pcs);
