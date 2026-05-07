@@ -294,9 +294,9 @@ const TOPICS={
     {id:'are4',emoji:'📏',name:'넓이 구하기',desc:'직사각형·삼각형 넓이',tag:'도형',gen:'G4are'}
   ],
   5:[
-    {id:'frc5mul',emoji:'✖️',name:'분수 곱셈',desc:'진분수×자연수, 진분수×진분수',tag:'분수',gen:'G5frcMul'},
-    {id:'frc5div',emoji:'➗',name:'분수 나눗셈',desc:'진분수÷자연수, 자연수÷진분수',tag:'분수',gen:'G5frcDiv'},
-    {id:'frc5',emoji:'🥧',name:'분수 곱셈+나눗셈',desc:'곱셈과 나눗셈 함께 도전!',tag:'분수',gen:'G5frc'},
+    {id:'frc5mul',emoji:'✖️',name:'분수 곱셈',desc:'진분수×자연수, 진분수×진분수',tag:'분수',gen:'G5frcMul',genHard:'G5frcMulHard'},
+    {id:'frc5div',emoji:'➗',name:'분수 나눗셈',desc:'진분수÷자연수, 자연수÷진분수',tag:'분수',gen:'G5frcDiv',genHard:'G5frcDivHard'},
+    {id:'frc5',emoji:'🥧',name:'분수 곱셈+나눗셈',desc:'곱셈과 나눗셈 함께 도전!',tag:'분수',gen:'G5frc',genHard:'G5frcHard'},
     {id:'pct5',emoji:'💯',name:'퍼센트',desc:'50%, 25%, 10% 실생활 활용',tag:'퍼센트',gen:'G5pct'},
     {id:'neg5',emoji:'❄️',name:'음수와 수직선',desc:'영하 기온, 음수 개념',tag:'음수',gen:'G5neg'},
     {id:'wrd5',emoji:'🧩',name:'혼합 계산',desc:'핀란드 실생활 응용 문제',tag:'응용',gen:'G5wrd'}
@@ -371,15 +371,30 @@ function renderHome(){
 function pickGrade(g){
   st.grade=g;
   document.getElementById('topic-badge').textContent=g+'학년';
-  document.getElementById('topic-list').innerHTML=TOPICS[g].map(t=>`
-    <div class="topic-card" onclick="startGame(${g},'${t.id}','${t.gen}')">
+  document.getElementById('topic-list').innerHTML=TOPICS[g].map(t=>{
+    if(t.genHard){
+      return `<div class="topic-card" style="cursor:default">
+        <div class="topic-ico">${t.emoji}</div>
+        <div style="flex:1">
+          <div class="topic-title">${t.name}</div>
+          <div class="topic-desc">${t.desc}</div>
+          <span class="topic-tag">${t.tag}</span>
+          <div style="display:flex;gap:6px;margin-top:8px">
+            <button onclick="event.stopPropagation();startGame(${g},'${t.id}','${t.gen}')" style="flex:1;background:#ede9fe;border:1.5px solid #a78bfa;color:#6d28d9;border-radius:10px;padding:7px 0;font-family:'Jua',sans-serif;font-size:.82rem;cursor:pointer">🌱 기초 10제</button>
+            <button onclick="event.stopPropagation();startGame(${g},'${t.id}_h','${t.genHard}')" style="flex:1;background:#fef3c7;border:1.5px solid #fbbf24;color:#92400e;border-radius:10px;padding:7px 0;font-family:'Jua',sans-serif;font-size:.82rem;cursor:pointer">🔥 심화 10제</button>
+          </div>
+        </div>
+      </div>`;
+    }
+    return `<div class="topic-card" onclick="startGame(${g},'${t.id}','${t.gen}')">
       <div class="topic-ico">${t.emoji}</div>
       <div>
         <div class="topic-title">${t.name}</div>
         <div class="topic-desc">${t.desc}</div>
         <span class="topic-tag">${t.tag}</span>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
   showScreen('topics');
 }
 
@@ -654,6 +669,15 @@ function G4are(){
 // ══════════════════════════════════════════
 function _frcSf(n,d){const g=gcd7(n,d);return[n/g,d/g];}
 function _frcFmt(n,d){if(n<=0||d<=0)return'0';const[sn,sd]=_frcSf(n,d);return sd===1?String(sn):sn+'/'+sd;}
+function _frcFmtMixed(n,d){
+  if(n<=0||d<=0)return'0';
+  const g=gcd7(n,d);const sn=n/g,sd=d/g;
+  if(sd===1)return String(sn);
+  if(sn<sd)return sn+'/'+sd;
+  const w=Math.floor(sn/sd),rem=sn%sd;
+  if(rem===0)return String(w);
+  return w+'와 '+rem+'/'+sd;
+}
 function _frcMc(ans,...ws){const s=new Set([ans]);const r=[ans];for(const w of ws)if(!s.has(w)&&r.length<4){s.add(w);r.push(w);}return shuf(r);}
 
 function G5frcMul(){
@@ -695,6 +719,45 @@ function G5frcDiv(){
 
 function G5frc(){
   return Math.random()<.5?G5frcMul():G5frcDiv();
+}
+
+function G5frcMulHard(){
+  const type=pick(['mixed_whole','frac_frac']);
+  if(type==='mixed_whole'){
+    const d=pick([2,3,4]),w=rnd(1,4),n=rnd(1,d-1),whole=rnd(2,5);
+    const total=(w*d+n)*whole;
+    const a=_frcFmtMixed(total,d);
+    return{ctx:'',q:w+'와 '+n+'/'+d+' × '+whole+' = ?',vis:'',
+      choices:_frcMc(a,_frcFmtMixed(total+d,d),_frcFmtMixed(Math.max(1,total-d),d),_frcFmtMixed(w*whole*d+n,d)),
+      ans:a,explain:'대분수→가분수: '+(w*d+n)+'/'+d+' → ×'+whole+'='+(w*d+n)*whole+'/'+d};
+  }
+  const d1=pick([3,4,5,6]),n1=rnd(1,d1-1),d2=pick([3,4,5,6]),n2=rnd(1,d2-1);
+  const rn=n1*n2,rd=d1*d2;
+  const a=_frcFmt(rn,rd);
+  return{ctx:'🍰 케이크를 나눠요.',q:n1+'/'+d1+' × '+n2+'/'+d2+' = ?',vis:'',
+    choices:_frcMc(a,_frcFmt(rn+1,rd),_frcFmt(n1+n2,d1+d2),_frcFmt(n1*n2,d1+d2)),
+    ans:a,explain:'분자×분자='+rn+', 분모×분모='+rd+(_frcSf(rn,rd)[1]<rd?'→ 약분':'')};
+}
+
+function G5frcDivHard(){
+  const type=pick(['mixed_whole','whole_frac']);
+  if(type==='mixed_whole'){
+    const d=pick([2,3,4]),w=rnd(1,3),n=rnd(1,d-1),whole=pick([2,3,4]);
+    const total=w*d+n;
+    const a=_frcFmtMixed(total,d*whole);
+    return{ctx:'🎂 케이크를 잘라요.',q:w+'와 '+n+'/'+d+' ÷ '+whole+' = ?',vis:'',
+      choices:_frcMc(a,_frcFmtMixed(total+1,d*whole),_frcFmtMixed(total,d),_frcFmtMixed(total*whole,d)),
+      ans:a,explain:'대분수→가분수: '+total+'/'+d+' → ÷'+whole+'='+total+'/'+(d*whole)};
+  }
+  const d=pick([2,3,4,5]),n=rnd(1,d-1),w=rnd(2,8);
+  const a=_frcFmtMixed(w*d,n);
+  return{ctx:'',q:w+' ÷ '+n+'/'+d+' = ?',vis:'',
+    choices:_frcMc(a,_frcFmtMixed(w*d+1,n),_frcFmtMixed(w*n,d),_frcFmtMixed(w*d-1,n)),
+    ans:a,explain:'역수 곱하기: '+w+'×'+d+'/'+n+'='+w*d+'/'+n};
+}
+
+function G5frcHard(){
+  return Math.random()<.5?G5frcMulHard():G5frcDivHard();
 }
 function G5pct(){
   const pcs=[{p:50,div:2},{p:25,div:4},{p:10,div:10},{p:20,div:5}],pc=pick(pcs);
